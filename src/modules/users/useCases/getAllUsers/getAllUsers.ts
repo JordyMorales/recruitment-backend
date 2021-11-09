@@ -1,6 +1,6 @@
 import { injectable, inject } from 'inversify';
-import { User } from './../../domain/user';
-import { IUserRepo } from './../../domain/ports/userRepo';
+import { User } from '../../domain/user';
+import { IUserRepo } from '../../domain/ports/IUserRepo';
 import { AppError } from '../../../../shared/core/AppError';
 import { Either, Result, left, right } from './../../../../shared/core/Result';
 import { UseCase } from './../../../../shared/core/UseCase';

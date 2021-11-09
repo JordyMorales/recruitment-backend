@@ -3,7 +3,7 @@ import { User } from '../../domain/user';
 import { UserId } from '../../domain/userId';
 import { UserMap } from '../mappers/userMap';
 import { UserEmail } from '../../domain/userEmail';
-import { IUserRepo } from '../../domain/ports/userRepo';
+import { IUserRepo } from '../../domain/ports/IUserRepo';
 import models from '../../../../shared/infra/database/sequelize/models';
 
 @injectable()

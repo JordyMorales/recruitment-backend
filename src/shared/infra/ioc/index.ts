@@ -1,5 +1,5 @@
 import { Container } from 'inversify';
-import { FirebaseAuthService } from '../../../modules/users/services/firebase/firebaseAuthService';
+import { FirebaseAuthService } from '../../../modules/users/services/auth/firebaseAuthService';
 
 import { UserRepo } from '../../../modules/users/infra/adapters/userRepo';
 import { CreateUser } from '../../../modules/users/useCases/createUser/createUser';

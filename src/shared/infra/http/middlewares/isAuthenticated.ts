@@ -1,7 +1,7 @@
 import { container } from '../../ioc';
 import { Request, Response } from 'express';
 import { endRequest } from '../utils/endRequest';
-import { IAuthService, IContext } from '../../../../modules/users/services/authService';
+import { IAuthService, IContext } from '../../../../modules/users/services/auth/IAuthService';
 import TYPES from '../../constants/types';
 
 export default async (req: Request, res: Response, next: Function) => {

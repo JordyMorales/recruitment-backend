@@ -1,7 +1,7 @@
 import { injectable, inject } from 'inversify';
 import { User } from '../../domain/user';
 import { UserId } from '../../domain/userId';
-import { IUserRepo } from '../../domain/ports/userRepo';
+import { IUserRepo } from '../../domain/ports/IUserRepo';
 import { UseCase } from '../../../../shared/core/UseCase';
 import { AppError } from '../../../../shared/core/AppError';
 import { Either, Result, left, right } from '../../../../shared/core/Result';

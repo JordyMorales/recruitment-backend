@@ -1,6 +1,6 @@
 import { injectable } from 'inversify';
 import { User } from '../../domain/user';
-import { IAuthService, IContext } from '../authService';
+import { IAuthService, IContext } from './IAuthService';
 import admin from '../../../../shared/infra/firebase';
 
 export interface IFirebaseProvider extends IAuthService {

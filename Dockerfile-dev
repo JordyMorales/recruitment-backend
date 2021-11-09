@@ -1,0 +1,15 @@
+FROM node:alpine
+
+WORKDIR /usr/src/recruitment
+
+ENV path /usr/src/recruitment/node_modules/.bin:$PATH
+
+COPY . /usr/src/recruitment
+
+RUN yarn global add dotenv-cli pgtools
+
+RUN yarn
+
+EXPOSE 4000
+
+CMD ["yarn", "start"]

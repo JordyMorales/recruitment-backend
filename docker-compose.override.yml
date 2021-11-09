@@ -1,0 +1,12 @@
+version: "3.8"
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: ./Dockerfile-dev
+    volumes: 
+      - .:/usr/src/recruitment
+      - /usr/src/recruitment/node_modules
+    command: yarn start:dev
+    

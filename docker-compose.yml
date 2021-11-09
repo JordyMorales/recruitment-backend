@@ -1,0 +1,34 @@
+version: "3.8"
+
+services:
+  api:
+    container_name: recruitment
+    image: nearshorecode/recruitment:xJtEW2gcfGFQaUyycycdCpvYyZbmui3vn7YU9ax9
+    env_file:
+      - .env
+    depends_on:
+      - postgresdb
+    ports:
+      - '4000:4000'
+
+  postgresdb:
+    container_name: postgresdb
+    image: postgres:latest
+    ports:
+      - '5432:5432'
+    environment:
+      - POSTGRES_USER=${RECRUITMENT_DB_USER}
+      - POSTGRES_PASSWORD=${RECRUITMENT_DB_PASS}
+      - POSTGRES_DB=${RECRUITMENT_PROD_DB_NAME}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  adminer:
+    image: adminer
+    depends_on:
+      - postgresdb
+    ports:
+      - '8080:8080'
+
+volumes:
+  pgdata:

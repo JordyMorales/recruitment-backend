@@ -3,6 +3,7 @@ const TYPES = {
   Middleware: 'Middleware',
   IUserRepo: 'IUserRepo',
   CreateUser: 'CreateUser',
+  GetAllUsers: 'GetAllUsers',
 };
 
 export default TYPES;

@@ -1,13 +1,12 @@
 import { State } from '../../domain/state';
 import { Role } from '../../domain/role';
 
-export interface CreateUserRequestDTO {
+export interface UpdateUserRequestDTO {
   userId?: string;
   firstName: string;
   middleName?: string;
   lastName: string;
   email: string;
-  password?: string;
   phone?: string;
   dateOfBirth?: Date;
   country?: string;

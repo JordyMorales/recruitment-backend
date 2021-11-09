@@ -15,16 +15,16 @@ export class UserRepo implements IUserRepo {
 
   async exists(userEmail: UserEmail): Promise<boolean> {
     const UserModel = this.models.User;
-    const user = await UserModel.findOne({
+    const userFound = await UserModel.findOne({
       where: { email: userEmail.value },
     });
-    return !!user === true;
+    return !!userFound === true;
   }
   async getUserById(userId: UserId): Promise<User> {
     const UserModel = this.models.User;
-    const user = await UserModel.findByPk(userId.id.toString());
-    if (!!user === false) throw new Error('User not found.');
-    return UserMap.toDomain(user);
+    const userFound = await UserModel.findByPk(userId.id.toString());
+    if (!!userFound === false) throw new Error('User not found.');
+    return UserMap.toDomain(userFound);
   }
   async getAllUsers(): Promise<User[]> {
     const UserModel = this.models.User;
@@ -42,7 +42,8 @@ export class UserRepo implements IUserRepo {
   }
   async update(user: User): Promise<void> {
     const UserModel = this.models.User;
-    const exists = await this.exists(user.email);
+    const userFound = await this.getUserById(user.userId);
+    const exists = !!userFound === true;
     if (exists) {
       const rawSequelizeUser = await UserMap.toPersistence(user);
       await UserModel.update(rawSequelizeUser, {

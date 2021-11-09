@@ -3,3 +3,4 @@ import './getAllUsersController';
 import './getUserByIdController';
 import './getCurrentUserController';
 import './registerController';
+import './updateUserController';

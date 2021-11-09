@@ -3,13 +3,13 @@ import { endRequest } from '../utils/endRequest';
 
 export default (opts: {
   hasRole: Array<'ADMIN' | 'RECRUITER' | 'INTERVIEWER' | 'EMPLOYEE' | 'CANDIDATE'>;
-  allowSameEmployee?: boolean;
+  allowSame?: boolean;
 }) => {
   return (req: Request, res: Response, next: Function) => {
-    const { uid, role } = req['context'];
+    const { userId, role } = req['context'];
     const { id } = req.params;
 
-    if (opts.allowSameEmployee && id && uid === id) return next();
+    if (opts.allowSame && id && userId === id) return next();
 
     if (!role) return endRequest(403, 'Forbidden', res);
 

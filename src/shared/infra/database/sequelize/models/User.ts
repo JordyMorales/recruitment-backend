@@ -76,5 +76,12 @@ module.exports = (sequelize, DataTypes) => {
     },
   );
 
+  User.associate = (models) => {
+    User.hasOne(models.Candidate, { foreignKey: 'candidate_id' });
+    User.hasOne(models.Candidate, { foreignKey: 'referral' });
+    User.hasOne(models.Candidate, { foreignKey: 'created_by' });
+    User.hasOne(models.Candidate, { foreignKey: 'updated_by' });
+  };
+
   return User;
 };

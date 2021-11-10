@@ -66,7 +66,10 @@ export class CreateUser implements UseCase<CreateUserRequestDTO, Promise<Respons
       const user: User = userOrError.getValue();
 
       await this.userRepo.save(user);
-      await this.authService.createUser(user);
+      
+      if (user.state === 'ACTIVE') {
+        await this.authService.createUser(user);
+      }
 
       return right(Result.ok<void>());
     } catch (error) {

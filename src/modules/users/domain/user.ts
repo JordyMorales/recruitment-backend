@@ -122,7 +122,7 @@ export class User extends AggregateRoot<UserProps> {
       resumeUrl: props.resumeUrl ? props.resumeUrl : null,
       jobTitle: props.jobTitle ? props.jobTitle : null,
       role: props.role ? props.role : 'CANDIDATE',
-      state: props.state ? props.state : 'ACTIVE',
+      state: props.state ? props.state : 'INACTIVE',
     };
 
     const user = new User(values, id);

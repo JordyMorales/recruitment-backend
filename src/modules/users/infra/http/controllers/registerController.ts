@@ -19,7 +19,7 @@ export class RegisterController extends BaseController {
     const dto: CreateUserRequestDTO = req.body as CreateUserRequestDTO;
 
     try {
-      const result = await this.useCase.execute({ ...dto, role: 'CANDIDATE' });
+      const result = await this.useCase.execute({ ...dto, role: 'CANDIDATE', state: 'ACTIVE' });
 
       if (result.isLeft()) {
         const error = result.value;

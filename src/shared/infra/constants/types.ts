@@ -14,6 +14,7 @@ const TYPES = {
   UpdateUser: 'UpdateUser',
   CreateCandidate: 'CreateCandidate',
   GetAllCandidates: 'GetAllCandidates',
+  GetCandidateById: 'GetCandidateById',
 };
 
 export default TYPES;

@@ -16,6 +16,7 @@ import { GetUserById } from '../../../modules/users/useCases/getUserById/getUser
 import { UpdateUser } from '../../../modules/users/useCases/updateUser/updateUser';
 import { CreateCandidate } from '../../../modules/recruitment/candidate/useCases/createCandidate/createCandidate';
 import { GetAllCandidates } from '../../../modules/recruitment/candidate/useCases/getAllCandidates/getAllCandidates';
+import { GetCandidateById } from '../../../modules/recruitment/candidate/useCases/getCandidateById/GetCandidateById';
 
 import TYPES from '../constants/types';
 
@@ -37,5 +38,6 @@ container.bind<GetUserById>(TYPES.GetUserById).to(GetUserById);
 container.bind<UpdateUser>(TYPES.UpdateUser).to(UpdateUser);
 container.bind<CreateCandidate>(TYPES.CreateCandidate).to(CreateCandidate);
 container.bind<GetAllCandidates>(TYPES.GetAllCandidates).to(GetAllCandidates);
+container.bind<GetCandidateById>(TYPES.GetCandidateById).to(GetCandidateById);
 
 export { container };

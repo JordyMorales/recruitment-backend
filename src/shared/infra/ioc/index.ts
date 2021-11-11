@@ -8,6 +8,7 @@ import { UserRepo } from '../../../modules/users/infra/adapters/userRepo';
 import { CandidateRepo } from '../../../modules/recruitment/candidate/infra/adapters/candidateRepo';
 import { EmailRepo } from '../../../modules/recruitment/candidate/infra/adapters/emailRepo';
 import { PhoneRepo } from '../../../modules/recruitment/candidate/infra/adapters/phoneRepo';
+import { TagRepo } from '../../../modules/recruitment/candidate/infra/adapters/tagRepo';
 
 // Use cases
 import { CreateUser } from '../../../modules/users/useCases/createUser/createUser';
@@ -17,6 +18,7 @@ import { UpdateUser } from '../../../modules/users/useCases/updateUser/updateUse
 import { CreateCandidate } from '../../../modules/recruitment/candidate/useCases/createCandidate/createCandidate';
 import { GetAllCandidates } from '../../../modules/recruitment/candidate/useCases/getAllCandidates/getAllCandidates';
 import { GetCandidateById } from '../../../modules/recruitment/candidate/useCases/getCandidateById/GetCandidateById';
+import { CreateTag } from '../../../modules/recruitment/candidate/useCases/createTag/createTag';
 
 import TYPES from '../constants/types';
 
@@ -30,6 +32,7 @@ container.bind(TYPES.IUserRepo).to(UserRepo).inSingletonScope();
 container.bind(TYPES.ICandidateRepo).to(CandidateRepo).inSingletonScope();
 container.bind(TYPES.IEmailRepo).to(EmailRepo).inSingletonScope();
 container.bind(TYPES.IPhoneRepo).to(PhoneRepo).inSingletonScope();
+container.bind(TYPES.ITagRepo).to(TagRepo).inSingletonScope();
 
 // Use cases
 container.bind<CreateUser>(TYPES.CreateUser).to(CreateUser);
@@ -39,5 +42,6 @@ container.bind<UpdateUser>(TYPES.UpdateUser).to(UpdateUser);
 container.bind<CreateCandidate>(TYPES.CreateCandidate).to(CreateCandidate);
 container.bind<GetAllCandidates>(TYPES.GetAllCandidates).to(GetAllCandidates);
 container.bind<GetCandidateById>(TYPES.GetCandidateById).to(GetCandidateById);
+container.bind<CreateTag>(TYPES.CreateTag).to(CreateTag);
 
 export { container };

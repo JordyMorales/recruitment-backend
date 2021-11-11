@@ -14,7 +14,7 @@ export class TagRepo implements ITagRepo {
   async exists(tag: string): Promise<boolean> {
     const TagModel = this.models.Tag;
     const tagFound = await TagModel.findOne({
-      where: { value: tag },
+      where: { name: tag },
     });
     return !!tagFound === true;
   }

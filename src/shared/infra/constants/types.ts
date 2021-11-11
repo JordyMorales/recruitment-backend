@@ -7,6 +7,7 @@ const TYPES = {
   ICandidateRepo: 'ICandidateRepo',
   IEmailRepo: 'IEmailRepo',
   IPhoneRepo: 'IPhoneRepo',
+  ITagRepo: 'ITagRepo',
   // Use cases
   CreateUser: 'CreateUser',
   GetAllUsers: 'GetAllUsers',
@@ -15,6 +16,7 @@ const TYPES = {
   CreateCandidate: 'CreateCandidate',
   GetAllCandidates: 'GetAllCandidates',
   GetCandidateById: 'GetCandidateById',
+  CreateTag: 'CreateTag',
 };
 
 export default TYPES;

@@ -15,15 +15,15 @@ module.exports = (sequelize, DataTypes) => {
       },
       address: {
         type: DataTypes.STRING(150),
-        allowNull: false,
+        allowNull: true,
       },
       city: {
         type: DataTypes.STRING(100),
-        allowNull: false,
+        allowNull: true,
       },
       country: {
         type: DataTypes.STRING(100),
-        allowNull: false,
+        allowNull: true,
       },
       english_level: {
         type: DataTypes.STRING(15),
@@ -108,11 +108,16 @@ module.exports = (sequelize, DataTypes) => {
     },
   );
 
-  Candidate.associate = (models) => {
-    Candidate.belongsTo(models.User, { foreignKey: 'candidate_id' });
-    Candidate.belongsTo(models.User, { foreignKey: 'referral' });
-    Candidate.belongsTo(models.User, { foreignKey: 'created_by' });
-    Candidate.belongsTo(models.User, { foreignKey: 'updated_by' });
+  Candidate.associate = ({ User, Email, Phone, Link, Tag, Technology }) => {
+    Candidate.belongsTo(User, { foreignKey: 'candidate_id' });
+    Candidate.belongsTo(User, { foreignKey: 'referral' });
+    Candidate.belongsTo(User, { foreignKey: 'created_by' });
+    Candidate.belongsTo(User, { foreignKey: 'updated_by' });
+    Candidate.hasMany(Email, { foreignKey: 'candidate_id' });
+    Candidate.hasMany(Phone, { foreignKey: 'candidate_id' });
+    Candidate.hasMany(Link, { foreignKey: 'candidate_id' });
+    Candidate.belongsToMany(Tag, { through: 'candidate_tag', foreignKey: 'candidate_id' });
+    Candidate.belongsToMany(Technology, { through: 'candidate_technology', foreignKey: 'candidate_id' });
   };
 
   return Candidate;

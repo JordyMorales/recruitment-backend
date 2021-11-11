@@ -17,6 +17,7 @@ const TYPES = {
   GetAllCandidates: 'GetAllCandidates',
   GetCandidateById: 'GetCandidateById',
   CreateTag: 'CreateTag',
+  GetAllTags: 'GetAllTags',
   SearchTags: 'SearchTags',
 };
 

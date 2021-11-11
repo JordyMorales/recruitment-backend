@@ -36,7 +36,6 @@ export class CreateUserController extends BaseController {
         return this.created(res, {
           user: UserMap.toDTO(userCreated),
         });
-
       }
     } catch (err) {
       return this.fail(res, err);

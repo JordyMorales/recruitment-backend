@@ -4,7 +4,6 @@ import { CandidateId } from '../../domain/candidateId';
 import { Mapper } from '../../../../../shared/infra/Mapper';
 import { UniqueEntityID } from '../../../../../shared/domain/UniqueEntityID';
 
-
 export class PhoneMap implements Mapper<Phone> {
   public static toDTO(phone: Phone): PhoneDTO {
     return {

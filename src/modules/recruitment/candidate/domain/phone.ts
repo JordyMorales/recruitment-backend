@@ -28,17 +28,15 @@ export class Phone extends AggregateRoot<PhoneProps> {
   }
 
   public static create(props: PhoneProps, id?: UniqueEntityID): Result<Phone> {
-    const nullGuard = Guard.againstNullOrUndefinedBulk([
-      { argument: props.value, argumentName: 'value' },
-    ]);
+    const nullGuard = Guard.againstNullOrUndefinedBulk([{ argument: props.value, argumentName: 'value' }]);
 
     if (!nullGuard.succeeded) {
       return Result.fail<Phone>(nullGuard.message);
     } else {
-      const values= {
+      const values = {
         ...props,
         candidateId: props.candidateId ? props.candidateId : null,
-      }
+      };
       const phone = new Phone(values, id);
       return Result.ok<Phone>(phone);
     }

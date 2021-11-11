@@ -56,7 +56,9 @@ export class TechnologyRepo implements ITechnologyRepo {
       const exists = await this.getTechnologyById(technology.technologyId);
       if (exists) {
         const raw = TechnologyMap.toPersistence(technology);
-        await TechnologyModel.update(raw, { where: { technology_id: technology.technologyId.id.toString() } });
+        await TechnologyModel.update(raw, {
+          where: { technology_id: technology.technologyId.id.toString() },
+        });
       }
     } catch (error: any) {
       throw new Error(error.toString());

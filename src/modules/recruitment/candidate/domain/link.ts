@@ -29,9 +29,7 @@ export class Link extends AggregateRoot<LinkProps> {
   }
 
   public static create(props: LinkProps, id?: UniqueEntityID): Result<Link> {
-    const nullGuard = Guard.againstNullOrUndefinedBulk([
-      { argument: props.value, argumentName: 'value' },
-    ]);
+    const nullGuard = Guard.againstNullOrUndefinedBulk([{ argument: props.value, argumentName: 'value' }]);
 
     if (!nullGuard.succeeded) {
       return Result.fail<Link>(nullGuard.message);
@@ -40,10 +38,10 @@ export class Link extends AggregateRoot<LinkProps> {
     if (!TextUtils.validateWebURL(props.value)) {
       return Result.fail<Link>(`Url {${props.value}} is not valid.`);
     }
-    const values= {
+    const values = {
       ...props,
       candidateId: props.candidateId ? props.candidateId : null,
-    }
+    };
     const link = new Link(values, id);
     return Result.ok<Link>(link);
   }

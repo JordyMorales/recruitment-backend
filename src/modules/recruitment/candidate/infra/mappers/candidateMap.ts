@@ -1,6 +1,5 @@
 import { Candidate } from '../../domain/candidate';
 import { CandidateDTO } from '../../domain/dtos/candidateDTO';
-import { UserId } from '../../../../users/domain/userId';
 import { Technology } from '../../domain/technology';
 import { Phone } from '../../domain/phone';
 import { Email } from '../../domain/email';

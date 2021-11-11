@@ -5,7 +5,6 @@ import { CandidateId } from '../../domain/candidateId';
 import { ILinkRepo } from '../../domain/ports/ILinkRepo';
 import models from '../../../../../shared/infra/database/sequelize/models';
 
-
 @injectable()
 export class LinkRepo implements ILinkRepo {
   private models: any;

@@ -1,4 +1,4 @@
-import { EnglishLevel } from "../englishLevel";
+import { EnglishLevel } from '../englishLevel';
 
 export interface CandidateDTO {
   candidateId?: string;

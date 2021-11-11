@@ -3,10 +3,11 @@ import { UserEmail } from '../../domain/userEmail';
 import { UserDTO } from '../../domain/dtos/userDTO';
 import { Mapper } from '../../../../shared/infra/Mapper';
 import { UniqueEntityID } from '../../../../shared/domain/UniqueEntityID';
+import { removeNullProperties } from '../../../../shared/utils/ObjectUtils';
 
 export class UserMap implements Mapper<User> {
   public static toDTO(user: User): UserDTO {
-    return {
+    return removeNullProperties({
       userId: user.userId.id.toString(),
       firstName: user.firstName,
       middleName: user.middleName ? user.middleName : null,
@@ -22,7 +23,7 @@ export class UserMap implements Mapper<User> {
       jobTitle: user.jobTitle ? user.jobTitle : null,
       state: user.state,
       role: user.role,
-    };
+    });
   }
 
   public static dtoToDomain(user: any): User {

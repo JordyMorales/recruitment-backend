@@ -5,7 +5,6 @@ import { IEmailRepo } from '../../domain/ports/IEmailRepo';
 import { CandidateId } from '../../domain/candidateId';
 import models from '../../../../../shared/infra/database/sequelize/models';
 
-
 @injectable()
 export class EmailRepo implements IEmailRepo {
   private models: any;

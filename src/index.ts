@@ -1,5 +1,5 @@
 require('dotenv').config();
-import Server from "./shared/infra/http/server";
+import Server from './shared/infra/http/server';
 
 const main = async (): Promise<void> => {
   try {

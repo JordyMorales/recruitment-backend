@@ -27,10 +27,26 @@ export class CandidateRepo implements ICandidateRepo {
         { model: this.models.Link, as: 'links' },
         { model: this.models.Tag },
         { model: this.models.Technology },
-        { model: this.models.User, as: 'user' },
-        { model: this.models.User, as: 'referralBy' },
-        { model: this.models.User, as: 'createdBy' },
-        { model: this.models.User, as: 'updatedBy' },
+        {
+          model: this.models.User,
+          as: 'user',
+          attributes: ['user_id', 'first_name', 'last_name', 'email', 'photo_url', 'state', 'role'],
+        },
+        {
+          model: this.models.User,
+          as: 'referralBy',
+          attributes: ['user_id', 'first_name', 'last_name', 'email', 'photo_url', 'state', 'role'],
+        },
+        {
+          model: this.models.User,
+          as: 'createdBy',
+          attributes: ['user_id', 'first_name', 'last_name', 'email', 'photo_url', 'state', 'role'],
+        },
+        {
+          model: this.models.User,
+          as: 'updatedBy',
+          attributes: ['user_id', 'first_name', 'last_name', 'email', 'photo_url', 'state', 'role'],
+        },
       ],
     });
     if (!!candidateFound === false) throw new Error('Candidate not found.');
@@ -46,10 +62,26 @@ export class CandidateRepo implements ICandidateRepo {
         { model: this.models.Link, as: 'links' },
         { model: this.models.Tag },
         { model: this.models.Technology },
-        { model: this.models.User, as: 'user' },
-        { model: this.models.User, as: 'referralBy' },
-        { model: this.models.User, as: 'createdBy' },
-        { model: this.models.User, as: 'updatedBy' },
+        {
+          model: this.models.User,
+          as: 'user',
+          attributes: ['user_id', 'first_name', 'last_name', 'email', 'photo_url', 'state', 'role'],
+        },
+        {
+          model: this.models.User,
+          as: 'referralBy',
+          attributes: ['user_id', 'first_name', 'last_name', 'email', 'photo_url', 'state', 'role'],
+        },
+        {
+          model: this.models.User,
+          as: 'createdBy',
+          attributes: ['user_id', 'first_name', 'last_name', 'email', 'photo_url', 'state', 'role'],
+        },
+        {
+          model: this.models.User,
+          as: 'updatedBy',
+          attributes: ['user_id', 'first_name', 'last_name', 'email', 'photo_url', 'state', 'role'],
+        },
       ],
       order: [['created_at', 'DESC']],
     });

@@ -24,6 +24,7 @@ const TYPES = {
   CreateTechnology: 'CreateTechnology',
   GetAllTechnologies: 'GetAllTechnologies',
   SearchTechnologies: 'SearchTechnologies',
+  UpdateTechnology: 'UpdateTechnology',
 };
 
 export default TYPES;

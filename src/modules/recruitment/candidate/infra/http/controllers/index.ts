@@ -8,3 +8,4 @@ import './updateTagController';
 import './createTechnologyController';
 import './getAllTechnologiesController';
 import './searchTechnologiesController';
+import './updateTechnologyController';

@@ -53,7 +53,7 @@ export class TechnologyRepo implements ITechnologyRepo {
   async update(technology: Technology): Promise<void> {
     const TechnologyModel = this.models.Technology;
     try {
-      const exists = await this.exists(technology.name);
+      const exists = await this.getTechnologyById(technology.technologyId);
       if (exists) {
         const raw = TechnologyMap.toPersistence(technology);
         await TechnologyModel.update(raw, { where: { technology_id: technology.technologyId.id.toString() } });

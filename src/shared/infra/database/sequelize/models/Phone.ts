@@ -33,7 +33,7 @@ module.exports = (sequelize, DataTypes) => {
   );
 
   Phone.associate = ({Candidate}) => {
-    Phone.belongsTo(Candidate, { foreignKey: 'candidate_id' });
+    Phone.belongsTo(Candidate, { foreignKey: 'candidate_id', as: 'phones' });
   };
 
   return Phone;

@@ -25,6 +25,34 @@ export class UserMap implements Mapper<User> {
     };
   }
 
+  public static dtoToDomain(user: any): User {
+    const emailOrError = UserEmail.create(user.email);
+
+    const userOrError = User.create(
+      {
+        firstName: user.firstName,
+        middleName: user.middleName ? user.middleName : null,
+        lastName: user.lastName ? user.lastName : null,
+        email: emailOrError.getValue(),
+        phone: user.phone ? user.phone : null,
+        dateOfBirth: user.dateOfBirth ? user.dateOfBirth : null,
+        country: user.country ? user.country : null,
+        city: user.city ? user.city : null,
+        address: user.address ? user.address : null,
+        photoUrl: user.photoUrl ? user.photoUrl : null,
+        resumeUrl: user.resumeUrl ? user.resumeUrl : null,
+        jobTitle: user.jobTitle ? user.jobTitle : null,
+        state: user.state,
+        role: user.role,
+      },
+      new UniqueEntityID(user.userId),
+    );
+
+    userOrError.isFailure ? console.log(userOrError.error) : '';
+
+    return userOrError.isSuccess ? userOrError.getValue() : null;
+  }
+
   public static toDomain(raw: any): User {
     const emailOrError = UserEmail.create(raw.email);
 

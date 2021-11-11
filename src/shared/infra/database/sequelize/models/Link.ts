@@ -31,7 +31,7 @@ module.exports = (sequelize, DataTypes) => {
   );
 
   Link.associate = ({ Candidate }) => {
-    Link.belongsTo(Candidate, { foreignKey: 'candidate_id' });
+    Link.belongsTo(Candidate, { foreignKey: 'candidate_id', as: 'links' });
   };
 
   return Link;

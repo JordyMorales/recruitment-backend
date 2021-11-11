@@ -20,9 +20,9 @@ export interface CandidateDTO {
   phones?: any[];
   emails?: any[];
   technologies?: any[];
-  referral?: string;
-  createdBy: string;
-  updatedBy?: string;
+  referralBy?: any;
+  createdBy: any;
+  updatedBy?: any;
   createdAt?: Date;
   updatedAt?: Date;
 }

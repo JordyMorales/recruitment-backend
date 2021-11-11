@@ -19,8 +19,8 @@ export interface CreateCandidateRequestDTO {
   phones?: any[];
   emails?: any[];
   technologies?: any[];
-  referral?: any;
-  createdBy?: any;
+  referralBy?: any;
+  createdBy: any;
   updatedBy?: any;
   createdAt?: Date;
   updatedAt?: Date;

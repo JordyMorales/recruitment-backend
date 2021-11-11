@@ -19,7 +19,7 @@ export class CreateCandidateController extends BaseController {
   async executeImpl(req: express.Request, res: express.Response): Promise<any> {
     const dto: CreateCandidateRequestDTO = req.body as CreateCandidateRequestDTO;
     try {
-      const result = await this.useCase.execute({ ...dto, createdBy: req['context'].userId });
+      const result = await this.useCase.execute({ ...dto, createdBy: req['context'] });
 
       if (result.isLeft()) {
         const error = result.value;

@@ -143,7 +143,7 @@ module.exports = {
             type: Sequelize.STRING(150),
             allowNull: true,
           },
-          referral: {
+          referral_by: {
             type: Sequelize.UUID,
             allowNull: true,
             references: {
@@ -430,6 +430,59 @@ module.exports = {
         },
       );
 
+    const CREATE_COMMENT = () =>
+      queryInterface.createTable(
+        'comment',
+        {
+          comment_id: {
+            type: Sequelize.UUID,
+            defaultValue: Sequelize.UUIDV4,
+            allowNull: false,
+            primaryKey: true,
+          },
+          candidate_id: {
+            type: Sequelize.UUID,
+            allowNull: false,
+            references: {
+              model: 'candidate',
+              key: 'candidate_id',
+            },
+            onDelete: 'cascade',
+            onUpdate: 'cascade',
+          },
+          parent_comment_id: {
+            type: Sequelize.UUID,
+            allowNull: true,
+            references: {
+              model: 'comment',
+              key: 'comment_id',
+            },
+            onDelete: 'cascade',
+            onUpdate: 'cascade',
+          },
+          commented_by: {
+            type: Sequelize.UUID,
+            allowNull: false,
+            references: {
+              model: 'user',
+              key: 'user_id',
+            },
+            onDelete: 'cascade',
+            onUpdate: 'cascade',
+          },
+          commented_at: {
+            type: Sequelize.DATE,
+            allowNull: false,
+            defaultValue: Sequelize.NOW,
+          },
+        },
+        {
+          timestamps: false,
+          underscored: true,
+          tableName: 'comment',
+        },
+      );
+
     await runner.run([
       () => CREATE_USER(),
       () => CREATE_CANDIDATE(),
@@ -440,6 +493,7 @@ module.exports = {
       () => CREATE_EMAIL(),
       () => CREATE_TECHNOLOGY(),
       () => CREATE_CANDIDATE_TECHNOLOGY(),
+      () => CREATE_COMMENT(),
     ]);
   },
 
@@ -454,6 +508,7 @@ module.exports = {
       () => queryInterface.dropTable('email'),
       () => queryInterface.dropTable('technology'),
       () => queryInterface.dropTable('candidate_technology'),
+      () => queryInterface.dropTable('comment'),
     ]);
   },
 };

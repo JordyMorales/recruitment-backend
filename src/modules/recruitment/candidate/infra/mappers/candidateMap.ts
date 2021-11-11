@@ -69,9 +69,9 @@ export class CandidateMap implements Mapper<Candidate> {
       phones: candidate.phones.length ? candidate.phones.map((phone) => phone.value) : [],
       emails: candidate.emails.length ? candidate.emails.map((email) => email.value) : [],
       technologies: candidate.technologies ? candidate.technologies.map((t) => TechnologyMap.toDTO(t)) : [],
-      referral: candidate.referral ? candidate.referral.id.toString() : null,
-      createdBy: candidate.createdBy.id.toString(),
-      updatedBy: candidate.updatedBy ? candidate.updatedBy.id.toString() : null,
+      referralBy: candidate.referralBy ? UserMap.toDTO(candidate.referralBy) : null,
+      createdBy: UserMap.toDTO(candidate.createdBy),
+      updatedBy: candidate.updatedBy ? UserMap.toDTO(candidate.updatedBy) : null,
       createdAt: candidate.createdAt,
       updatedAt: candidate.updatedAt ? candidate.updatedAt : null,
     };
@@ -80,7 +80,7 @@ export class CandidateMap implements Mapper<Candidate> {
   public static toDomain(raw: any): Candidate {
     const candidateOrError = Candidate.create(
       {
-        personalData:raw.user ? UserMap.toDomain(raw.user) : null,
+        personalData: raw.user ? UserMap.toDomain(raw.user) : null,
         address: raw.address ? raw.address : null,
         city: raw.city ? raw.city : null,
         country: raw.country ? raw.country : null,
@@ -98,9 +98,9 @@ export class CandidateMap implements Mapper<Candidate> {
         phones: raw.phones ? phonesToDomain(raw.phones) : [],
         emails: raw.emails ? emailsToDomain(raw.emails) : [],
         technologies: raw.technologies ? technologiesToDomain(raw.technologies) : [],
-        referral: raw.referral ? UserId.create(raw.referral).getValue() : null,
-        createdBy: UserId.create(raw.created_by).getValue(),
-        updatedBy: raw.updated_by ? UserId.create(raw.updated_by).getValue() : null,
+        referralBy: raw.referral ? UserMap.toDomain(raw.referralBy) : null,
+        createdBy: UserMap.toDomain(raw.createdBy),
+        updatedBy: raw.updated_by ? UserMap.toDomain(raw.updatedBy) : null,
         createdAt: raw.created_at,
         updatedAt: raw.updated_at ? raw.updated_at : null,
       },
@@ -134,7 +134,7 @@ export class CandidateMap implements Mapper<Candidate> {
         : [],
       tags: candidate.tags ? candidate.tags.map((tag) => TagMap.toPersistence(tag)) : [],
       links: candidate.links ? candidate.links.map((link) => LinkMap.toPersistence(link)) : [],
-      referral: candidate.referral ? candidate.referral.id.toString() : null,
+      referral_by: candidate.referralBy ? candidate.referralBy.id.toString() : null,
       created_by: candidate.createdBy.id.toString(),
       updated_by: candidate.updatedBy ? candidate.updatedBy.id.toString() : null,
       created_at: candidate.createdAt,

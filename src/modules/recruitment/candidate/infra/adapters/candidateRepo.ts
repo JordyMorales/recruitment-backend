@@ -22,13 +22,16 @@ export class CandidateRepo implements ICandidateRepo {
     const CandidateModel = this.models.Candidate;
     const candidateFound = await CandidateModel.findByPk(candidateId.id.toString(), {
       include: [
-        this.models.Email,
-        this.models.Phone,
-        this.models.Link,
-        this.models.Tag,
-        this.models.Technology,
-        this.models.User,
-      ]
+        { model: this.models.Email, as: 'emails' },
+        { model: this.models.Phone, as: 'phones' },
+        { model: this.models.Link, as: 'links' },
+        { model: this.models.Tag },
+        { model: this.models.Technology },
+        { model: this.models.User, as: 'user' },
+        { model: this.models.User, as: 'referralBy' },
+        { model: this.models.User, as: 'createdBy' },
+        { model: this.models.User, as: 'updatedBy' },
+      ],
     });
     if (!!candidateFound === false) throw new Error('Candidate not found.');
 
@@ -38,12 +41,15 @@ export class CandidateRepo implements ICandidateRepo {
     const CandidateModel = this.models.Candidate;
     const response = await CandidateModel.findAll({
       include: [
-        this.models.Email,
-        this.models.Phone,
-        this.models.Link,
-        this.models.Tag,
-        this.models.Technology,
-        this.models.User,
+        { model: this.models.Email, as: 'emails' },
+        { model: this.models.Phone, as: 'phones' },
+        { model: this.models.Link, as: 'links' },
+        { model: this.models.Tag },
+        { model: this.models.Technology },
+        { model: this.models.User, as: 'user' },
+        { model: this.models.User, as: 'referralBy' },
+        { model: this.models.User, as: 'createdBy' },
+        { model: this.models.User, as: 'updatedBy' },
       ],
       order: [['created_at', 'DESC']],
     });
@@ -58,7 +64,11 @@ export class CandidateRepo implements ICandidateRepo {
         const raw = CandidateMap.toPersistence(candidate);
 
         const candidateCreated = await CandidateModel.create(raw, {
-          include: [this.models.Email, this.models.Phone, this.models.Link],
+          include: [
+            { model: this.models.Email, as: 'emails' },
+            { model: this.models.Phone, as: 'phones' },
+            { model: this.models.Link, as: 'links' },
+          ],
           transaction,
         });
 

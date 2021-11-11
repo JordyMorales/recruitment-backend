@@ -61,7 +61,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING(150),
         allowNull: true,
       },
-      referral: {
+      referral_by: {
         type: DataTypes.UUID,
         allowNull: true,
         references: {
@@ -108,13 +108,17 @@ module.exports = (sequelize, DataTypes) => {
     },
   );
 
-  Candidate.associate = ({ User, Email, Phone, Link, Tag, Technology }) => {
-    Candidate.belongsTo(User, { foreignKey: 'candidate_id' });
-    Candidate.hasMany(Email, { foreignKey: 'candidate_id' });
-    Candidate.hasMany(Phone, { foreignKey: 'candidate_id' });
-    Candidate.hasMany(Link, { foreignKey: 'candidate_id' });
+  Candidate.associate = ({ User, Email, Phone, Link, Tag, Technology, Comment }) => {
+    Candidate.belongsTo(User, { foreignKey: 'candidate_id', as: 'user' });
+    Candidate.belongsTo(User, { foreignKey: 'referral_by', as: 'referralBy' });
+    Candidate.belongsTo(User, { foreignKey: 'created_by', as: 'createdBy' });
+    Candidate.belongsTo(User, { foreignKey: 'updated_by', as: 'updatedBy' });
+    Candidate.hasMany(Email, { foreignKey: 'candidate_id', as: 'emails' });
+    Candidate.hasMany(Phone, { foreignKey: 'candidate_id', as: 'phones' });
+    Candidate.hasMany(Link, { foreignKey: 'candidate_id', as: 'links' });
     Candidate.belongsToMany(Tag, { through: 'candidate_tag', foreignKey: 'candidate_id' });
     Candidate.belongsToMany(Technology, { through: 'candidate_technology', foreignKey: 'candidate_id' });
+    Candidate.hasMany(Comment, { foreignKey: 'candidate_id' });
   };
 
   return Candidate;

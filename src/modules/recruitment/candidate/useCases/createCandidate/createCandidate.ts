@@ -12,6 +12,7 @@ import { ICandidateRepo } from '../../domain/ports/ICandidateRepo';
 import { IUserRepo } from '../../../../users/domain/ports/IUserRepo';
 import { IEmailRepo } from '../../domain/ports/IEmailRepo';
 import { IPhoneRepo } from '../../domain/ports/IPhoneRepo';
+import { UserMap } from '../../../../users/infra/mappers/userMap';
 import { UseCase } from '../../../../../shared/core/UseCase';
 import { AppError } from '../../../../../shared/core/AppError';
 import { UniqueEntityID } from '../../../../../shared/domain/UniqueEntityID';
@@ -93,10 +94,9 @@ export class CreateCandidate implements UseCase<CreateCandidateRequestDTO, Promi
         links: request.links ? this.linksToDomain(request.links) : [],
         tags: request.tags ? this.tagsToDomain(request.tags) : [],
         technologies: request.technologies ? this.technologiesToDomain(request.technologies) : [],
-
-        referral: request.referral ? UserId.create(new UniqueEntityID(request.referral)).getValue() : null,
+        referralBy: request.referralBy ? UserMap.toDomain(request.referralBy) : null,
+        createdBy: UserMap.dtoToDomain(request.createdBy),
         createdAt: request.createdAt ? request.createdAt : new Date(),
-        createdBy: request.createdBy ? UserId.create(new UniqueEntityID(request.createdBy)).getValue() : null,
         emails,
         phones,
       };

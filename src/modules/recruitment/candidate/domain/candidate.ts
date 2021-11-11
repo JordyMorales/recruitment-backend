@@ -6,14 +6,13 @@ import { Technology } from './technology';
 import { EnglishLevel } from './englishLevel';
 import { CandidateId } from './candidateId';
 import { User } from '../../../users/domain/user';
-import { UserId } from '../../../users/domain/userId';
 import { AggregateRoot } from '../../../../shared/domain/AggregateRoot';
 import { UniqueEntityID } from '../../../../shared/domain/UniqueEntityID';
 import { Result } from '../../../../shared/core/Result';
 import { Guard } from '../../../../shared/core/Guard';
 
 export interface CandidateProps {
-  personalData?: any;
+  personalData?: User;
   address?: string;
   city?: string;
   country?: string;
@@ -31,9 +30,9 @@ export interface CandidateProps {
   phones?: Phone[];
   emails?: Email[];
   technologies?: Technology[];
-  referral?: UserId;
-  createdBy: UserId;
-  updatedBy?: UserId;
+  referralBy?: User;
+  createdBy: User;
+  updatedBy?: User;
   createdAt?: Date;
   updatedAt?: Date;
 }
@@ -114,15 +113,15 @@ export class Candidate extends AggregateRoot<CandidateProps> {
     return this.props.technologies;
   }
 
-  get referral(): UserId {
-    return this.props.referral;
+  get referralBy(): User {
+    return this.props.referralBy;
   }
 
-  get createdBy(): UserId {
+  get createdBy(): User {
     return this.props.createdBy;
   }
 
-  get updatedBy(): UserId {
+  get updatedBy(): User {
     return this.props.updatedBy;
   }
 
@@ -222,7 +221,7 @@ export class Candidate extends AggregateRoot<CandidateProps> {
       phones: props.phones ? props.phones : [],
       emails: props.emails ? props.emails : [],
       technologies: props.technologies ? props.technologies : [],
-      referral: props.referral ? props.referral : null,
+      referralBy: props.referralBy ? props.referralBy : null,
       updatedBy: props.updatedBy ? props.updatedBy : null,
       createdAt: props.createdAt ? props.createdAt : new Date(),
       updatedAt: props.updatedAt ? props.updatedAt : null,

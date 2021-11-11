@@ -30,21 +30,20 @@ export class CreateUser implements UseCase<CreateUserRequestDTO, Promise<Respons
     let passwordOrError: Result<UserPassword>;
     let email: UserEmail;
     let emailOrError = UserEmail.create(request.email);
-
-    has(request, 'password')
-      ? (passwordOrError = UserPassword.create(request.password))
-      : (passwordOrError = UserPassword.create(TextUtils.generatePassword()));
-
-    const dtoResult = Result.combine([emailOrError, passwordOrError]);
-
-    if (dtoResult.isFailure) {
-      return left(Result.fail<void>(dtoResult.error)) as Response;
-    }
-
-    password = passwordOrError.getValue();
-    email = emailOrError.getValue();
-
     try {
+      has(request, 'password')
+        ? (passwordOrError = UserPassword.create(request.password))
+        : (passwordOrError = UserPassword.create(TextUtils.generatePassword()));
+
+      const dtoResult = Result.combine([emailOrError, passwordOrError]);
+
+      if (dtoResult.isFailure) {
+        return left(Result.fail<void>(dtoResult.error)) as Response;
+      }
+
+      password = passwordOrError.getValue();
+      email = emailOrError.getValue();
+
       const UserAlreadyExists = await this.userRepo.exists(email);
 
       if (UserAlreadyExists) {
@@ -65,10 +64,13 @@ export class CreateUser implements UseCase<CreateUserRequestDTO, Promise<Respons
 
       const user: User = userOrError.getValue();
 
-      await this.userRepo.save(user);
-      
-      if (user.state === 'ACTIVE') {
-        await this.authService.createUser(user);
+      let userCreated = false;
+
+      try {
+        userCreated = await this.authService.createUser(user);
+        await this.userRepo.save(user);
+      } catch (error) {
+        if (userCreated) await this.authService.deleteUser(user);
       }
 
       return right(Result.ok<void>());

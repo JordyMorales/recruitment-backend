@@ -5,8 +5,9 @@ import admin from '../../../../shared/infra/firebase';
 
 export interface IFirebaseProvider extends IAuthService {
   decodeAuthToken(idToken: string): Promise<IContext>;
-  createUser(user: User): Promise<void>;
+  createUser(user: User): Promise<boolean>;
   updateUser(user: User): Promise<void>;
+  deleteUser(user: User): Promise<boolean>;
 }
 
 @injectable()
@@ -31,17 +32,19 @@ export class FirebaseAuthService implements IFirebaseProvider {
     }
   }
 
-  public async createUser(user: User): Promise<void> {
+  public async createUser(user: User): Promise<boolean> {
     try {
-      const { id, firstName, lastName, password, email, role } = user;
+      const { id, firstName, lastName, password, email, role, state } = user;
 
       const userRecord = await admin.auth().createUser({
         uid: id.toString(),
         displayName: `${firstName} ${lastName}`,
         password: password.props.value,
         email: email.props.value,
+        disabled: state !== 'ACTIVE',
       });
       await admin.auth().setCustomUserClaims(userRecord.uid, { role });
+      return true;
     } catch (error) {
       throw new Error(error.message);
     }
@@ -49,15 +52,25 @@ export class FirebaseAuthService implements IFirebaseProvider {
 
   public async updateUser(user: User): Promise<void> {
     try {
-      const { id, firstName, lastName, email, role } = user;
+      const { id, firstName, lastName, email, role, state } = user;
 
       await admin.auth().updateUser(id.toString(), {
         displayName: `${firstName} ${lastName}`,
         email: email.props.value,
+        disabled: state !== 'ACTIVE',
       });
       await admin.auth().setCustomUserClaims(id.toString(), { role });
     } catch (error) {
       throw new Error(error.message);
+    }
+  }
+
+  public async deleteUser(user: User): Promise<boolean> {
+    try {
+      await admin.auth().deleteUser(user.id.toString());
+      return true;
+    } catch (error) {
+      return false;
     }
   }
 }

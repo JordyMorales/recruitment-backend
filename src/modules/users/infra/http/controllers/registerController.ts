@@ -5,7 +5,7 @@ import { CreateUser } from '../../../useCases/createUser/createUser';
 import { CreateUserErrors } from '../../../useCases/createUser/createUserErrors';
 import { CreateUserRequestDTO } from '../../../useCases/createUser/createUserRequestDTO';
 import { BaseController } from '../../../../../shared/infra/http/models/BaseController';
-
+import { UserMap } from '../../mappers/userMap';
 import TYPES from '../../../../../shared/infra/constants/types';
 
 @controller('/api/v1/register')
@@ -28,10 +28,13 @@ export class RegisterController extends BaseController {
           case CreateUserErrors.EmailAlreadyExistsError:
             return this.conflict(res, error.errorValue().message);
           default:
-            return this.clientError(res, error.errorValue()?.message ?? error.errorValue());
+            return this.fail(res, error.errorValue()?.message ?? error.errorValue());
         }
       } else {
-        return this.ok(res);
+        const userCreated = result.value.getValue();
+        return this.created(res, {
+          user: UserMap.toDTO(userCreated),
+        });
       }
     } catch (err) {
       return this.fail(res, err);

@@ -6,6 +6,7 @@ import { BaseController } from '../../../../../../shared/infra/http/models/BaseC
 import { isAuthenticated, isAuthorized } from '../../../../../../shared/infra/http/middlewares';
 import { CreateTagRequestDTO } from '../../../useCases/createTag/createTagRequestDTO';
 import { CreateTagErrors } from '../../../useCases/createTag/createTagErrors';
+import { TagMap } from '../../mappers/tagMap';
 import TYPES from '../../../../../../shared/infra/constants/types';
 
 @controller('/api/v1/tags')
@@ -29,7 +30,10 @@ export class CreateTagController extends BaseController {
             return this.fail(res, error.errorValue()?.message ?? error.errorValue());
         }
       } else {
-        return this.ok(res);
+        const tagCreated = result.value.getValue();
+        return this.created(res, {
+          tag: TagMap.toDTO(tagCreated),
+        });
       }
     } catch (err) {
       return this.fail(res, err);

@@ -51,7 +51,7 @@ export class CandidateMap implements Mapper<Candidate> {
   public static toDTO(candidate: Candidate): CandidateDTO {
     return {
       candidateId: candidate.id.toString(),
-      personalData: UserMap.toDTO(candidate.personalData),
+      personalData: candidate.personalData ? UserMap.toDTO(candidate.personalData) : null,
       address: candidate.address ? candidate.address : null,
       city: candidate.city ? candidate.city : null,
       country: candidate.country ? candidate.country : null,
@@ -80,7 +80,7 @@ export class CandidateMap implements Mapper<Candidate> {
   public static toDomain(raw: any): Candidate {
     const candidateOrError = Candidate.create(
       {
-        personalData: UserMap.toDomain(raw.user),
+        personalData:raw.user ? UserMap.toDomain(raw.user) : null,
         address: raw.address ? raw.address : null,
         city: raw.city ? raw.city : null,
         country: raw.country ? raw.country : null,

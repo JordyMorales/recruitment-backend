@@ -18,7 +18,7 @@ import { UniqueEntityID } from '../../../../../shared/domain/UniqueEntityID';
 import { Either, left, Result, right } from '../../../../../shared/core/Result';
 import TYPES from '../../../../../shared/infra/constants/types';
 
-export type Response = Either<AppError.UnexpectedError | Result<any>, Result<void>>;
+export type Response = Either<AppError.UnexpectedError, Result<Candidate>>;
 
 @injectable()
 export class CreateCandidate implements UseCase<CreateCandidateRequestDTO, Promise<Response>> {
@@ -104,13 +104,13 @@ export class CreateCandidate implements UseCase<CreateCandidateRequestDTO, Promi
       const candidateOrError = Candidate.create(candidateProps, new UniqueEntityID(request.userId));
 
       if (candidateOrError.isFailure) {
-        return left(candidateOrError);
+        return left(Result.fail(candidateOrError.error.toString()));
       }
       const candidate: Candidate = candidateOrError.getValue();
 
       await this.candidateRepo.save(candidate);
 
-      return right(Result.ok<void>());
+      return right(Result.ok<Candidate>(candidate));
     } catch (error: any) {
       return left(new AppError.UnexpectedError(error));
     }

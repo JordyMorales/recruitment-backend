@@ -6,6 +6,7 @@ import { BaseController } from '../../../../../../shared/infra/http/models/BaseC
 import { isAuthenticated, isAuthorized } from '../../../../../../shared/infra/http/middlewares';
 import { CreateTechnologyRequestDTO } from '../../../useCases/createTechnology/createTechnologyRequestDTO';
 import { CreateTechnologyErrors } from '../../../useCases/createTechnology/createTechnologyErrors';
+import { TechnologyMap } from '../../mappers/technologyMap';
 import TYPES from '../../../../../../shared/infra/constants/types';
 
 @controller('/api/v1/technologies')
@@ -29,7 +30,10 @@ export class CreateTechnologyController extends BaseController {
             return this.fail(res, error.errorValue()?.message ?? error.errorValue());
         }
       } else {
-        return this.ok(res);
+        const technologyCreated = result.value.getValue();
+        return this.created(res, {
+          technology: TechnologyMap.toDTO(technologyCreated),
+        });
       }
     } catch (err) {
       return this.fail(res, err);

@@ -6,6 +6,7 @@ import { BaseController } from '../../../../../../shared/infra/http/models/BaseC
 import { CreateCandidateErrors } from '../../../useCases/createCandidate/createCandidateErrors';
 import { CreateCandidateRequestDTO } from '../../../useCases/createCandidate/createCandidateRequestDTO';
 import { isAuthenticated, isAuthorized } from '../../../../../../shared/infra/http/middlewares';
+import { CandidateMap } from '../../mappers/candidateMap';
 import TYPES from '../../../../../../shared/infra/constants/types';
 
 @controller('/api/v1/candidates')
@@ -33,7 +34,10 @@ export class CreateCandidateController extends BaseController {
             return this.fail(res, error.errorValue()?.message ?? error.errorValue());
         }
       } else {
-        return this.ok(res);
+        const candidateCreated = result.value.getValue();
+        return this.created(res, {
+          candidate: CandidateMap.toDTO(candidateCreated),
+        });
       }
     } catch (err) {
       return this.fail(res, err);

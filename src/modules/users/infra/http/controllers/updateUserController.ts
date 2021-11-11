@@ -32,7 +32,7 @@ export class UpdateUserController extends BaseController {
             return this.clientError(res, error.errorValue()?.message ?? error.errorValue());
         }
       } else {
-        return this.ok(res);
+        return this.noContent(res);
       }
     } catch (err) {
       return this.fail(res, err);

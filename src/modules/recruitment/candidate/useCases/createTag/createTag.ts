@@ -8,10 +8,7 @@ import { AppError } from '../../../../../shared/core/AppError';
 import { Either, Result, left, right } from '../../../../../shared/core/Result';
 import TYPES from '../../../../../shared/infra/constants/types';
 
-type Response = Either<
-  CreateTagErrors.TagAlreadyExistsError | AppError.UnexpectedError | Result<any>,
-  Result<void>
->;
+type Response = Either<CreateTagErrors.TagAlreadyExistsError | AppError.UnexpectedError, Result<Tag>>;
 
 @injectable()
 export class CreateTag implements UseCase<CreateTagRequestDTO, Promise<Response>> {
@@ -27,14 +24,14 @@ export class CreateTag implements UseCase<CreateTagRequestDTO, Promise<Response>
       const tagOrError = Tag.create(request);
 
       if (tagOrError.isFailure) {
-        return left(tagOrError);
+        return left(Result.fail(tagOrError.error.toString()));
       }
 
       const tag = tagOrError.getValue();
 
       await this.tagRepo.save(tag);
 
-      return right(Result.ok<void>());
+      return right(Result.ok<Tag>(tag));
     } catch (error: any) {
       return left(new AppError.UnexpectedError(error));
     }

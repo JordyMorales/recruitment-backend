@@ -29,8 +29,17 @@ export abstract class BaseController {
     }
   }
 
-  public created(res: express.Response) {
-    return res.sendStatus(201);
+  public created<T>(res: express.Response, dto?: T) {
+    if (!!dto) {
+      res.type('application/json');
+      return res.status(201).json(dto);
+    } else {
+      return res.sendStatus(201);
+    }
+  }
+
+  public noContent(res: express.Response) {
+    return res.sendStatus(204);
   }
 
   public clientError(res: express.Response, message?: string) {

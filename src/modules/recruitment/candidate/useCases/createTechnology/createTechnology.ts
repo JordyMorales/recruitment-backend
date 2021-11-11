@@ -8,9 +8,9 @@ import { AppError } from '../../../../../shared/core/AppError';
 import { Either, Result, left, right } from '../../../../../shared/core/Result';
 import TYPES from '../../../../../shared/infra/constants/types';
 
-type Response = Either<
-  CreateTechnologyErrors.TechnologyAlreadyExistsError | AppError.UnexpectedError | Result<any>,
-  Result<void>
+export type Response = Either<
+  CreateTechnologyErrors.TechnologyAlreadyExistsError | AppError.UnexpectedError,
+  Result<Technology>
 >;
 
 @injectable()
@@ -27,14 +27,14 @@ export class CreateTechnology implements UseCase<CreateTechnologyRequestDTO, Pro
       const technologyOrError = Technology.create(request);
 
       if (technologyOrError.isFailure) {
-        return left(technologyOrError);
+        return left(Result.fail(technologyOrError.error.toString()));
       }
 
       const technology = technologyOrError.getValue();
 
       await this.technologyRepo.save(technology);
 
-      return right(Result.ok<void>());
+      return right(Result.ok<Technology>(technology));
     } catch (error: any) {
       return left(new AppError.UnexpectedError(error));
     }

@@ -12,10 +12,7 @@ import { TextUtils } from './../../../../shared/utils/TextUtils';
 import { Either, Result, left, right } from '../../../../shared/core/Result';
 import TYPES from '../../../../shared/infra/constants/types';
 
-type Response = Either<
-  CreateUserErrors.EmailAlreadyExistsError | AppError.UnexpectedError | Result<any>,
-  Result<void>
->;
+type Response = Either<CreateUserErrors.EmailAlreadyExistsError | AppError.UnexpectedError, Result<User>>;
 
 @injectable()
 export class CreateUser implements UseCase<CreateUserRequestDTO, Promise<Response>> {
@@ -72,7 +69,7 @@ export class CreateUser implements UseCase<CreateUserRequestDTO, Promise<Respons
         if (userCreated) await this.authService.deleteUser(user);
       }
 
-      return right(Result.ok<void>());
+      return right(Result.ok<User>(user));
     } catch (error) {
       return left(new AppError.UnexpectedError(error)) as Response;
     }

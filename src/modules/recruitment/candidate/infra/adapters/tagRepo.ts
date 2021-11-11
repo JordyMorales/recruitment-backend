@@ -26,6 +26,13 @@ export class TagRepo implements ITagRepo {
 
     return TagMap.toDomain(tagFound);
   }
+  async searchTags(isActive: boolean): Promise<Tag[]> {
+    const TagModel = this.models.Tag;
+    const tags = await TagModel.findAll({
+      where: { is_active: isActive },
+    });
+    return tags.map((tag) => TagMap.toDomain(tag));
+  }
   async getAllTags(): Promise<Tag[]> {
     const TagModel = this.models.Tag;
     const tags = await TagModel.findAll();

@@ -17,6 +17,7 @@ const TYPES = {
   GetAllCandidates: 'GetAllCandidates',
   GetCandidateById: 'GetCandidateById',
   CreateTag: 'CreateTag',
+  SearchTags: 'SearchTags',
 };
 
 export default TYPES;

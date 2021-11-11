@@ -6,9 +6,10 @@ import { UniqueEntityID } from '../../../../../shared/domain/UniqueEntityID';
 export class TagMap implements Mapper<Tag> {
   public static toDTO(tag: Tag): TagDTO {
     return {
-      tagId: tag.tagId.id.toString(),
-      name: tag.name.toString(),
-      color: tag.color.toString(),
+      tagId: tag.id.toString(),
+      name: tag.name,
+      color: tag.color,
+      isActive: tag.isActive,
     };
   }
 
@@ -17,6 +18,7 @@ export class TagMap implements Mapper<Tag> {
       {
         name: raw.name,
         color: raw.color,
+        isActive: raw.is_active,
       },
       new UniqueEntityID(raw.tag_id),
     );
@@ -28,9 +30,10 @@ export class TagMap implements Mapper<Tag> {
 
   public static toPersistence(tag: Tag): any {
     return {
-      tag_id: tag.tagId.id.toString(),
-      name: tag.name.toString(),
-      color: tag.color.toString(),
+      tag_id: tag.id.toString(),
+      name: tag.name,
+      color: tag.color,
+      is_active: tag.isActive,
     };
   }
 }

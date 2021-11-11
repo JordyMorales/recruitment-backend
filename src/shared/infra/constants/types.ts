@@ -23,6 +23,7 @@ const TYPES = {
   UpdateTag: 'UpdateTag',
   CreateTechnology: 'CreateTechnology',
   GetAllTechnologies: 'GetAllTechnologies',
+  SearchTechnologies: 'SearchTechnologies',
 };
 
 export default TYPES;

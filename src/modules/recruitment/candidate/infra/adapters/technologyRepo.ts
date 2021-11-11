@@ -26,6 +26,13 @@ export class TechnologyRepo implements ITechnologyRepo {
 
     return TechnologyMap.toDomain(technologyFound);
   }
+  async searchTechnologies(isActive: boolean): Promise<Technology[]> {
+    const TechnologyModel = this.models.Technology;
+    const technologies = await TechnologyModel.findAll({
+      where: { is_active: isActive },
+    });
+    return technologies.map((technology) => TechnologyMap.toDomain(technology));
+  }
   async getAllTechnologies(): Promise<Technology[]> {
     const TechnologyModel = this.models.Technology;
     const technologies = await TechnologyModel.findAll();

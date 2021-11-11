@@ -110,9 +110,6 @@ module.exports = (sequelize, DataTypes) => {
 
   Candidate.associate = ({ User, Email, Phone, Link, Tag, Technology }) => {
     Candidate.belongsTo(User, { foreignKey: 'candidate_id' });
-    Candidate.belongsTo(User, { foreignKey: 'referral' });
-    Candidate.belongsTo(User, { foreignKey: 'created_by' });
-    Candidate.belongsTo(User, { foreignKey: 'updated_by' });
     Candidate.hasMany(Email, { foreignKey: 'candidate_id' });
     Candidate.hasMany(Phone, { foreignKey: 'candidate_id' });
     Candidate.hasMany(Link, { foreignKey: 'candidate_id' });

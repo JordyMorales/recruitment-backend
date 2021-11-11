@@ -13,6 +13,7 @@ const TYPES = {
   GetUserById: 'GetUserById',
   UpdateUser: 'UpdateUser',
   CreateCandidate: 'CreateCandidate',
+  GetAllCandidates: 'GetAllCandidates',
 };
 
 export default TYPES;

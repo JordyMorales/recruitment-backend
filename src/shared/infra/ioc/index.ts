@@ -15,6 +15,7 @@ import { GetAllUsers } from '../../../modules/users/useCases/getAllUsers/getAllU
 import { GetUserById } from '../../../modules/users/useCases/getUserById/getUserById';
 import { UpdateUser } from '../../../modules/users/useCases/updateUser/updateUser';
 import { CreateCandidate } from '../../../modules/recruitment/candidate/useCases/createCandidate/createCandidate';
+import { GetAllCandidates } from '../../../modules/recruitment/candidate/useCases/getAllCandidates/getAllCandidates';
 
 import TYPES from '../constants/types';
 
@@ -29,12 +30,12 @@ container.bind(TYPES.ICandidateRepo).to(CandidateRepo).inSingletonScope();
 container.bind(TYPES.IEmailRepo).to(EmailRepo).inSingletonScope();
 container.bind(TYPES.IPhoneRepo).to(PhoneRepo).inSingletonScope();
 
-
 // Use cases
 container.bind<CreateUser>(TYPES.CreateUser).to(CreateUser);
 container.bind<GetAllUsers>(TYPES.GetAllUsers).to(GetAllUsers);
 container.bind<GetUserById>(TYPES.GetUserById).to(GetUserById);
 container.bind<UpdateUser>(TYPES.UpdateUser).to(UpdateUser);
 container.bind<CreateCandidate>(TYPES.CreateCandidate).to(CreateCandidate);
+container.bind<GetAllCandidates>(TYPES.GetAllCandidates).to(GetAllCandidates);
 
 export { container };

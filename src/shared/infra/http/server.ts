@@ -6,6 +6,7 @@ import { InversifyExpressServer } from 'inversify-express-utils';
 import { container } from '../ioc';
 
 import '../../../modules/users/infra/http/controllers';
+import '../../../modules/recruitment/candidate/infra/http/controllers';
 
 import '../database/sequelize/hooks';
 

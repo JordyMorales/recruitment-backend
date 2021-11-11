@@ -1,4 +1,3 @@
-import { has } from 'lodash';
 import { injectable, inject } from 'inversify';
 import { Tag } from './../../domain/tag';
 import { Link } from '../../domain/link';
@@ -50,7 +49,6 @@ export class CreateCandidate implements UseCase<CreateCandidateRequestDTO, Promi
 
   public async execute(request?: CreateCandidateRequestDTO): Promise<Response> {
     try {
-
       const userId = UserId.create(new UniqueEntityID(request.userId)).getValue();
       const userFound = await this.userRepo.getUserById(userId);
       const userExists = !!userFound === true;
@@ -66,7 +64,7 @@ export class CreateCandidate implements UseCase<CreateCandidateRequestDTO, Promi
 
       let emails: Email[] = [];
       let phones: Phone[] = [];
-      if (has(request, 'emails')) {
+      if (request.hasOwnProperty('emails')) {
         for (let index = 0; index < request.emails.length; index++) {
           const email = request.emails[index];
           const emailAlreadyExists = await this.emailRepo.exists(email);
@@ -78,7 +76,7 @@ export class CreateCandidate implements UseCase<CreateCandidateRequestDTO, Promi
         }
       }
 
-      if (has(request, 'phones')) {
+      if (request.hasOwnProperty('phones')) {
         for (let index = 0; index < request.phones.length; index++) {
           const phone = request.phones[index];
           const phoneAlreadyExists = await this.phoneRepo.exists(phone);

@@ -34,7 +34,7 @@ export class Technology extends AggregateRoot<TechnologyProps> {
     } else {
       const values = {
         ...props,
-        isActive: props.isActive ? props.isActive : true,
+        isActive: props.hasOwnProperty('isActive') ? props.isActive : true,
       };
 
       const technology = new Technology(values, id);

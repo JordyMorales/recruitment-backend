@@ -1,4 +1,3 @@
-import { has } from 'lodash';
 import { injectable, inject } from 'inversify';
 import { User, UserProps } from '../../domain/user';
 import { UserEmail } from '../../domain/userEmail';
@@ -40,7 +39,7 @@ export class UpdateUser implements UseCase<UpdateUserRequestDTO, Promise<Respons
         return left(new UpdateUserErrors.UserNotFoundError(request.userId));
       }
 
-      if (has(request, 'email')) {
+      if (request.hasOwnProperty('email')) {
         const emailOrError = UserEmail.create(request.email);
         if (emailOrError.isFailure) {
           return left(Result.fail<any>(emailOrError.error.toString())) as Response;

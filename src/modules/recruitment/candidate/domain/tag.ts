@@ -42,7 +42,7 @@ export class Tag extends AggregateRoot<TagProps> {
     } else {
       const values = {
         ...props,
-        isActive: props.isActive ? props.isActive : true,
+        isActive: props.hasOwnProperty('isActive') ? props.isActive : true,
       };
 
       const tag = new Tag(values, id);

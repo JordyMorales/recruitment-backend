@@ -1,4 +1,3 @@
-import { has } from 'lodash';
 import { injectable, inject } from 'inversify';
 import { User, UserProps } from '../../domain/user';
 import { UserEmail } from '../../domain/userEmail';
@@ -31,7 +30,7 @@ export class CreateUser implements UseCase<CreateUserRequestDTO, Promise<Respons
     let email: UserEmail;
     let emailOrError = UserEmail.create(request.email);
     try {
-      has(request, 'password')
+      request.hasOwnProperty('password')
         ? (passwordOrError = UserPassword.create(request.password))
         : (passwordOrError = UserPassword.create(TextUtils.generatePassword()));
 

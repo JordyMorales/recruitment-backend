@@ -5,3 +5,4 @@ import './createTagController';
 import './getAllTagsController';
 import './searchTagsController';
 import './updateTagController';
+import './createTechnologyController';

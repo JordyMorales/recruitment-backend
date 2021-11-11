@@ -7,7 +7,8 @@ export class TechnologyMap implements Mapper<Technology> {
   public static toDTO(technology: Technology): TechnologyDTO {
     return {
       technologyId: technology.technologyId.id.toString(),
-      name: technology.name.toString(),
+      name: technology.name,
+      isActive: technology.isActive,
     };
   }
 
@@ -15,6 +16,7 @@ export class TechnologyMap implements Mapper<Technology> {
     const technologyOrError = Technology.create(
       {
         name: raw.name,
+        isActive: raw.is_active,
       },
       new UniqueEntityID(raw.technology_id),
     );
@@ -27,7 +29,8 @@ export class TechnologyMap implements Mapper<Technology> {
   public static toPersistence(technology: Technology): any {
     return {
       technology_id: technology.technologyId.id.toString(),
-      name: technology.name.toString(),
+      name: technology.name,
+      is_active: technology.isActive,
     };
   }
 }

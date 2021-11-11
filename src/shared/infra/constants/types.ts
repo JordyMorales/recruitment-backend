@@ -8,6 +8,7 @@ const TYPES = {
   IEmailRepo: 'IEmailRepo',
   IPhoneRepo: 'IPhoneRepo',
   ITagRepo: 'ITagRepo',
+  ITechnologyRepo: 'ITechnologyRepo',
   // Use cases
   CreateUser: 'CreateUser',
   GetAllUsers: 'GetAllUsers',
@@ -19,7 +20,8 @@ const TYPES = {
   CreateTag: 'CreateTag',
   GetAllTags: 'GetAllTags',
   SearchTags: 'SearchTags',
-  UpdateTag: 'UpdateTag'
+  UpdateTag: 'UpdateTag',
+  CreateTechnology: 'CreateTechnology',
 };
 
 export default TYPES;

@@ -14,7 +14,7 @@ export class TechnologyRepo implements ITechnologyRepo {
   async exists(technology: string): Promise<boolean> {
     const TechnologyModel = this.models.Technology;
     const technologyFound = await TechnologyModel.findOne({
-      where: { value: technology },
+      where: { name: technology },
     });
     return !!technologyFound === true;
   }

@@ -24,6 +24,7 @@ import { GetAllTags } from '../../../modules/recruitment/candidate/useCases/getA
 import { SearchTags } from '../../../modules/recruitment/candidate/useCases/searchTags/searchTags';
 import { UpdateTag } from '../../../modules/recruitment/candidate/useCases/updateTag/updateTag';
 import { CreateTechnology } from '../../../modules/recruitment/candidate/useCases/createTechnology/createTechnology';
+import { GetAllTechnologies } from '../../../modules/recruitment/candidate/useCases/getAllTechnologies/getAllTechnologies';
 
 import TYPES from '../constants/types';
 
@@ -53,5 +54,6 @@ container.bind<GetAllTags>(TYPES.GetAllTags).to(GetAllTags);
 container.bind<SearchTags>(TYPES.SearchTags).to(SearchTags);
 container.bind<UpdateTag>(TYPES.UpdateTag).to(UpdateTag);
 container.bind<CreateTechnology>(TYPES.CreateTechnology).to(CreateTechnology);
+container.bind<GetAllTechnologies>(TYPES.GetAllTechnologies).to(GetAllTechnologies);
 
 export { container };

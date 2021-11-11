@@ -19,6 +19,7 @@ const TYPES = {
   CreateTag: 'CreateTag',
   GetAllTags: 'GetAllTags',
   SearchTags: 'SearchTags',
+  UpdateTag: 'UpdateTag'
 };
 
 export default TYPES;

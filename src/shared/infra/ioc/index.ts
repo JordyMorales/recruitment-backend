@@ -21,6 +21,7 @@ import { GetCandidateById } from '../../../modules/recruitment/candidate/useCase
 import { CreateTag } from '../../../modules/recruitment/candidate/useCases/createTag/createTag';
 import { GetAllTags } from '../../../modules/recruitment/candidate/useCases/getAllTags/getAllTags';
 import { SearchTags } from '../../../modules/recruitment/candidate/useCases/searchTags/searchTags';
+import { UpdateTag } from '../../../modules/recruitment/candidate/useCases/updateTag/updateTag';
 
 import TYPES from '../constants/types';
 
@@ -47,5 +48,6 @@ container.bind<GetCandidateById>(TYPES.GetCandidateById).to(GetCandidateById);
 container.bind<CreateTag>(TYPES.CreateTag).to(CreateTag);
 container.bind<GetAllTags>(TYPES.GetAllTags).to(GetAllTags);
 container.bind<SearchTags>(TYPES.SearchTags).to(SearchTags);
+container.bind<UpdateTag>(TYPES.UpdateTag).to(UpdateTag);
 
 export { container };

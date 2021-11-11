@@ -53,7 +53,7 @@ export class TagRepo implements ITagRepo {
   async update(tag: Tag): Promise<void> {
     const TagModel = this.models.Tag;
     try {
-      const exists = await this.exists(tag.name);
+      const exists = await this.getTagById(tag.tagId);
       if (exists) {
         const raw = TagMap.toPersistence(tag);
         await TagModel.update(raw, { where: { tag_id: tag.tagId.id.toString() } });

@@ -4,3 +4,4 @@ import './getCandidateByIdController';
 import './createTagController';
 import './getAllTagsController';
 import './searchTagsController';
+import './updateTagController';

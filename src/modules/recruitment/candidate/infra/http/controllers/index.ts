@@ -10,3 +10,4 @@ import './getAllTechnologiesController';
 import './searchTechnologiesController';
 import './updateTechnologyController';
 import './createCommentController';
+import './getCandidateCommentsController';

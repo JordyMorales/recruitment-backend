@@ -27,6 +27,7 @@ const TYPES = {
   SearchTechnologies: 'SearchTechnologies',
   UpdateTechnology: 'UpdateTechnology',
   CreateComment: 'CreateComment',
+  GetCandidateComments: 'GetCandidateComments',
 };
 
 export default TYPES;

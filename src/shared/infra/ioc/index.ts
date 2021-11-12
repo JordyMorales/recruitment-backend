@@ -29,6 +29,7 @@ import { GetAllTechnologies } from '../../../modules/recruitment/candidate/useCa
 import { SearchTechnologies } from '../../../modules/recruitment/candidate/useCases/searchTechnologies/searchTechnologies';
 import { UpdateTechnology } from '../../../modules/recruitment/candidate/useCases/updateTechnology/updateTechnology';
 import { CreateComment } from '../../../modules/recruitment/candidate/useCases/createComment/createComment';
+import { GetCandidateComments } from '../../../modules/recruitment/candidate/useCases/getCandidateComments/getCandidateComments';
 
 import TYPES from '../constants/types';
 
@@ -63,5 +64,6 @@ container.bind<GetAllTechnologies>(TYPES.GetAllTechnologies).to(GetAllTechnologi
 container.bind<SearchTechnologies>(TYPES.SearchTechnologies).to(SearchTechnologies);
 container.bind<UpdateTechnology>(TYPES.UpdateTechnology).to(UpdateTechnology);
 container.bind<CreateComment>(TYPES.CreateComment).to(CreateComment);
+container.bind<GetCandidateComments>(TYPES.GetCandidateComments).to(GetCandidateComments);
 
 export { container };

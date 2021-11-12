@@ -4,6 +4,7 @@ import { CommentDTO } from '../../domain/dtos/commentDTO';
 import { UserMap } from '../../../../users/infra/mappers/userMap';
 import { UniqueEntityID } from '../../../../../shared/domain/UniqueEntityID';
 import { Mapper } from '../../../../../shared/infra/Mapper';
+import { CandidateId } from '../../domain/candidateId';
 
 export class CommentMap implements Mapper<Comment> {
   public static toDTO(comment: Comment): CommentDTO {
@@ -21,9 +22,11 @@ export class CommentMap implements Mapper<Comment> {
     const commentOrError = Comment.create(
       {
         comment: raw.comment,
-        candidateId: raw.candidate_id,
-        parentCommentId: raw.parent_comment_id ? CommentId.create(raw.parent_comment_id).getValue() : null,
-        commentedBy: UserMap.toDomain(raw.commented_by),
+        candidateId: CandidateId.create(new UniqueEntityID(raw.candidate_id)).getValue(),
+        parentCommentId: raw.parent_comment_id
+          ? CommentId.create(new UniqueEntityID(raw.parent_comment_id)).getValue()
+          : null,
+        commentedBy: UserMap.toDomain(raw.user),
         commentedAt: raw.commented_at,
       },
       new UniqueEntityID(raw.comment_id),

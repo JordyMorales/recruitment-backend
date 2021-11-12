@@ -15,12 +15,7 @@ export class commentRepo implements ICommentRepo {
     const CommentModel = this.models.Comment;
     const comments = await CommentModel.findAll({
       where: { candidate_id: candidateId.id.toString() },
-      include: [
-        {
-          model: this.models.User,
-          attributes: ['user_id', 'first_name', 'last_name', 'email', 'photo_url', 'state', 'role'],
-        },
-      ],
+      include: [this.models.User],
     });
     return comments.map((comment) => CommentMap.toDomain(comment));
   }

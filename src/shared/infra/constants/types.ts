@@ -10,6 +10,7 @@ const TYPES = {
   ITagRepo: 'ITagRepo',
   ITechnologyRepo: 'ITechnologyRepo',
   ICommentRepo: 'ICommentRepo',
+  IProcessRepo: 'IProcessRepo',
   // Use cases
   CreateUser: 'CreateUser',
   GetAllUsers: 'GetAllUsers',
@@ -28,6 +29,7 @@ const TYPES = {
   UpdateTechnology: 'UpdateTechnology',
   CreateComment: 'CreateComment',
   GetCandidateComments: 'GetCandidateComments',
+  CreateProcess: 'CreateProcess',
 };
 
 export default TYPES;

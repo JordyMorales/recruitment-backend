@@ -76,12 +76,15 @@ module.exports = (sequelize, DataTypes) => {
     },
   );
 
-  User.associate = ({ Candidate, Comment }) => {
+  User.associate = ({ Candidate, Comment, Job }) => {
     User.hasOne(Candidate, { foreignKey: 'candidate_id', as: 'user' });
     User.hasMany(Candidate, { foreignKey: 'referral_by', as: 'referralBy' });
     User.hasMany(Candidate, { foreignKey: 'created_by', as: 'createdBy' });
     User.hasMany(Candidate, { foreignKey: 'updated_by', as: 'updatedBy' });
     User.hasMany(Comment, { foreignKey: 'commented_by' });
+
+    User.hasMany(Job, { foreignKey: 'created_by', as: 'jobCreatedBy' });
+    User.hasMany(Job, { foreignKey: 'updated_by', as: 'jobUpdatedBy' });
   };
 
   return User;

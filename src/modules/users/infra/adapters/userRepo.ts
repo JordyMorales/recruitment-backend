@@ -33,23 +33,31 @@ export class UserRepo implements IUserRepo {
   }
   async save(user: User): Promise<void> {
     const UserModel = this.models.User;
-    const exists = await this.exists(user.email);
-    if (!exists) {
-      const rawSequelizeUser = await UserMap.toPersistence(user);
-      await UserModel.create(rawSequelizeUser);
+    try {
+      const exists = await this.exists(user.email);
+      if (!exists) {
+        const rawSequelizeUser = await UserMap.toPersistence(user);
+        await UserModel.create(rawSequelizeUser);
+      }
+      return;
+    } catch (error) {
+      throw new Error(error.toString());
     }
-    return;
   }
   async update(user: User): Promise<void> {
-    const UserModel = this.models.User;
-    const userFound = await this.getUserById(user.userId);
-    const exists = !!userFound === true;
-    if (exists) {
-      const rawSequelizeUser = await UserMap.toPersistence(user);
-      await UserModel.update(rawSequelizeUser, {
-        where: { user_id: user.userId.id.toString() },
-      });
+    try {
+      const UserModel = this.models.User;
+      const userFound = await this.getUserById(user.userId);
+      const exists = !!userFound === true;
+      if (exists) {
+        const rawSequelizeUser = await UserMap.toPersistence(user);
+        await UserModel.update(rawSequelizeUser, {
+          where: { user_id: user.userId.id.toString() },
+        });
+      }
+      return;
+    } catch (error) {
+      throw new Error(error.toString());
     }
-    return;
   }
 }

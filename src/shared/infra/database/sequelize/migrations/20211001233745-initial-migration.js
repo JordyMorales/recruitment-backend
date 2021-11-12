@@ -487,6 +487,158 @@ module.exports = {
         },
       );
 
+    const CREATE_PROCESS = () =>
+      queryInterface.createTable(
+        'process',
+        {
+          process_id: {
+            type: Sequelize.UUID,
+            defaultValue: Sequelize.UUIDV4,
+            allowNull: false,
+            primaryKey: true,
+          },
+          code: {
+            type: Sequelize.STRING(10),
+            allowNull: false,
+          },
+          name: {
+            type: Sequelize.STRING(100),
+            allowNull: false,
+          },
+          description: {
+            type: Sequelize.STRING(200),
+            allowNull: true,
+          },
+        },
+        {
+          timestamps: false,
+          underscored: true,
+          tableName: 'process',
+        },
+      );
+
+    const CREATE_STEP = () =>
+      queryInterface.createTable(
+        'step',
+        {
+          step_id: {
+            type: Sequelize.UUID,
+            defaultValue: Sequelize.UUIDV4,
+            allowNull: false,
+            primaryKey: true,
+          },
+          order: {
+            type: Sequelize.INTEGER,
+            allowNull: false,
+          },
+          name: {
+            type: Sequelize.STRING(100),
+            allowNull: false,
+          },
+          description: {
+            type: Sequelize.STRING(200),
+            allowNull: true,
+          },
+          process_id: {
+            type: Sequelize.UUID,
+            allowNull: false,
+            references: {
+              model: 'process',
+              key: 'process_id',
+            },
+            onDelete: 'cascade',
+            onUpdate: 'cascade',
+          },
+        },
+        {
+          timestamps: false,
+          underscored: true,
+          tableName: 'step',
+        },
+      );
+
+    const CREATE_JOB = () =>
+      queryInterface.createTable(
+        'job',
+        {
+          job_id: {
+            type: Sequelize.UUID,
+            defaultValue: Sequelize.UUIDV4,
+            allowNull: false,
+            primaryKey: true,
+          },
+          name: {
+            type: Sequelize.STRING(100),
+            allowNull: false,
+          },
+          description: {
+            type: Sequelize.STRING(200),
+            allowNull: true,
+          },
+          date_published: {
+            type: Sequelize.DATE,
+            allowNull: true,
+          },
+          start_date: {
+            type: Sequelize.DATE,
+            allowNull: true,
+          },
+          vacancies: {
+            type: Sequelize.INTEGER,
+            allowNull: true,
+          },
+          process_id: {
+            type: Sequelize.UUID,
+            allowNull: false,
+            references: {
+              model: 'process',
+              key: 'process_id',
+            },
+            onDelete: 'cascade',
+            onUpdate: 'cascade',
+          },
+          state: {
+            type: Sequelize.ENUM(['DRAFF', 'PUBLISHED', 'CANCELED', 'FINISHED']),
+            allowNull: false,
+            defaultValue: 'DRAFF',
+          },
+          created_by: {
+            type: Sequelize.UUID,
+            allowNull: false,
+            references: {
+              model: 'user',
+              key: 'user_id',
+            },
+            onDelete: 'cascade',
+            onUpdate: 'cascade',
+          },
+          updated_by: {
+            type: Sequelize.UUID,
+            allowNull: true,
+            references: {
+              model: 'user',
+              key: 'user_id',
+            },
+            onDelete: 'cascade',
+            onUpdate: 'cascade',
+          },
+          created_at: {
+            type: Sequelize.DATE,
+            allowNull: false,
+            defaultValue: Sequelize.NOW,
+          },
+          updated_at: {
+            type: Sequelize.DATE,
+            allowNull: true,
+          },
+        },
+        {
+          timestamps: false,
+          underscored: true,
+          tableName: 'job',
+        },
+      );
+
     await runner.run([
       () => CREATE_USER(),
       () => CREATE_CANDIDATE(),
@@ -498,6 +650,9 @@ module.exports = {
       () => CREATE_TECHNOLOGY(),
       () => CREATE_CANDIDATE_TECHNOLOGY(),
       () => CREATE_COMMENT(),
+      () => CREATE_PROCESS(),
+      () => CREATE_STEP(),
+      () => CREATE_JOB(),
     ]);
   },
 
@@ -513,6 +668,9 @@ module.exports = {
       () => queryInterface.dropTable('technology'),
       () => queryInterface.dropTable('candidate_technology'),
       () => queryInterface.dropTable('comment'),
+      () => queryInterface.dropTable('process'),
+      () => queryInterface.dropTable('step'),
+      () => queryInterface.dropTable('job'),
     ]);
   },
 };

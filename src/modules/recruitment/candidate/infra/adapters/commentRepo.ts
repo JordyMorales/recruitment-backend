@@ -6,7 +6,7 @@ import { CommentMap } from '../mappers/commentMap';
 import models from '../../../../../shared/infra/database/sequelize/models';
 
 @injectable()
-export class commentRepo implements ICommentRepo {
+export class CommentRepo implements ICommentRepo {
   private models: any;
   constructor() {
     this.models = models;

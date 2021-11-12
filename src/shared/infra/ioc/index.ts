@@ -10,7 +10,8 @@ import { EmailRepo } from '../../../modules/recruitment/candidate/infra/adapters
 import { PhoneRepo } from '../../../modules/recruitment/candidate/infra/adapters/phoneRepo';
 import { TagRepo } from '../../../modules/recruitment/candidate/infra/adapters/tagRepo';
 import { TechnologyRepo } from '../../../modules/recruitment/candidate/infra/adapters/technologyRepo';
-import { commentRepo } from '../../../modules/recruitment/candidate/infra/adapters/commentRepo';
+import { CommentRepo } from '../../../modules/recruitment/candidate/infra/adapters/commentRepo';
+import { ProcessRepo } from '../../../modules/recruitment/job/infra/adapters/processRepo';
 
 // Use cases
 import { CreateUser } from '../../../modules/users/useCases/createUser/createUser';
@@ -30,6 +31,7 @@ import { SearchTechnologies } from '../../../modules/recruitment/candidate/useCa
 import { UpdateTechnology } from '../../../modules/recruitment/candidate/useCases/updateTechnology/updateTechnology';
 import { CreateComment } from '../../../modules/recruitment/candidate/useCases/createComment/createComment';
 import { GetCandidateComments } from '../../../modules/recruitment/candidate/useCases/getCandidateComments/getCandidateComments';
+import { CreateProcess } from '../../../modules/recruitment/job/useCases/createProcess/createProcess';
 
 import TYPES from '../constants/types';
 
@@ -45,7 +47,8 @@ container.bind(TYPES.IEmailRepo).to(EmailRepo).inSingletonScope();
 container.bind(TYPES.IPhoneRepo).to(PhoneRepo).inSingletonScope();
 container.bind(TYPES.ITagRepo).to(TagRepo).inSingletonScope();
 container.bind(TYPES.ITechnologyRepo).to(TechnologyRepo).inSingletonScope();
-container.bind(TYPES.ICommentRepo).to(commentRepo).inSingletonScope();
+container.bind(TYPES.ICommentRepo).to(CommentRepo).inSingletonScope();
+container.bind(TYPES.IProcessRepo).to(ProcessRepo).inSingletonScope();
 
 // Use cases
 container.bind<CreateUser>(TYPES.CreateUser).to(CreateUser);
@@ -65,5 +68,6 @@ container.bind<SearchTechnologies>(TYPES.SearchTechnologies).to(SearchTechnologi
 container.bind<UpdateTechnology>(TYPES.UpdateTechnology).to(UpdateTechnology);
 container.bind<CreateComment>(TYPES.CreateComment).to(CreateComment);
 container.bind<GetCandidateComments>(TYPES.GetCandidateComments).to(GetCandidateComments);
+container.bind<CreateProcess>(TYPES.CreateProcess).to(CreateProcess);
 
 export { container };

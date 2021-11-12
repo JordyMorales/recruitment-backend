@@ -9,6 +9,7 @@ const TYPES = {
   IPhoneRepo: 'IPhoneRepo',
   ITagRepo: 'ITagRepo',
   ITechnologyRepo: 'ITechnologyRepo',
+  ICommentRepo: 'ICommentRepo',
   // Use cases
   CreateUser: 'CreateUser',
   GetAllUsers: 'GetAllUsers',
@@ -25,6 +26,7 @@ const TYPES = {
   GetAllTechnologies: 'GetAllTechnologies',
   SearchTechnologies: 'SearchTechnologies',
   UpdateTechnology: 'UpdateTechnology',
+  CreateComment: 'CreateComment',
 };
 
 export default TYPES;

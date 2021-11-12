@@ -9,3 +9,4 @@ import './createTechnologyController';
 import './getAllTechnologiesController';
 import './searchTechnologiesController';
 import './updateTechnologyController';
+import './createCommentController';

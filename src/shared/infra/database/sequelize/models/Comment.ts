@@ -8,6 +8,10 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         primaryKey: true,
       },
+      comment: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
       candidate_id: {
         type: DataTypes.UUID,
         allowNull: false,

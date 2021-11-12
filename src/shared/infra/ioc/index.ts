@@ -10,6 +10,7 @@ import { EmailRepo } from '../../../modules/recruitment/candidate/infra/adapters
 import { PhoneRepo } from '../../../modules/recruitment/candidate/infra/adapters/phoneRepo';
 import { TagRepo } from '../../../modules/recruitment/candidate/infra/adapters/tagRepo';
 import { TechnologyRepo } from '../../../modules/recruitment/candidate/infra/adapters/technologyRepo';
+import { commentRepo } from '../../../modules/recruitment/candidate/infra/adapters/commentRepo';
 
 // Use cases
 import { CreateUser } from '../../../modules/users/useCases/createUser/createUser';
@@ -27,6 +28,7 @@ import { CreateTechnology } from '../../../modules/recruitment/candidate/useCase
 import { GetAllTechnologies } from '../../../modules/recruitment/candidate/useCases/getAllTechnologies/getAllTechnologies';
 import { SearchTechnologies } from '../../../modules/recruitment/candidate/useCases/searchTechnologies/searchTechnologies';
 import { UpdateTechnology } from '../../../modules/recruitment/candidate/useCases/updateTechnology/updateTechnology';
+import { CreateComment } from '../../../modules/recruitment/candidate/useCases/createComment/createComment';
 
 import TYPES from '../constants/types';
 
@@ -42,6 +44,7 @@ container.bind(TYPES.IEmailRepo).to(EmailRepo).inSingletonScope();
 container.bind(TYPES.IPhoneRepo).to(PhoneRepo).inSingletonScope();
 container.bind(TYPES.ITagRepo).to(TagRepo).inSingletonScope();
 container.bind(TYPES.ITechnologyRepo).to(TechnologyRepo).inSingletonScope();
+container.bind(TYPES.ICommentRepo).to(commentRepo).inSingletonScope();
 
 // Use cases
 container.bind<CreateUser>(TYPES.CreateUser).to(CreateUser);
@@ -59,5 +62,6 @@ container.bind<CreateTechnology>(TYPES.CreateTechnology).to(CreateTechnology);
 container.bind<GetAllTechnologies>(TYPES.GetAllTechnologies).to(GetAllTechnologies);
 container.bind<SearchTechnologies>(TYPES.SearchTechnologies).to(SearchTechnologies);
 container.bind<UpdateTechnology>(TYPES.UpdateTechnology).to(UpdateTechnology);
+container.bind<CreateComment>(TYPES.CreateComment).to(CreateComment);
 
 export { container };

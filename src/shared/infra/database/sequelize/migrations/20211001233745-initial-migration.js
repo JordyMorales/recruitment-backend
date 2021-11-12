@@ -440,6 +440,10 @@ module.exports = {
             allowNull: false,
             primaryKey: true,
           },
+          comment: {
+            type: Sequelize.STRING,
+            allowNull: false,
+          },
           candidate_id: {
             type: Sequelize.UUID,
             allowNull: false,

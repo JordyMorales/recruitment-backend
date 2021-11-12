@@ -39,6 +39,7 @@ const TYPES = {
   GetAllProcessesSteps: 'GetAllProcessesSteps',
   CreateJob: 'CreateJob',
   UpdateJob: 'UpdateJob',
+  GetJobById: 'GetJobById',
 };
 
 export default TYPES;

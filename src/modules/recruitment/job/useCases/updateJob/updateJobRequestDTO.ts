@@ -1,4 +1,4 @@
-import { JobState } from "../../domain/jobState";
+import { JobState } from '../../domain/jobState';
 
 export interface UpdateJobRequestDTO {
   jobId?: string;

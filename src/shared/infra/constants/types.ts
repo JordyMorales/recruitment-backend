@@ -12,6 +12,7 @@ const TYPES = {
   ICommentRepo: 'ICommentRepo',
   IProcessRepo: 'IProcessRepo',
   IStepRepo: 'IStepRepo',
+  IJobRepo: 'IJobRepo',
   // Use cases
   CreateUser: 'CreateUser',
   GetAllUsers: 'GetAllUsers',
@@ -36,6 +37,7 @@ const TYPES = {
   AddStepToProcess: 'AddStepToProcess',
   UpdateStep: 'UpdateStep',
   GetAllProcessesSteps: 'GetAllProcessesSteps',
+  CreateJob: 'CreateJob',
 };
 
 export default TYPES;

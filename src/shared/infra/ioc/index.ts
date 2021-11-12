@@ -13,6 +13,7 @@ import { TechnologyRepo } from '../../../modules/recruitment/candidate/infra/ada
 import { CommentRepo } from '../../../modules/recruitment/candidate/infra/adapters/commentRepo';
 import { ProcessRepo } from '../../../modules/recruitment/job/infra/adapters/processRepo';
 import { StepRepo } from '../../../modules/recruitment/job/infra/adapters/stepRepo';
+import { JobRepo } from '../../../modules/recruitment/job/infra/adapters/jobRepo';
 
 // Use cases
 import { CreateUser } from '../../../modules/users/useCases/createUser/createUser';
@@ -38,6 +39,7 @@ import { UpdateProcess } from '../../../modules/recruitment/job/useCases/updateP
 import { AddStepToProcess } from '../../../modules/recruitment/job/useCases/addStepToProcess/addStepToProcess';
 import { UpdateStep } from '../../../modules/recruitment/job/useCases/updateStep/updateStep';
 import { GetAllProcessesSteps } from '../../../modules/recruitment/job/useCases/getAllProcessesSteps/getAllProcessesSteps';
+import { CreateJob } from '../../../modules/recruitment/job/useCases/createJob/createJob';
 
 import TYPES from '../constants/types';
 
@@ -56,6 +58,7 @@ container.bind(TYPES.ITechnologyRepo).to(TechnologyRepo).inSingletonScope();
 container.bind(TYPES.ICommentRepo).to(CommentRepo).inSingletonScope();
 container.bind(TYPES.IProcessRepo).to(ProcessRepo).inSingletonScope();
 container.bind(TYPES.IStepRepo).to(StepRepo).inSingletonScope();
+container.bind(TYPES.IJobRepo).to(JobRepo).inSingletonScope();
 
 // Use cases
 container.bind<CreateUser>(TYPES.CreateUser).to(CreateUser);
@@ -81,5 +84,6 @@ container.bind<UpdateProcess>(TYPES.UpdateProcess).to(UpdateProcess);
 container.bind<AddStepToProcess>(TYPES.AddStepToProcess).to(AddStepToProcess);
 container.bind<UpdateStep>(TYPES.UpdateStep).to(UpdateStep);
 container.bind<GetAllProcessesSteps>(TYPES.GetAllProcessesSteps).to(GetAllProcessesSteps);
+container.bind<CreateJob>(TYPES.CreateJob).to(CreateJob);
 
 export { container };

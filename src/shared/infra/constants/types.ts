@@ -40,6 +40,7 @@ const TYPES = {
   CreateJob: 'CreateJob',
   UpdateJob: 'UpdateJob',
   GetJobById: 'GetJobById',
+  GetAllJobs: 'GetAllJobs',
 };
 
 export default TYPES;

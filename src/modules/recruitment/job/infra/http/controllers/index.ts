@@ -7,3 +7,4 @@ import './getAllProcessesStepsController';
 import './createJobController';
 import './updateJobController';
 import './getJobByIdController';
+import './getAllJobsController';

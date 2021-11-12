@@ -37,6 +37,24 @@ export class JobRepo implements IJobRepo {
 
     return JobMap.toDomain(jobFound);
   }
+  async getAllJobs(): Promise<Job[]> {
+    const JobModel = this.models.Job;
+    const jobs = await JobModel.findAll({
+      include: [
+        {
+          model: this.models.User,
+          as: 'jobCreatedBy',
+          attributes: ['user_id', 'first_name', 'last_name', 'email', 'photo_url', 'state', 'role'],
+        },
+        {
+          model: this.models.User,
+          as: 'jobUpdatedBy',
+          attributes: ['user_id', 'first_name', 'last_name', 'email', 'photo_url', 'state', 'role'],
+        },
+      ],
+    });
+    return jobs.map((job) => JobMap.toDomain(job));
+  }
   async search?(text?: string, page?: number, limit?: number): Promise<Job[]> {
     throw new Error('Method not implemented.');
   }

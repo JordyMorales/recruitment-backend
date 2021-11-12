@@ -15,7 +15,7 @@ export class UpdateProcessController extends BaseController {
     super();
   }
 
-  @httpPut('/', isAuthenticated, isAuthorized({ hasRole: ['ADMIN'] }))
+  @httpPut('/', isAuthenticated, isAuthorized({ hasRole: ['ADMIN', 'RECRUITER'] }))
   async executeImpl(req: express.Request, res: express.Response): Promise<any> {
     const dto: UpdateProcessRequestDTO = req.body as UpdateProcessRequestDTO;
     const { id } = req.params;

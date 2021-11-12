@@ -33,6 +33,7 @@ import { CreateComment } from '../../../modules/recruitment/candidate/useCases/c
 import { GetCandidateComments } from '../../../modules/recruitment/candidate/useCases/getCandidateComments/getCandidateComments';
 import { CreateProcess } from '../../../modules/recruitment/job/useCases/createProcess/createProcess';
 import { GetProcessById } from '../../../modules/recruitment/job/useCases/getProcessById/getProcessById';
+import { UpdateProcess } from '../../../modules/recruitment/job/useCases/updateProcess/updateProcess';
 
 import TYPES from '../constants/types';
 
@@ -71,5 +72,6 @@ container.bind<CreateComment>(TYPES.CreateComment).to(CreateComment);
 container.bind<GetCandidateComments>(TYPES.GetCandidateComments).to(GetCandidateComments);
 container.bind<CreateProcess>(TYPES.CreateProcess).to(CreateProcess);
 container.bind<GetProcessById>(TYPES.GetProcessById).to(GetProcessById);
+container.bind<UpdateProcess>(TYPES.UpdateProcess).to(UpdateProcess);
 
 export { container };

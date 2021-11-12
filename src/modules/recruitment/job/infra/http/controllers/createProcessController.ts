@@ -9,7 +9,7 @@ import { CreateProcessErrors } from '../../../useCases/createProcess/createProce
 import { ProcessMap } from '../../mappers/processMap';
 import TYPES from '../../../../../../shared/infra/constants/types';
 
-@controller('/api/v1/process')
+@controller('/api/v1/processes')
 export class CreateProcessController extends BaseController {
   constructor(@inject(TYPES.CreateProcess) private useCase: CreateProcess) {
     super();

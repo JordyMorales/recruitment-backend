@@ -8,7 +8,7 @@ import { isAuthenticated, isAuthorized } from '../../../../../../shared/infra/ht
 import { GetProcessByIdErrors } from '../../../useCases/getProcessById/getProcessByIdErrors';
 import TYPES from '../../../../../../shared/infra/constants/types';
 
-@controller('/api/v1/process/:id')
+@controller('/api/v1/processes/:id')
 export class GetProcessByIdController extends BaseController {
   constructor(@inject(TYPES.GetProcessById) private useCase: GetProcessById) {
     super();

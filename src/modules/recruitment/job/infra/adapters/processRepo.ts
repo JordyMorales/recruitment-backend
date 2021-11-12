@@ -41,8 +41,8 @@ export class ProcessRepo implements IProcessRepo {
   async update(process: Process): Promise<void> {
     const ProcessModel = this.models.Process;
     try {
-      const exists = await this.exists(process.code);
-      if (exists) {
+      const processFound = await this.getProcessById(process.processId);
+      if (!!processFound === true) {
         const raw = ProcessMap.toPersistence(process);
         await ProcessModel.update(raw, {
           where: { process_id: process.processId.id.toString() },

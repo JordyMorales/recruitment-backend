@@ -31,6 +31,7 @@ const TYPES = {
   GetCandidateComments: 'GetCandidateComments',
   CreateProcess: 'CreateProcess',
   GetProcessById: 'GetProcessById',
+  UpdateProcess: 'UpdateProcess',
 };
 
 export default TYPES;

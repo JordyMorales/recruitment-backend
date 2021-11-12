@@ -36,6 +36,7 @@ import { CreateProcess } from '../../../modules/recruitment/job/useCases/createP
 import { GetProcessById } from '../../../modules/recruitment/job/useCases/getProcessById/getProcessById';
 import { UpdateProcess } from '../../../modules/recruitment/job/useCases/updateProcess/updateProcess';
 import { AddStepToProcess } from '../../../modules/recruitment/job/useCases/addStepToProcess/addStepToProcess';
+import { UpdateStep } from '../../../modules/recruitment/job/useCases/updateStep/updateStep';
 
 import TYPES from '../constants/types';
 
@@ -77,5 +78,6 @@ container.bind<CreateProcess>(TYPES.CreateProcess).to(CreateProcess);
 container.bind<GetProcessById>(TYPES.GetProcessById).to(GetProcessById);
 container.bind<UpdateProcess>(TYPES.UpdateProcess).to(UpdateProcess);
 container.bind<AddStepToProcess>(TYPES.AddStepToProcess).to(AddStepToProcess);
+container.bind<UpdateStep>(TYPES.UpdateStep).to(UpdateStep);
 
 export { container };

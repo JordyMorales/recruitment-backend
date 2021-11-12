@@ -19,7 +19,7 @@ export class StepRepo implements IStepRepo {
   }
   async getStepById(stepId: StepId): Promise<Step> {
     const StepModel = this.models.Step;
-    const stepFound = await StepModel.findByPk(stepId.toString());
+    const stepFound = await StepModel.findByPk(stepId.id.toString());
 
     if (!!stepFound === false) throw new Error('Step not found.');
 
@@ -50,7 +50,7 @@ export class StepRepo implements IStepRepo {
       const exists = await this.exists(step.stepId);
       if (exists) {
         const raw = StepMap.toPersistence(step);
-        await StepModel.update(raw, { where: { step_id: step.stepId.toString() } });
+        await StepModel.update(raw, { where: { step_id: step.stepId.id.toString() } });
       }
     } catch (error: any) {
       throw new Error(error.toString());

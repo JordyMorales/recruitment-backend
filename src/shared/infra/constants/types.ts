@@ -34,6 +34,7 @@ const TYPES = {
   GetProcessById: 'GetProcessById',
   UpdateProcess: 'UpdateProcess',
   AddStepToProcess: 'AddStepToProcess',
+  UpdateStep: 'UpdateStep',
 };
 
 export default TYPES;

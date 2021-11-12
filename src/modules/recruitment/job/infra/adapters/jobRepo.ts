@@ -18,7 +18,20 @@ export class JobRepo implements IJobRepo {
   }
   async getJobById(jobId: JobId): Promise<Job> {
     const JobModel = this.models.Job;
-    const jobFound = await JobModel.findByPk(jobId.id.toString());
+    const jobFound = await JobModel.findByPk(jobId.id.toString(), {
+      include: [
+        {
+          model: this.models.User,
+          as: 'jobCreatedBy',
+          attributes: ['user_id', 'first_name', 'last_name', 'email', 'photo_url', 'state', 'role'],
+        },
+        {
+          model: this.models.User,
+          as: 'jobUpdatedBy',
+          attributes: ['user_id', 'first_name', 'last_name', 'email', 'photo_url', 'state', 'role'],
+        },
+      ],
+    });
 
     if (!!jobFound === false) throw new Error('Job not found.');
 

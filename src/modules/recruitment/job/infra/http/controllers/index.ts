@@ -5,3 +5,4 @@ import './addStepToProcessController';
 import './updateStepController';
 import './getAllProcessesStepsController';
 import './createJobController';
+import './updateJobController';

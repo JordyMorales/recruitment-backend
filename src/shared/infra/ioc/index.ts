@@ -40,6 +40,7 @@ import { AddStepToProcess } from '../../../modules/recruitment/job/useCases/addS
 import { UpdateStep } from '../../../modules/recruitment/job/useCases/updateStep/updateStep';
 import { GetAllProcessesSteps } from '../../../modules/recruitment/job/useCases/getAllProcessesSteps/getAllProcessesSteps';
 import { CreateJob } from '../../../modules/recruitment/job/useCases/createJob/createJob';
+import { UpdateJob } from '../../../modules/recruitment/job/useCases/updateJob/updateJob';
 
 import TYPES from '../constants/types';
 
@@ -85,5 +86,6 @@ container.bind<AddStepToProcess>(TYPES.AddStepToProcess).to(AddStepToProcess);
 container.bind<UpdateStep>(TYPES.UpdateStep).to(UpdateStep);
 container.bind<GetAllProcessesSteps>(TYPES.GetAllProcessesSteps).to(GetAllProcessesSteps);
 container.bind<CreateJob>(TYPES.CreateJob).to(CreateJob);
+container.bind<UpdateJob>(TYPES.UpdateJob).to(UpdateJob);
 
 export { container };

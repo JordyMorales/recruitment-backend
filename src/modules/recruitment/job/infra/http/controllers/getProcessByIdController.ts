@@ -1,16 +1,16 @@
 import express from 'express';
 import { inject } from 'inversify';
 import { controller, httpGet } from 'inversify-express-utils';
-import { CandidateMap } from '../../mappers/candidateMap';
-import { GetCandidateById } from '../../../useCases/getCandidateById/getCandidateById';
+import { ProcessMap } from '../../mappers/processMap';
+import { GetProcessById } from '../../../useCases/getProcessById/getProcessById';
 import { BaseController } from '../../../../../../shared/infra/http/models/BaseController';
 import { isAuthenticated, isAuthorized } from '../../../../../../shared/infra/http/middlewares';
-import { GetCandidateByIdErrors } from '../../../useCases/getCandidateById/getCandidateByIdErrors';
+import { GetProcessByIdErrors } from '../../../useCases/getProcessById/getProcessByIdErrors';
 import TYPES from '../../../../../../shared/infra/constants/types';
 
-@controller('/api/v1/candidates/:id')
-export class GetCandidateByIdController extends BaseController {
-  constructor(@inject(TYPES.GetCandidateById) private useCase: GetCandidateById) {
+@controller('/api/v1/process/:id')
+export class GetProcessByIdController extends BaseController {
+  constructor(@inject(TYPES.GetProcessById) private useCase: GetProcessById) {
     super();
   }
 
@@ -19,20 +19,20 @@ export class GetCandidateByIdController extends BaseController {
     const { id } = req.params;
 
     try {
-      const result = await this.useCase.execute({ candidateId: id });
+      const result = await this.useCase.execute({ processId: id });
 
       if (result.isLeft()) {
         const error = result.value;
         switch (error.constructor) {
-          case GetCandidateByIdErrors.CandidateNotFoundError:
+          case GetProcessByIdErrors.ProcessNotFoundError:
             return this.notFound(res, error.errorValue().message);
           default:
             return this.fail(res, error.errorValue()?.message ?? error.errorValue());
         }
       } else {
-        const candidate = result.value.getValue();
+        const process = result.value.getValue();
         return this.ok(res, {
-          candidate: CandidateMap.toDTO(candidate),
+          process: ProcessMap.toDTO(process),
         });
       }
     } catch (err) {

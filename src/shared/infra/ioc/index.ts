@@ -20,7 +20,7 @@ import { GetUserById } from '../../../modules/users/useCases/getUserById/getUser
 import { UpdateUser } from '../../../modules/users/useCases/updateUser/updateUser';
 import { CreateCandidate } from '../../../modules/recruitment/candidate/useCases/createCandidate/createCandidate';
 import { GetAllCandidates } from '../../../modules/recruitment/candidate/useCases/getAllCandidates/getAllCandidates';
-import { GetCandidateById } from '../../../modules/recruitment/candidate/useCases/getCandidateById/GetCandidateById';
+import { GetCandidateById } from '../../../modules/recruitment/candidate/useCases/getCandidateById/getCandidateById';
 import { CreateTag } from '../../../modules/recruitment/candidate/useCases/createTag/createTag';
 import { GetAllTags } from '../../../modules/recruitment/candidate/useCases/getAllTags/getAllTags';
 import { SearchTags } from '../../../modules/recruitment/candidate/useCases/searchTags/searchTags';
@@ -32,6 +32,7 @@ import { UpdateTechnology } from '../../../modules/recruitment/candidate/useCase
 import { CreateComment } from '../../../modules/recruitment/candidate/useCases/createComment/createComment';
 import { GetCandidateComments } from '../../../modules/recruitment/candidate/useCases/getCandidateComments/getCandidateComments';
 import { CreateProcess } from '../../../modules/recruitment/job/useCases/createProcess/createProcess';
+import { GetProcessById } from '../../../modules/recruitment/job/useCases/getProcessById/getProcessById';
 
 import TYPES from '../constants/types';
 
@@ -69,5 +70,6 @@ container.bind<UpdateTechnology>(TYPES.UpdateTechnology).to(UpdateTechnology);
 container.bind<CreateComment>(TYPES.CreateComment).to(CreateComment);
 container.bind<GetCandidateComments>(TYPES.GetCandidateComments).to(GetCandidateComments);
 container.bind<CreateProcess>(TYPES.CreateProcess).to(CreateProcess);
+container.bind<GetProcessById>(TYPES.GetProcessById).to(GetProcessById);
 
 export { container };

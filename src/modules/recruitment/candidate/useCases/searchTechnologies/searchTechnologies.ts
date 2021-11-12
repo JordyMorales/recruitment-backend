@@ -14,9 +14,8 @@ export class SearchTechnologies implements UseCase<SearchTechnologiesRequestDTO,
   constructor(@inject(TYPES.ITechnologyRepo) private technologyRepo: ITechnologyRepo) {}
 
   public async execute(request: SearchTechnologiesRequestDTO): Promise<Response> {
-    let technologies: Technology[];
     try {
-      technologies = await this.technologyRepo.searchTechnologies(request.isActive);
+      const technologies = await this.technologyRepo.searchTechnologies(request.isActive);
       return right(Result.ok<Technology[]>(technologies));
     } catch (err) {
       return left(new AppError.UnexpectedError(err));

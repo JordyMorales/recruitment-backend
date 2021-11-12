@@ -29,25 +29,24 @@ export class UpdateStep implements UseCase<UpdateStepRequestDTO, Promise<Respons
       const processId = ProcessId.create(new UniqueEntityID(request.processId)).getValue();
       const processFound = await this.processRepo.getProcessById(processId);
       const exists = !!processFound === true;
-      
+
       if (!exists) {
         return left(new UpdateStepErrors.ProcessNotFoundError(request.processId)) as Response;
       }
-      
+
       let stepFound: Step;
       const stepId = StepId.create(new UniqueEntityID(request.stepId)).getValue();
-      
+
       try {
         stepFound = await this.stepRepo.getStepById(stepId);
       } catch (error) {
-        console.log("🚀 ~ file: updateStep.ts ~ line 43 ~ UpdateStep ~ execute ~ error", error)
         return left(new UpdateStepErrors.StepNotFoundError(request.stepId));
       }
 
       const stepProps: StepProps = {
         ...stepFound.props,
         ...request,
-        processId
+        processId,
       };
 
       const StepOrError = Step.create(stepProps, stepFound.id);

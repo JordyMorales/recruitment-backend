@@ -28,7 +28,7 @@ export class StepRepo implements IStepRepo {
   async getAllProcessesSteps(processId: ProcessId): Promise<Step[]> {
     const StepModel = this.models.Step;
     const steps = await StepModel.findAll({
-      where: { process_id: processId.toString() },
+      where: { process_id: processId.id.toString() },
     });
     return steps.map((step) => StepMap.toDomain(step));
   }

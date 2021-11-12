@@ -13,9 +13,8 @@ export class GetAllTechnologies implements UseCase<GetAllTechnologies, Promise<R
   constructor(@inject(TYPES.ITechnologyRepo) private technologyRepo: ITechnologyRepo) {}
 
   public async execute(): Promise<Response> {
-    let technologies: Technology[];
     try {
-      technologies = await this.technologyRepo.getAllTechnologies();
+      const technologies = await this.technologyRepo.getAllTechnologies();
       return right(Result.ok<Technology[]>(technologies));
     } catch (err) {
       return left(new AppError.UnexpectedError(err));

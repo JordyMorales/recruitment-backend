@@ -13,9 +13,8 @@ export class GetAllTags implements UseCase<GetAllTags, Promise<Response>> {
   constructor(@inject(TYPES.ITagRepo) private tagRepo: ITagRepo) {}
 
   public async execute(): Promise<Response> {
-    let tags: Tag[];
     try {
-      tags = await this.tagRepo.getAllTags();
+      const tags = await this.tagRepo.getAllTags();
       return right(Result.ok<Tag[]>(tags));
     } catch (err) {
       return left(new AppError.UnexpectedError(err));

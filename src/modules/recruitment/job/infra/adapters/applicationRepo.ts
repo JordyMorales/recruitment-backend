@@ -36,6 +36,7 @@ export class ApplicationRepo implements IApplicationRepo {
             },
           ],
         },
+        { model: this.models.Step },
       ],
     });
     if (!!applicationFound === false) throw new Error('Application not found.');
@@ -78,6 +79,7 @@ export class ApplicationRepo implements IApplicationRepo {
             },
           ],
         },
+        { model: this.models.Step },
       ],
     });
     return applications.map((application) => ApplicationMap.toDomain(application));

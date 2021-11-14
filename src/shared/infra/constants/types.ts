@@ -44,6 +44,7 @@ const TYPES = {
   GetAllJobs: 'GetAllJobs',
   ApplyForJob: 'ApplyForJob',
   GetJobApplications: 'GetJobApplications',
+  GetStepApplications: 'GetStepApplications',
 };
 
 export default TYPES;

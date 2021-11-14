@@ -20,7 +20,7 @@ export type Response = Either<
 export class GetJobApplications implements UseCase<GetJobApplicationsRequestDTO, Promise<Response>> {
   constructor(
     @inject(TYPES.IJobRepo) private jobRepo: IJobRepo,
-    @inject(TYPES.IApplicationRepo) private applicationRepo: IApplicationRepo
+    @inject(TYPES.IApplicationRepo) private applicationRepo: IApplicationRepo,
   ) {}
 
   public async execute(request: GetJobApplicationsRequestDTO): Promise<Response> {

@@ -15,6 +15,7 @@ import { ProcessRepo } from '../../../modules/recruitment/job/infra/adapters/pro
 import { StepRepo } from '../../../modules/recruitment/job/infra/adapters/stepRepo';
 import { JobRepo } from '../../../modules/recruitment/job/infra/adapters/jobRepo';
 import { ApplicationRepo } from '../../../modules/recruitment/job/infra/adapters/applicationRepo';
+import { InterviewRepo } from '../../../modules/recruitment/interview/infra/adapters/interviewRepo';
 
 // Use cases
 import { CreateUser } from '../../../modules/users/useCases/createUser/createUser';
@@ -48,6 +49,7 @@ import { ApplyForJob } from '../../../modules/recruitment/job/useCases/applyForJ
 import { GetJobApplications } from '../../../modules/recruitment/job/useCases/getJobApplications/getJobApplications';
 import { GetStepApplications } from '../../../modules/recruitment/job/useCases/getStepApplications/getStepApplications';
 import { UpdateApplication } from '../../../modules/recruitment/job/useCases/updateApplication/updateApplication';
+import { ScheduleInterview } from '../../../modules/recruitment/interview/useCases/scheduleInterview/scheduleInterview';
 
 import TYPES from '../constants/types';
 
@@ -68,6 +70,7 @@ container.bind(TYPES.IProcessRepo).to(ProcessRepo).inSingletonScope();
 container.bind(TYPES.IStepRepo).to(StepRepo).inSingletonScope();
 container.bind(TYPES.IJobRepo).to(JobRepo).inSingletonScope();
 container.bind(TYPES.IApplicationRepo).to(ApplicationRepo).inSingletonScope();
+container.bind(TYPES.IInterviewRepo).to(InterviewRepo).inSingletonScope();
 
 // Use cases
 container.bind<CreateUser>(TYPES.CreateUser).to(CreateUser);
@@ -101,5 +104,6 @@ container.bind<ApplyForJob>(TYPES.ApplyForJob).to(ApplyForJob);
 container.bind<GetJobApplications>(TYPES.GetJobApplications).to(GetJobApplications);
 container.bind<GetStepApplications>(TYPES.GetStepApplications).to(GetStepApplications);
 container.bind<UpdateApplication>(TYPES.UpdateApplication).to(UpdateApplication);
+container.bind<ScheduleInterview>(TYPES.ScheduleInterview).to(ScheduleInterview);
 
 export { container };

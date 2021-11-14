@@ -28,9 +28,9 @@ module.exports = (sequelize, DataTypes) => {
     },
   );
 
-  Process.associate = (models) => {
-    Process.hasMany(models.Step, { foreignKey: 'process_id' });
-    Process.hasMany(models.Job, { foreignKey: 'process_id' });
+  Process.associate = ({ Job, Step }) => {
+    Process.hasMany(Step, { foreignKey: 'process_id' });
+    Process.hasMany(Job, { foreignKey: 'process_id' });
   };
 
   return Process;

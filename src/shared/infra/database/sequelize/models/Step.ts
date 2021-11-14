@@ -38,8 +38,10 @@ module.exports = (sequelize, DataTypes) => {
     },
   );
 
-  Step.associate = (models) => {
-    Step.belongsTo(models.Process, { foreignKey: 'process_id' });
+  Step.associate = ({ Application, Job, Process }) => {
+    Step.belongsTo(Process, { foreignKey: 'process_id' });
+    Step.hasMany(Job, { foreignKey: 'updated_by', as: 'jobUpdatedBy' });
+    Step.hasMany(Application, { foreignKey: 'step_id' });
   };
 
   return Step;

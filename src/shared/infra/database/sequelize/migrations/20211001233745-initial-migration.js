@@ -639,6 +639,78 @@ module.exports = {
         },
       );
 
+    const CREATE_APPLICATION = () =>
+      queryInterface.createTable(
+        'application',
+        {
+          application_id: {
+            type: Sequelize.UUID,
+            defaultValue: Sequelize.UUIDV4,
+            allowNull: false,
+            primaryKey: true,
+          },
+          date_of_application: {
+            type: Sequelize.DATE,
+            allowNull: false,
+            defaultValue: Sequelize.NOW,
+          },
+          other_info: {
+            type: Sequelize.STRING(150),
+            allowNull: true,
+          },
+          applied_by: {
+            type: Sequelize.UUID,
+            allowNull: false,
+            references: {
+              model: 'candidate',
+              key: 'candidate_id',
+            },
+            onDelete: 'cascade',
+            onUpdate: 'cascade',
+          },
+          state: {
+            type: Sequelize.ENUM(['APPLIED', 'REJECTED', 'ACCEPTED', 'FINISHED', 'HIRED']),
+            allowNull: false,
+            defaultValue: 'APPLIED',
+          },
+          job_id: {
+            type: Sequelize.UUID,
+            allowNull: false,
+            references: {
+              model: 'job',
+              key: 'job_id',
+            },
+            onDelete: 'cascade',
+            onUpdate: 'cascade',
+          },
+          step_id: {
+            type: Sequelize.UUID,
+            allowNull: false,
+            references: {
+              model: 'step',
+              key: 'step_id',
+            },
+            onDelete: 'cascade',
+            onUpdate: 'cascade',
+          },
+          created_at: {
+            type: Sequelize.DATE,
+            allowNull: false,
+            defaultValue: Sequelize.NOW,
+          },
+          updated_at: {
+            type: Sequelize.DATE,
+            allowNull: false,
+            defaultValue: Sequelize.NOW,
+          },
+        },
+        {
+          timestamps: false,
+          underscored: true,
+          tableName: 'application',
+        },
+      );
+
     await runner.run([
       () => CREATE_USER(),
       () => CREATE_CANDIDATE(),
@@ -653,6 +725,7 @@ module.exports = {
       () => CREATE_PROCESS(),
       () => CREATE_STEP(),
       () => CREATE_JOB(),
+      () => CREATE_APPLICATION(),
     ]);
   },
 
@@ -671,6 +744,7 @@ module.exports = {
       () => queryInterface.dropTable('process'),
       () => queryInterface.dropTable('step'),
       () => queryInterface.dropTable('job'),
+      () => queryInterface.dropTable('application'),
     ]);
   },
 };

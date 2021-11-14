@@ -80,10 +80,11 @@ module.exports = (sequelize, DataTypes) => {
     },
   );
 
-  Job.associate = ({ User, Process }) => {
+  Job.associate = ({ Application, Process, User }) => {
     Job.belongsTo(Process, { foreignKey: 'process_id' });
     Job.belongsTo(User, { foreignKey: 'created_by', as: 'jobCreatedBy' });
     Job.belongsTo(User, { foreignKey: 'updated_by', as: 'jobUpdatedBy' });
+    Job.hasMany(Application, { foreignKey: 'job_id' });
   };
 
   return Job;

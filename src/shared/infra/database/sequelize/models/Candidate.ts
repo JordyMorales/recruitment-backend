@@ -108,7 +108,7 @@ module.exports = (sequelize, DataTypes) => {
     },
   );
 
-  Candidate.associate = ({ User, Email, Phone, Link, Tag, Technology, Comment }) => {
+  Candidate.associate = ({ Application, User, Email, Phone, Link, Tag, Technology, Comment }) => {
     Candidate.belongsTo(User, { foreignKey: 'candidate_id', as: 'user' });
     Candidate.belongsTo(User, { foreignKey: 'referral_by', as: 'referralBy' });
     Candidate.belongsTo(User, { foreignKey: 'created_by', as: 'createdBy' });
@@ -119,6 +119,7 @@ module.exports = (sequelize, DataTypes) => {
     Candidate.belongsToMany(Tag, { through: 'candidate_tag', foreignKey: 'candidate_id' });
     Candidate.belongsToMany(Technology, { through: 'candidate_technology', foreignKey: 'candidate_id' });
     Candidate.hasMany(Comment, { foreignKey: 'candidate_id' });
+    Candidate.hasMany(Application, { foreignKey: 'applied_by' });
   };
 
   return Candidate;

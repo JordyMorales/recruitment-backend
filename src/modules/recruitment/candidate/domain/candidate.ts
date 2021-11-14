@@ -31,7 +31,7 @@ export interface CandidateProps {
   emails?: Email[];
   technologies?: Technology[];
   referralBy?: User;
-  createdBy: User;
+  createdBy?: User;
   updatedBy?: User;
   createdAt?: Date;
   updatedAt?: Date;
@@ -193,14 +193,6 @@ export class Candidate extends AggregateRoot<CandidateProps> {
   }
 
   public static create(props: CandidateProps, id?: UniqueEntityID): Result<Candidate> {
-    const nullGuard = Guard.againstNullOrUndefinedBulk([
-      { argument: props.createdBy, argumentName: 'createdBy' },
-    ]);
-
-    if (!nullGuard.succeeded) {
-      return Result.fail<Candidate>(nullGuard.message);
-    }
-
     const values = {
       ...props,
       personalData: props.personalData ? props.personalData : null,
@@ -222,6 +214,7 @@ export class Candidate extends AggregateRoot<CandidateProps> {
       emails: props.emails ? props.emails : [],
       technologies: props.technologies ? props.technologies : [],
       referralBy: props.referralBy ? props.referralBy : null,
+      createdBy: props.createdBy ? props.createdBy : null,
       updatedBy: props.updatedBy ? props.updatedBy : null,
       createdAt: props.createdAt ? props.createdAt : new Date(),
       updatedAt: props.updatedAt ? props.updatedAt : null,

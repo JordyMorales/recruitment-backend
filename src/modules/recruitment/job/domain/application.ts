@@ -6,24 +6,21 @@ import { Candidate } from '../../candidate/domain/candidate';
 import { ApplicationId } from './applicationId';
 import { ApplicationState } from './applicationState';
 import { JobId } from './jobId';
-import { StepId } from './stepId';
+import { Step } from './step';
 
 export interface ApplicationProps {
-  dateOfApplication?: Date;
   otherInfo?: string;
   appliedBy: Candidate;
   jobId: JobId;
-  stepId: StepId;
+  step: Step;
   state?: ApplicationState;
+  appliedAt?: Date;
+  updatedAt?: Date;
 }
 
 export class Application extends AggregateRoot<ApplicationProps> {
   get applicationId(): ApplicationId {
     return ApplicationId.create(this._id).getValue();
-  }
-
-  get dateOfApplication(): Date {
-    return this.props.dateOfApplication;
   }
 
   get otherInfo(): string {
@@ -38,12 +35,20 @@ export class Application extends AggregateRoot<ApplicationProps> {
     return this.props.jobId;
   }
 
-  get stepId(): StepId {
-    return this.props.stepId;
+  get step(): Step {
+    return this.props.step;
   }
 
   get state(): ApplicationState {
     return this.props.state;
+  }
+
+  get appliedAt(): Date {
+    return this.props.appliedAt;
+  }
+
+  get updatedAt(): Date {
+    return this.props.updatedAt;
   }
 
   private constructor(props: ApplicationProps, id?: UniqueEntityID) {
@@ -54,7 +59,7 @@ export class Application extends AggregateRoot<ApplicationProps> {
     const nullGuard = Guard.againstNullOrUndefinedBulk([
       { argument: props.appliedBy, argumentName: 'appliedBy' },
       { argument: props.jobId, argumentName: 'jobId' },
-      { argument: props.stepId, argumentName: 'stepId' },
+      { argument: props.step, argumentName: 'step' },
     ]);
 
     if (!nullGuard.succeeded) {
@@ -62,9 +67,10 @@ export class Application extends AggregateRoot<ApplicationProps> {
     } else {
       const values = {
         ...props,
-        dateOfApplication: props.dateOfApplication ? props.dateOfApplication : new Date(),
         otherInfo: props.otherInfo ? props.otherInfo : null,
         state: props.state ? props.state : 'APPLIED',
+        appliedAt: props.appliedAt ? props.appliedAt : new Date(),
+        updatedAt: props.updatedAt ? props.updatedAt : new Date(),
       };
 
       const application = new Application(values, id);

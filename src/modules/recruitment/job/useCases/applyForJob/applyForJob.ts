@@ -38,8 +38,8 @@ export class ApplyForJob implements UseCase<ApplyForJobRequestDTO, Promise<Respo
       }
 
       const stepId = StepId.create(new UniqueEntityID(request.stepId)).getValue();
-      const stepExists = await this.stepRepo.exists(stepId);
-      if (!stepExists) {
+      const step = await this.stepRepo.getStepById(stepId);
+      if (!!step === false) {
         return left(new ApplyForJobErrors.StepDoesNotExists(request.stepId)) as Response;
       }
 
@@ -49,7 +49,7 @@ export class ApplyForJob implements UseCase<ApplyForJobRequestDTO, Promise<Respo
         return left(new ApplyForJobErrors.ApplicationAlreadyExistsError()) as Response;
       }
 
-      const applicationProps: ApplicationProps = { ...request, appliedBy, stepId, jobId };
+      const applicationProps: ApplicationProps = { ...request, appliedBy, step, jobId };
 
       const applicationOrError = Application.create(applicationProps);
 

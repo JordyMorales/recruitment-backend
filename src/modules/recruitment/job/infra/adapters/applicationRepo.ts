@@ -27,6 +27,7 @@ export class ApplicationRepo implements IApplicationRepo {
       include: [
         {
           model: this.models.Candidate,
+          attributes: ['candidate_id'],
           include: [
             {
               model: this.models.User,
@@ -47,13 +48,16 @@ export class ApplicationRepo implements IApplicationRepo {
       include: [
         {
           model: this.models.Candidate,
+          attributes: ['candidate_id'],
           include: [
             {
               model: this.models.User,
+              as: 'user',
               attributes: ['user_id', 'first_name', 'last_name', 'email', 'photo_url', 'state', 'role'],
             },
           ],
         },
+        { model: this.models.Step },
       ],
     });
     return applications.map((application) => ApplicationMap.toDomain(application));
@@ -65,9 +69,11 @@ export class ApplicationRepo implements IApplicationRepo {
       include: [
         {
           model: this.models.Candidate,
+          attributes: ['candidate_id'],
           include: [
             {
               model: this.models.User,
+              as: 'user',
               attributes: ['user_id', 'first_name', 'last_name', 'email', 'photo_url', 'state', 'role'],
             },
           ],

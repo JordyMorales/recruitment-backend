@@ -649,11 +649,6 @@ module.exports = {
             allowNull: false,
             primaryKey: true,
           },
-          date_of_application: {
-            type: Sequelize.DATE,
-            allowNull: false,
-            defaultValue: Sequelize.NOW,
-          },
           other_info: {
             type: Sequelize.STRING(150),
             allowNull: true,
@@ -693,15 +688,14 @@ module.exports = {
             onDelete: 'cascade',
             onUpdate: 'cascade',
           },
-          created_at: {
+          applied_at: {
             type: Sequelize.DATE,
             allowNull: false,
             defaultValue: Sequelize.NOW,
           },
           updated_at: {
             type: Sequelize.DATE,
-            allowNull: false,
-            defaultValue: Sequelize.NOW,
+            allowNull: true,
           },
         },
         {

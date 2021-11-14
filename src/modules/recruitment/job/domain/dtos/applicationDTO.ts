@@ -2,10 +2,11 @@ import { ApplicationState } from '../applicationState';
 
 export interface ApplicationDTO {
   applicationId?: string;
-  dateOfApplication?: Date;
   otherInfo?: string;
   appliedBy: any;
-  stepId: any;
+  step: any;
   jobId: any;
   state?: ApplicationState;
+  appliedAt: Date;
+  updatedAt: Date;
 }

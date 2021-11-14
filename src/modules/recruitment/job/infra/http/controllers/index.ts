@@ -11,3 +11,4 @@ import './getAllJobsController';
 import './applyForJobController';
 import './getJobApplicationsController';
 import './getStepApplicationsController';
+import './updateApplicationController';

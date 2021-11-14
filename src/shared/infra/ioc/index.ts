@@ -47,6 +47,7 @@ import { GetAllJobs } from '../../../modules/recruitment/job/useCases/getAllJobs
 import { ApplyForJob } from '../../../modules/recruitment/job/useCases/applyForJob/applyForJob';
 import { GetJobApplications } from '../../../modules/recruitment/job/useCases/getJobApplications/getJobApplications';
 import { GetStepApplications } from '../../../modules/recruitment/job/useCases/getStepApplications/getStepApplications';
+import { UpdateApplication } from '../../../modules/recruitment/job/useCases/updateApplication/updateApplication';
 
 import TYPES from '../constants/types';
 
@@ -99,5 +100,6 @@ container.bind<GetAllJobs>(TYPES.GetAllJobs).to(GetAllJobs);
 container.bind<ApplyForJob>(TYPES.ApplyForJob).to(ApplyForJob);
 container.bind<GetJobApplications>(TYPES.GetJobApplications).to(GetJobApplications);
 container.bind<GetStepApplications>(TYPES.GetStepApplications).to(GetStepApplications);
+container.bind<UpdateApplication>(TYPES.UpdateApplication).to(UpdateApplication);
 
 export { container };

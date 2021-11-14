@@ -8,3 +8,4 @@ import './createJobController';
 import './updateJobController';
 import './getJobByIdController';
 import './getAllJobsController';
+import './applyForJobController';

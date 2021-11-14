@@ -705,6 +705,167 @@ module.exports = {
         },
       );
 
+    const CREATE_INTERVIEW = () =>
+      queryInterface.createTable(
+        'interview',
+        {
+          interview_id: {
+            type: Sequelize.UUID,
+            defaultValue: Sequelize.UUIDV4,
+            allowNull: false,
+            primaryKey: true,
+          },
+          topic: {
+            type: Sequelize.STRING(100),
+            allowNull: false,
+          },
+          description: {
+            type: Sequelize.STRING,
+            allowNull: true,
+          },
+          application_id: {
+            type: Sequelize.UUID,
+            allowNull: false,
+            references: {
+              model: 'application',
+              key: 'application_id',
+            },
+            onDelete: 'cascade',
+            onUpdate: 'cascade',
+          },
+          scheduled_at: {
+            type: Sequelize.DATE,
+            allowNull: false,
+            defaultValue: Sequelize.NOW,
+          },
+          duration: {
+            type: Sequelize.INTEGER,
+            allowNull: true,
+          },
+          triggered_at: {
+            type: Sequelize.DATE,
+            allowNull: false,
+          },
+          step_id: {
+            type: Sequelize.UUID,
+            allowNull: false,
+            references: {
+              model: 'step',
+              key: 'step_id',
+            },
+            onDelete: 'cascade',
+            onUpdate: 'cascade',
+          },
+          created_at: {
+            type: Sequelize.DATE,
+            allowNull: false,
+            defaultValue: Sequelize.NOW,
+          },
+        },
+        {
+          timestamps: false,
+          underscored: true,
+          tableName: 'interview',
+        },
+      );
+
+    const CREATE_INTERVIEWER = () =>
+      queryInterface.createTable(
+        'interviewer',
+        {
+          interviewer_id: {
+            type: Sequelize.UUID,
+            defaultValue: Sequelize.UUIDV4,
+            allowNull: false,
+            primaryKey: true,
+          },
+          user_id: {
+            type: Sequelize.UUID,
+            allowNull: false,
+            references: {
+              model: 'user',
+              key: 'user_id',
+            },
+            onDelete: 'cascade',
+            onUpdate: 'cascade',
+          },
+          interview_id: {
+            type: Sequelize.UUID,
+            allowNull: false,
+            references: {
+              model: 'interview',
+              key: 'interview_id',
+            },
+            onDelete: 'cascade',
+            onUpdate: 'cascade',
+          },
+        },
+        {
+          timestamps: false,
+          underscored: true,
+          tableName: 'interviewer',
+        },
+      );
+
+    const CREATE_RATE = () =>
+      queryInterface.createTable(
+        'rate',
+        {
+          rate_id: {
+            type: Sequelize.UUID,
+            defaultValue: Sequelize.UUIDV4,
+            allowNull: false,
+            primaryKey: true,
+          },
+          note: {
+            type: Sequelize.STRING,
+            allowNull: false,
+          },
+          rate: {
+            type: Sequelize.FLOAT,
+            allowNull: false,
+          },
+          props: {
+            type: Sequelize.STRING,
+            allowNull: false,
+          },
+          cons: {
+            type: Sequelize.STRING,
+            allowNull: false,
+          },
+          rated_by: {
+            type: Sequelize.UUID,
+            allowNull: false,
+            references: {
+              model: 'interviewer',
+              key: 'interviewer_id',
+            },
+            onDelete: 'cascade',
+            onUpdate: 'cascade',
+          },
+          interview_id: {
+            type: Sequelize.UUID,
+            allowNull: false,
+            references: {
+              model: 'interview',
+              key: 'interview_id',
+            },
+            onDelete: 'cascade',
+            onUpdate: 'cascade',
+          },
+          rated_at: {
+            type: Sequelize.DATE,
+            allowNull: false,
+            defaultValue: Sequelize.NOW,
+          },
+        },
+        {
+          timestamps: false,
+          underscored: true,
+          tableName: 'rate',
+        },
+      );
+
     await runner.run([
       () => CREATE_USER(),
       () => CREATE_CANDIDATE(),
@@ -720,6 +881,9 @@ module.exports = {
       () => CREATE_STEP(),
       () => CREATE_JOB(),
       () => CREATE_APPLICATION(),
+      () => CREATE_INTERVIEW(),
+      () => CREATE_INTERVIEWER(),
+      () => CREATE_RATE(),
     ]);
   },
 
@@ -739,6 +903,7 @@ module.exports = {
       () => queryInterface.dropTable('step'),
       () => queryInterface.dropTable('job'),
       () => queryInterface.dropTable('application'),
+      () => queryInterface.dropTable('interview'),
     ]);
   },
 };

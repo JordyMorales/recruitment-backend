@@ -64,10 +64,11 @@ module.exports = (sequelize, DataTypes) => {
     },
   );
 
-  Application.associate = ({ Candidate, Job, Step }) => {
+  Application.associate = ({ Candidate, Interview, Job, Step }) => {
     Application.belongsTo(Candidate, { foreignKey: 'applied_by' });
     Application.belongsTo(Job, { foreignKey: 'job_id' });
     Application.belongsTo(Step, { foreignKey: 'step_id' });
+    Application.hasMany(Interview, { foreignKey: 'application_id' });
   };
 
   return Application;

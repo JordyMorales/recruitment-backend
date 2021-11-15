@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.FLOAT,
         allowNull: false,
       },
-      props: {
+      pros: {
         type: DataTypes.STRING,
         allowNull: false,
       },

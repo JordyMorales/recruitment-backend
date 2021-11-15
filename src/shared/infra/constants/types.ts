@@ -16,6 +16,7 @@ const TYPES = {
   IApplicationRepo: 'IApplicationRepo',
   IInterviewRepo: 'IInterviewRepo',
   IInterviewerRepo: 'IInterviewerRepo',
+  IRateRepo: 'IRateRepo',
   // Use cases
   CreateUser: 'CreateUser',
   GetAllUsers: 'GetAllUsers',
@@ -52,6 +53,7 @@ const TYPES = {
   UpdateInterview: 'UpdateInterview',
   AssignInterviewer: 'AssignInterviewer',
   GetApplicationInterviews: 'GetApplicationInterviews',
+  RateInterview: 'RateInterview',
 };
 
 export default TYPES;

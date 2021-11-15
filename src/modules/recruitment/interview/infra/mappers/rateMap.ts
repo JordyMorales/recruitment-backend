@@ -2,6 +2,8 @@ import { Rate } from '../../domain/rate';
 import { RateDTO } from '../../domain/dtos/rateDTO';
 import { InterviewId } from '../../domain/interviewId';
 import { InterviewerId } from '../../domain/interviewerId';
+import { Mapper } from '../../../../../shared/infra/Mapper';
+import { UniqueEntityID } from '../../../../../shared/domain/UniqueEntityID';
 
 export class RateMap implements Mapper<Rate> {
   public static toDTO(rate: Rate): RateDTO {
@@ -12,7 +14,7 @@ export class RateMap implements Mapper<Rate> {
       pros: rate.pros,
       cons: rate.cons,
       ratedAt: rate.createdAt ? rate.createdAt : null,
-      ratedBy: rate.ratedBy.toString(),
+      ratedBy: rate.ratedBy.id.toString(),
       interviewId: rate.interviewId.id.toString(),
     };
   }
@@ -38,12 +40,12 @@ export class RateMap implements Mapper<Rate> {
 
   public static toPersistence(rate: Rate): any {
     return {
-      rate_id: rate.id.toString(),
+      rate_id: rate.rateId.id.toString(),
       note: rate.note,
       rate: rate.rate,
       pros: rate.pros,
       cons: rate.cons,
-      rated_by: rate.ratedBy ? rate.ratedBy.toString() : null,
+      rated_by: rate.ratedBy.id.toString(),
       interview_id: rate.interviewId ? rate.interviewId.id.toString() : null,
     };
   }

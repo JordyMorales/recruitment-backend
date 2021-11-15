@@ -17,6 +17,7 @@ import { JobRepo } from '../../../modules/recruitment/job/infra/adapters/jobRepo
 import { ApplicationRepo } from '../../../modules/recruitment/job/infra/adapters/applicationRepo';
 import { InterviewRepo } from '../../../modules/recruitment/interview/infra/adapters/interviewRepo';
 import { InterviewerRepo } from '../../../modules/recruitment/interview/infra/adapters/interviewerRepo';
+import { RateRepo } from '../../../modules/recruitment/interview/infra/adapters/rateRepo';
 
 // Use cases
 import { CreateUser } from '../../../modules/users/useCases/createUser/createUser';
@@ -54,6 +55,7 @@ import { ScheduleInterview } from '../../../modules/recruitment/interview/useCas
 import { UpdateInterview } from '../../../modules/recruitment/interview/useCases/updateInterview/updateInterview';
 import { AssignInterviewer } from '../../../modules/recruitment/interview/useCases/assignInterviewer/assignInterviewer';
 import { GetApplicationInterviews } from '../../../modules/recruitment/interview/useCases/getApplicationInterviews/getApplicationInterviews';
+import { RateInterview } from '../../../modules/recruitment/interview/useCases/rateInterview/rateInterview';
 
 import TYPES from '../constants/types';
 
@@ -76,6 +78,7 @@ container.bind(TYPES.IJobRepo).to(JobRepo).inSingletonScope();
 container.bind(TYPES.IApplicationRepo).to(ApplicationRepo).inSingletonScope();
 container.bind(TYPES.IInterviewRepo).to(InterviewRepo).inSingletonScope();
 container.bind(TYPES.IInterviewerRepo).to(InterviewerRepo).inSingletonScope();
+container.bind(TYPES.IRateRepo).to(RateRepo).inSingletonScope();
 
 // Use cases
 container.bind<CreateUser>(TYPES.CreateUser).to(CreateUser);
@@ -113,5 +116,6 @@ container.bind<ScheduleInterview>(TYPES.ScheduleInterview).to(ScheduleInterview)
 container.bind<UpdateInterview>(TYPES.UpdateInterview).to(UpdateInterview);
 container.bind<AssignInterviewer>(TYPES.AssignInterviewer).to(AssignInterviewer);
 container.bind<GetApplicationInterviews>(TYPES.GetApplicationInterviews).to(GetApplicationInterviews);
+container.bind<RateInterview>(TYPES.RateInterview).to(RateInterview);
 
 export { container };

@@ -4,7 +4,7 @@ import { UserId } from '../../../../users/domain/userId';
 
 export interface IInterviewerRepo {
   exists(userId: UserId, interviewId: InterviewId): Promise<boolean>;
-  getInterviewerById(interviewerId: InterviewId): Promise<Interviewer>;
+  getInterviewer(userId: UserId, interviewId: InterviewId): Promise<Interviewer>;
   save(interviewer: Interviewer): Promise<void>;
   update(interviewer: Interviewer): Promise<void>;
 }

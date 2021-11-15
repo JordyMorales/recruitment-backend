@@ -19,9 +19,11 @@ export class InterviewerRepo implements IInterviewerRepo {
     });
     return !!interviewerFound === true;
   }
-  async getInterviewerById(interviewerId: InterviewId): Promise<Interviewer> {
+  async getInterviewer(userId: UserId, interviewId: InterviewId): Promise<Interviewer> {
     const InterviewerModel = this.models.Interviewer;
-    const interviewerFound = await InterviewerModel.findByPk(interviewerId.id.toString());
+    const interviewerFound = await InterviewerModel.findOne({
+      where: { user_id: userId.id.toString(), interview_id: interviewId.id.toString() },
+    });
 
     if (!!interviewerFound === false) throw new Error('Interviewer not found.');
 

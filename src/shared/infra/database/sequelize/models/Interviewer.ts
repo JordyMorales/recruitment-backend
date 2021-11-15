@@ -39,7 +39,7 @@ module.exports = (sequelize, DataTypes) => {
   Interviewer.associate = ({ Interview, Rate, User }) => {
     Interviewer.belongsTo(Interview, { foreignKey: 'interview_id' });
     Interviewer.belongsTo(User, { foreignKey: 'user_id' });
-    Interviewer.hasMany(Rate, { foreignKey: 'user_id' });
+    Interviewer.hasMany(Rate, { foreignKey: 'rated_by' });
   };
 
   return Interviewer;

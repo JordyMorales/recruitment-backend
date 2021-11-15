@@ -825,7 +825,7 @@ module.exports = {
             type: Sequelize.FLOAT,
             allowNull: false,
           },
-          props: {
+          pros: {
             type: Sequelize.STRING,
             allowNull: false,
           },

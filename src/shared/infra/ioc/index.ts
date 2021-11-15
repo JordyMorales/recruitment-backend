@@ -56,6 +56,7 @@ import { UpdateInterview } from '../../../modules/recruitment/interview/useCases
 import { AssignInterviewer } from '../../../modules/recruitment/interview/useCases/assignInterviewer/assignInterviewer';
 import { GetApplicationInterviews } from '../../../modules/recruitment/interview/useCases/getApplicationInterviews/getApplicationInterviews';
 import { RateInterview } from '../../../modules/recruitment/interview/useCases/rateInterview/rateInterview';
+import { UpdateRate } from '../../../modules/recruitment/interview/useCases/updateRate/updateRate';
 
 import TYPES from '../constants/types';
 
@@ -117,5 +118,6 @@ container.bind<UpdateInterview>(TYPES.UpdateInterview).to(UpdateInterview);
 container.bind<AssignInterviewer>(TYPES.AssignInterviewer).to(AssignInterviewer);
 container.bind<GetApplicationInterviews>(TYPES.GetApplicationInterviews).to(GetApplicationInterviews);
 container.bind<RateInterview>(TYPES.RateInterview).to(RateInterview);
+container.bind<UpdateRate>(TYPES.UpdateRate).to(UpdateRate);
 
 export { container };

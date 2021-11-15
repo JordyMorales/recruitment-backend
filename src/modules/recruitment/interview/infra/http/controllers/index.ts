@@ -4,3 +4,4 @@ import './assignInterviewerController';
 import './getApplicationInterviewsController';
 import './rateInterviewController';
 import './updateRateController';
+import './getInterviewRatingsController';

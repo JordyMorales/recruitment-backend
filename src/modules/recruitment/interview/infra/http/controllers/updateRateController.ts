@@ -9,7 +9,7 @@ import { isAuthenticated, isAuthorized } from '../../../../../../shared/infra/ht
 
 import TYPES from '../../../../../../shared/infra/constants/types';
 
-@controller('/api/v1/interviews/rate/:id')
+@controller('/api/v1/interviews/rates/:id')
 export class UpdateRateController extends BaseController {
   constructor(@inject(TYPES.UpdateRate) private useCase: UpdateRate) {
     super();

@@ -55,6 +55,7 @@ const TYPES = {
   GetApplicationInterviews: 'GetApplicationInterviews',
   RateInterview: 'RateInterview',
   UpdateRate: 'UpdateRate',
+  GetInterviewRatings: 'GetInterviewRatings',
 };
 
 export default TYPES;

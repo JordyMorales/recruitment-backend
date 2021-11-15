@@ -10,7 +10,7 @@ import { isAuthenticated, isAuthorized } from '../../../../../../shared/infra/ht
 import TYPES from '../../../../../../shared/infra/constants/types';
 import { RateMap } from '../../mappers/rateMap';
 
-@controller('/api/v1/interviews/:id/rate')
+@controller('/api/v1/interviews/:id/rates')
 export class RateInterviewController extends BaseController {
   constructor(@inject(TYPES.RateInterview) private useCase: RateInterview) {
     super();

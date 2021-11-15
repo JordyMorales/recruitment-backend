@@ -53,6 +53,7 @@ import { UpdateApplication } from '../../../modules/recruitment/job/useCases/upd
 import { ScheduleInterview } from '../../../modules/recruitment/interview/useCases/scheduleInterview/scheduleInterview';
 import { UpdateInterview } from '../../../modules/recruitment/interview/useCases/updateInterview/updateInterview';
 import { AssignInterviewer } from '../../../modules/recruitment/interview/useCases/assignInterviewer/assignInterviewer';
+import { GetApplicationInterviews } from '../../../modules/recruitment/interview/useCases/getApplicationInterviews/getApplicationInterviews';
 
 import TYPES from '../constants/types';
 
@@ -111,5 +112,6 @@ container.bind<UpdateApplication>(TYPES.UpdateApplication).to(UpdateApplication)
 container.bind<ScheduleInterview>(TYPES.ScheduleInterview).to(ScheduleInterview);
 container.bind<UpdateInterview>(TYPES.UpdateInterview).to(UpdateInterview);
 container.bind<AssignInterviewer>(TYPES.AssignInterviewer).to(AssignInterviewer);
+container.bind<GetApplicationInterviews>(TYPES.GetApplicationInterviews).to(GetApplicationInterviews);
 
 export { container };

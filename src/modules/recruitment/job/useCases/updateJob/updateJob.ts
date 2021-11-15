@@ -47,6 +47,7 @@ export class UpdateJob implements UseCase<UpdateJobRequestDTO, Promise<Response>
         ...jobFound.props,
         ...request,
         processId,
+        createdBy: jobFound.createdBy,
         updatedBy: UserMap.dtoToDomain(request.updatedBy),
       };
 

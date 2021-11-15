@@ -54,6 +54,8 @@ export class UpdateApplication implements UseCase<UpdateApplicationRequestDTO, P
         ...request,
         step: stepFound,
         updatedAt: new Date(),
+        appliedBy: applicationFound.appliedBy,
+        jobId: applicationFound.jobId,
       };
 
       const applicationOrError = Application.create(applicationProps, applicationFound.id);

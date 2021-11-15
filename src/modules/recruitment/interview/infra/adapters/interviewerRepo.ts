@@ -1,6 +1,9 @@
 import { injectable } from 'inversify';
+import { UserId } from '../../../../users/domain/userId';
 import { Interviewer } from '../../domain/interviewer';
 import { InterviewId } from '../../domain/interviewId';
+import { IInterviewerRepo } from '../../domain/ports/IInterviewerRepo';
+import models from '../../../../../shared/infra/database/sequelize/models';
 
 @injectable()
 export class InterviewerRepo implements IInterviewerRepo {

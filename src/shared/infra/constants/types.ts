@@ -48,6 +48,7 @@ const TYPES = {
   GetStepApplications: 'GetStepApplications',
   UpdateApplication: 'UpdateApplication',
   ScheduleInterview: 'ScheduleInterview',
+  UpdateInterview: 'UpdateInterview',
 };
 
 export default TYPES;

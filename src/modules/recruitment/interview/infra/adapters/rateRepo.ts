@@ -1,8 +1,10 @@
 import { injectable } from 'inversify';
-import { InterviewId } from '../../domain/interviewId';
 import { Rate } from '../../domain/rate';
 import { RateId } from '../../domain/rateId';
 import { RateMap } from '../mappers/rateMap';
+import { InterviewId } from '../../domain/interviewId';
+import { IRateRepo } from '../../domain/ports/IRateRepo';
+import models from '../../../../../shared/infra/database/sequelize/models';
 
 @injectable()
 export class RateRepo implements IRateRepo {

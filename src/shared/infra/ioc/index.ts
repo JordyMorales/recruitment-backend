@@ -16,6 +16,7 @@ import { StepRepo } from '../../../modules/recruitment/job/infra/adapters/stepRe
 import { JobRepo } from '../../../modules/recruitment/job/infra/adapters/jobRepo';
 import { ApplicationRepo } from '../../../modules/recruitment/job/infra/adapters/applicationRepo';
 import { InterviewRepo } from '../../../modules/recruitment/interview/infra/adapters/interviewRepo';
+import { InterviewerRepo } from '../../../modules/recruitment/interview/infra/adapters/interviewerRepo';
 
 // Use cases
 import { CreateUser } from '../../../modules/users/useCases/createUser/createUser';
@@ -51,6 +52,7 @@ import { GetStepApplications } from '../../../modules/recruitment/job/useCases/g
 import { UpdateApplication } from '../../../modules/recruitment/job/useCases/updateApplication/updateApplication';
 import { ScheduleInterview } from '../../../modules/recruitment/interview/useCases/scheduleInterview/scheduleInterview';
 import { UpdateInterview } from '../../../modules/recruitment/interview/useCases/updateInterview/updateInterview';
+import { AssignInterviewer } from '../../../modules/recruitment/interview/useCases/assignInterviewer/assignInterviewer';
 
 import TYPES from '../constants/types';
 
@@ -72,6 +74,7 @@ container.bind(TYPES.IStepRepo).to(StepRepo).inSingletonScope();
 container.bind(TYPES.IJobRepo).to(JobRepo).inSingletonScope();
 container.bind(TYPES.IApplicationRepo).to(ApplicationRepo).inSingletonScope();
 container.bind(TYPES.IInterviewRepo).to(InterviewRepo).inSingletonScope();
+container.bind(TYPES.IInterviewerRepo).to(InterviewerRepo).inSingletonScope();
 
 // Use cases
 container.bind<CreateUser>(TYPES.CreateUser).to(CreateUser);
@@ -107,5 +110,6 @@ container.bind<GetStepApplications>(TYPES.GetStepApplications).to(GetStepApplica
 container.bind<UpdateApplication>(TYPES.UpdateApplication).to(UpdateApplication);
 container.bind<ScheduleInterview>(TYPES.ScheduleInterview).to(ScheduleInterview);
 container.bind<UpdateInterview>(TYPES.UpdateInterview).to(UpdateInterview);
+container.bind<AssignInterviewer>(TYPES.AssignInterviewer).to(AssignInterviewer);
 
 export { container };

@@ -1,6 +1,9 @@
 import { Interviewer } from '../../domain/interviewer';
 import { InterviewerDTO } from '../../domain/dtos/interviewerDTO';
 import { InterviewId } from '../../domain/interviewId';
+import { UserId } from '../../../../users/domain/userId';
+import { UniqueEntityID } from '../../../../../shared/domain/UniqueEntityID';
+import { Mapper } from '../../../../../shared/infra/Mapper';
 
 export class InterviewerMap implements Mapper<Interviewer> {
   public static toDTO(interviewer: Interviewer): InterviewerDTO {

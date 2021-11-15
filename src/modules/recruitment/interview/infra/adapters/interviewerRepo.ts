@@ -4,6 +4,7 @@ import { Interviewer } from '../../domain/interviewer';
 import { InterviewId } from '../../domain/interviewId';
 import { IInterviewerRepo } from '../../domain/ports/IInterviewerRepo';
 import models from '../../../../../shared/infra/database/sequelize/models';
+import { InterviewerMap } from '../mappers/interviewerMap';
 
 @injectable()
 export class InterviewerRepo implements IInterviewerRepo {
@@ -19,12 +20,37 @@ export class InterviewerRepo implements IInterviewerRepo {
     return !!interviewerFound === true;
   }
   async getInterviewerById(interviewerId: InterviewId): Promise<Interviewer> {
-    throw new Error('Method not implemented.');
+    const InterviewerModel = this.models.Interviewer;
+    const interviewerFound = await InterviewerModel.findByPk(interviewerId.id.toString());
+
+    if (!!interviewerFound === false) throw new Error('Interviewer not found.');
+
+    return InterviewerMap.toDomain(interviewerFound);
   }
   async save(interviewer: Interviewer): Promise<void> {
-    throw new Error('Method not implemented.');
+    const InterviewerModel = this.models.Interviewer;
+    try {
+      const exists = await this.exists(interviewer.userId, interviewer.interviewId);
+      if (!exists) {
+        const raw = InterviewerMap.toPersistence(interviewer);
+        await InterviewerModel.create(raw);
+      }
+    } catch (error) {
+      throw new Error(error.toString());
+    }
   }
   async update(interviewer: Interviewer): Promise<void> {
-    throw new Error('Method not implemented.');
+    const InterviewerModel = this.models.Interviewer;
+    try {
+      const exists = await this.exists(interviewer.userId, interviewer.interviewId);
+      if (exists) {
+        const raw = InterviewerMap.toPersistence(interviewer);
+        await InterviewerModel.update(raw, {
+          where: { interviewer_id: interviewer.interviewerId.id.toString() },
+        });
+      }
+    } catch (error) {
+      throw new Error(error.toString());
+    }
   }
 }

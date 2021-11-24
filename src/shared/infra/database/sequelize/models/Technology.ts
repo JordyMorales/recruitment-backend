@@ -27,8 +27,9 @@ module.exports = (sequelize, DataTypes) => {
     },
   );
 
-  Technology.associate = ({ Candidate }) => {
+  Technology.associate = ({ Candidate, Job }) => {
     Technology.belongsToMany(Candidate, { through: 'candidate_technology', foreignKey: 'technology_id' });
+    Technology.belongsToMany(Job, { through: 'job_technology', foreignKey: 'technology_id' });
   };
 
   return Technology;

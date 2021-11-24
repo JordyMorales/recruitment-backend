@@ -7,6 +7,7 @@ export interface JobDTO {
   datePublished?: Date;
   startDate?: Date;
   vacancies?: number;
+  technologies?: any[];
   processId: string;
   state?: JobState;
   createdBy: any;

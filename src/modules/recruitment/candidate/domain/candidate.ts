@@ -9,7 +9,6 @@ import { User } from '../../../users/domain/user';
 import { AggregateRoot } from '../../../../shared/domain/AggregateRoot';
 import { UniqueEntityID } from '../../../../shared/domain/UniqueEntityID';
 import { Result } from '../../../../shared/core/Result';
-import { Guard } from '../../../../shared/core/Guard';
 
 export interface CandidateProps {
   personalData?: User;

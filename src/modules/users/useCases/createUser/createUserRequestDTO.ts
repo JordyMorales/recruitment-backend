@@ -2,7 +2,7 @@ import { State } from '../../domain/state';
 import { Role } from '../../domain/role';
 
 export interface CreateUserRequestDTO {
-  userId?: string;
+  userId: string;
   firstName: string;
   middleName?: string;
   lastName: string;

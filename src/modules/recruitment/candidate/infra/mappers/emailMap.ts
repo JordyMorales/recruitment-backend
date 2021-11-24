@@ -29,7 +29,7 @@ export class EmailMap implements Mapper<Email> {
 
   public static toPersistence(email: Email): any {
     return {
-      email_id: email.id.toString(),
+      email_id: email.emailId.id.toString(),
       value: email.value,
       candidate_id: email.candidateId ? email.candidateId.id.toString() : null,
     };

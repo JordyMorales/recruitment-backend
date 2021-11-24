@@ -4,6 +4,16 @@ import { ProcessId } from '../../domain/processId';
 import { Mapper } from '../../../../../shared/infra/Mapper';
 import { UniqueEntityID } from '../../../../../shared/domain/UniqueEntityID';
 import { UserMap } from '../../../../users/infra/mappers/userMap';
+import { Technology } from '../../../candidate/domain/technology';
+import { Result } from '../../../../../shared/core/Result';
+import { TechnologyMap } from '../../../candidate/infra/mappers/technologyMap';
+
+const technologiesToDomain = (technologies: any[]): Technology[] => {
+  return technologies.map(({ technology_id, name }) => {
+    const technologyOrError: Result<Technology> = Technology.create({ name }, technology_id);
+    if (technologyOrError.isSuccess) return technologyOrError.getValue();
+  });
+};
 
 export class JobMap implements Mapper<Job> {
   public static toDTO(job: Job): JobDTO {
@@ -14,6 +24,7 @@ export class JobMap implements Mapper<Job> {
       datePublished: job.datePublished ? job.datePublished : null,
       startDate: job.startDate ? job.startDate : null,
       vacancies: job.vacancies ? job.vacancies : null,
+      technologies: job.technologies ? job.technologies.map((t) => TechnologyMap.toDTO(t)) : [],
       processId: job.processId.id.toString(),
       state: job.state ? job.state : null,
       createdBy: UserMap.toDTO(job.createdBy),
@@ -31,6 +42,7 @@ export class JobMap implements Mapper<Job> {
         datePublished: raw.date_published ? new Date(raw.date_published) : null,
         startDate: raw.start_date ? new Date(raw.start_date) : null,
         vacancies: raw.vacancies ? raw.vacancies : null,
+        technologies: raw.technologies ? technologiesToDomain(raw.technologies) : [],
         processId: ProcessId.create(raw.process_id).getValue(),
         state: raw.state ? raw.state : null,
         createdBy: UserMap.toDomain(raw.jobCreatedBy),
@@ -54,6 +66,7 @@ export class JobMap implements Mapper<Job> {
       date_published: job.datePublished ? job.datePublished : null,
       start_date: job.startDate ? job.startDate : null,
       vacancies: job.vacancies ? job.vacancies : null,
+      technologies: job.technologies ? job.technologies.map((t) => TechnologyMap.toPersistence(t)) : [],
       process_id: job.processId.id.toString(),
       state: job.state ? job.state : null,
       created_by: job.createdBy.id.toString(),

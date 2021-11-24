@@ -25,6 +25,15 @@ export class LinkRepo implements ILinkRepo {
     });
     return links.map((link) => LinkMap.toDomain(link));
   }
+  async getLink(link: string): Promise<Link> {
+    const LinkModel = this.models.Link;
+    const linkFound = await LinkModel.findOne({
+      where: { value: link },
+    });
+    if (!!linkFound === false) return null;
+
+    return LinkMap.toDomain(linkFound);
+  }
   async save(link: Link): Promise<void> {
     const LinkModel = this.models.Link;
     try {

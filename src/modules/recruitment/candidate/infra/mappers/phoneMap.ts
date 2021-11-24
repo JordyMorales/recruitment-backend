@@ -29,7 +29,7 @@ export class PhoneMap implements Mapper<Phone> {
 
   public static toPersistence(phone: Phone): any {
     return {
-      phone_id: phone.id.toString(),
+      phone_id: phone.phoneId.id.toString(),
       value: phone.value,
       candidate_id: phone.candidateId ? phone.candidateId.id.toString() : null,
     };

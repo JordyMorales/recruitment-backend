@@ -128,11 +128,11 @@ export class CandidateMap implements Mapper<Candidate> {
       resume_url: candidate.resumeUrl ? candidate.resumeUrl : null,
       seniority: candidate.seniority ? candidate.seniority : null,
       availability: candidate.availability ? candidate.availability : null,
-      technologies: candidate.technologies
+      technologies: candidate.technologies.length
         ? candidate.technologies.map((t) => TechnologyMap.toPersistence(t))
         : [],
-      tags: candidate.tags ? candidate.tags.map((tag) => TagMap.toPersistence(tag)) : [],
-      links: candidate.links ? candidate.links.map((link) => LinkMap.toPersistence(link)) : [],
+      tags: candidate.tags.length ? candidate.tags.map((tag) => TagMap.toPersistence(tag)) : [],
+      links: candidate.links.length ? candidate.links.map((link) => LinkMap.toPersistence(link)) : [],
       referral_by: candidate.referralBy ? candidate.referralBy.id.toString() : null,
       created_by: candidate.createdBy.id.toString(),
       updated_by: candidate.updatedBy ? candidate.updatedBy.id.toString() : null,

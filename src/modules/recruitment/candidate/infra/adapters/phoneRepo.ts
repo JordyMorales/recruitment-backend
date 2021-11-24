@@ -25,6 +25,15 @@ export class PhoneRepo implements IPhoneRepo {
     });
     return phones.map((phone) => PhoneMap.toDomain(phone));
   }
+  async getPhone(phone: string): Promise<Phone> {
+    const PhoneModel = this.models.Phone;
+    const phoneFound = await PhoneModel.findOne({
+      where: { value: phone },
+    });
+    if (!!phoneFound === false) return null;
+
+    return PhoneMap.toDomain(phoneFound);
+  }
   async save(phone: Phone): Promise<void> {
     const PhoneModel = this.models.Phone;
     try {

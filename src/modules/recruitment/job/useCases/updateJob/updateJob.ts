@@ -12,6 +12,7 @@ import { AppError } from '../../../../../shared/core/AppError';
 import { Either, Result, left, right } from '../../../../../shared/core/Result';
 import { UniqueEntityID } from '../../../../../shared/domain/UniqueEntityID';
 import TYPES from '../../../../../shared/infra/constants/types';
+import { Technology } from '../../../candidate/domain/technology';
 
 export type Response = Either<
   UpdateJobErrors.JobNotFoundError | AppError.UnexpectedError | Result<any>,
@@ -24,6 +25,13 @@ export class UpdateJob implements UseCase<UpdateJobRequestDTO, Promise<Response>
     @inject(TYPES.IJobRepo) private jobRepo: IJobRepo,
     @inject(TYPES.IProcessRepo) private processRepo: IProcessRepo,
   ) {}
+
+  private technologiesToDomain(technologies: any[]): Technology[] {
+    return technologies.map(({ technologyId, name }) => {
+      const technologyOrError: Result<Technology> = Technology.create({ name }, technologyId);
+      if (technologyOrError.isSuccess) return technologyOrError.getValue();
+    });
+  }
 
   public async execute(request: UpdateJobRequestDTO): Promise<Response> {
     try {
@@ -47,6 +55,7 @@ export class UpdateJob implements UseCase<UpdateJobRequestDTO, Promise<Response>
         ...jobFound.props,
         ...request,
         processId,
+        technologies: request.technologies ? this.technologiesToDomain(request.technologies) : [],
         createdBy: jobFound.createdBy,
         updatedBy: UserMap.dtoToDomain(request.updatedBy),
       };

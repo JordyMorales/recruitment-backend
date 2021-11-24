@@ -30,22 +30,22 @@ export class CandidateRepo implements ICandidateRepo {
         {
           model: this.models.User,
           as: 'user',
-          attributes: ['user_id', 'first_name', 'last_name', 'email', 'photo_url', 'state', 'role'],
+          attributes: ['user_id', 'first_name', 'last_name', 'email', 'phone', 'photo_url', 'state', 'role'],
         },
         {
           model: this.models.User,
           as: 'referralBy',
-          attributes: ['user_id', 'first_name', 'last_name', 'email', 'photo_url', 'state', 'role'],
+          attributes: ['user_id', 'first_name', 'last_name', 'email', 'phone', 'photo_url', 'state', 'role'],
         },
         {
           model: this.models.User,
           as: 'createdBy',
-          attributes: ['user_id', 'first_name', 'last_name', 'email', 'photo_url', 'state', 'role'],
+          attributes: ['user_id', 'first_name', 'last_name', 'email', 'phone', 'photo_url', 'state', 'role'],
         },
         {
           model: this.models.User,
           as: 'updatedBy',
-          attributes: ['user_id', 'first_name', 'last_name', 'email', 'photo_url', 'state', 'role'],
+          attributes: ['user_id', 'first_name', 'last_name', 'email', 'phone', 'photo_url', 'state', 'role'],
         },
       ],
     });
@@ -65,22 +65,22 @@ export class CandidateRepo implements ICandidateRepo {
         {
           model: this.models.User,
           as: 'user',
-          attributes: ['user_id', 'first_name', 'last_name', 'email', 'photo_url', 'state', 'role'],
+          attributes: ['user_id', 'first_name', 'last_name', 'email', 'phone', 'photo_url', 'state', 'role'],
         },
         {
           model: this.models.User,
           as: 'referralBy',
-          attributes: ['user_id', 'first_name', 'last_name', 'email', 'photo_url', 'state', 'role'],
+          attributes: ['user_id', 'first_name', 'last_name', 'email', 'phone', 'photo_url', 'state', 'role'],
         },
         {
           model: this.models.User,
           as: 'createdBy',
-          attributes: ['user_id', 'first_name', 'last_name', 'email', 'photo_url', 'state', 'role'],
+          attributes: ['user_id', 'first_name', 'last_name', 'email', 'phone', 'photo_url', 'state', 'role'],
         },
         {
           model: this.models.User,
           as: 'updatedBy',
-          attributes: ['user_id', 'first_name', 'last_name', 'email', 'photo_url', 'state', 'role'],
+          attributes: ['user_id', 'first_name', 'last_name', 'email', 'phone', 'photo_url', 'state', 'role'],
         },
       ],
       order: [['created_at', 'DESC']],
@@ -105,16 +105,26 @@ export class CandidateRepo implements ICandidateRepo {
         });
 
         await Promise.all(
-          raw.tags.map(async (t) => {
-            const tag = await this.models.Tag.findByPk(t.tag_id);
-            await candidateCreated.addTag(tag, { transaction });
+          raw.tags.map(async (tag) => {
+            const tagFound = await this.models.Tag.findOne({ where: { name: tag.name } });
+            if (!!tagFound === false) {
+              const resp = await this.models.Tag.create(tag, { transaction });
+              await candidateCreated.addTag(resp, { transaction });
+            } else {
+              await candidateCreated.addTag(tagFound, { transaction });
+            }
           }),
         );
 
         await Promise.all(
-          raw.technologies.map(async (t) => {
-            const technology = await this.models.Technology.findByPk(t.technology_id);
-            await candidateCreated.addTechnology(technology, { transaction });
+          raw.technologies.map(async (tech) => {
+            const techFound = await this.models.Technology.findOne({ where: { name: tech.name } });
+            if (!!techFound === false) {
+              const resp = await this.models.Technology.create(tech, { transaction });
+              await candidateCreated.addTechnology(resp, { transaction });
+            } else {
+              await candidateCreated.addTechnology(techFound, { transaction });
+            }
           }),
         );
         await transaction.commit();
@@ -125,6 +135,77 @@ export class CandidateRepo implements ICandidateRepo {
     }
   }
   async update(candidate: Candidate): Promise<void> {
-    throw new Error('Method not implemented.');
+    const CandidateModel = this.models.Candidate;
+    const transaction = await models['sequelize'].transaction();
+    try {
+      const raw = CandidateMap.toPersistence(candidate);
+      const candidateInstance = await CandidateModel.findByPk(candidate.candidateId.id.toString());
+      await candidateInstance.update(raw, { transaction });
+
+      // await candidateInstance.setEmails([], { transaction });
+      await this.models.Email.destroy({
+        where: { candidate_id: candidate.candidateId.id.toString() },
+        transaction,
+      });
+
+      // await candidateInstance.setPhones([], { transaction });
+      await this.models.Phone.destroy({
+        where: { candidate_id: candidate.candidateId.id.toString() },
+        transaction,
+      });
+
+      // await candidateInstance.setLinks([], { transaction });
+      await this.models.Link.destroy({
+        where: { candidate_id: candidate.candidateId.id.toString() },
+        transaction,
+      });
+
+      await candidateInstance.setTags([], { transaction });
+      await candidateInstance.setTechnologies([], { transaction });
+
+      await Promise.all(
+        raw.emails.map(async (email) => {
+          await candidateInstance.createEmail(email, { transaction });
+        }),
+      );
+      await Promise.all(
+        raw.phones.map(async (phone) => {
+          await candidateInstance.createPhone(phone, { transaction });
+        }),
+      );
+      await Promise.all(
+        raw.links.map(async (link) => {
+          await candidateInstance.createLink(link, { transaction });
+        }),
+      );
+
+      await Promise.all(
+        raw.tags.map(async (tag) => {
+          const tagFound = await this.models.Tag.findOne({ where: { name: tag.name } });
+          if (!!tagFound === false) {
+            const resp = await this.models.Tag.create(tag, { transaction });
+            await candidateInstance.addTag(resp, { transaction });
+          } else {
+            await candidateInstance.addTag(tagFound, { transaction });
+          }
+        }),
+      );
+
+      await Promise.all(
+        raw.technologies.map(async (tech) => {
+          const techFound = await this.models.Technology.findOne({ where: { name: tech.name } });
+          if (!!techFound === false) {
+            const resp = await this.models.Technology.create(tech, { transaction });
+            await candidateInstance.addTechnology(resp, { transaction });
+          } else {
+            await candidateInstance.addTechnology(techFound, { transaction });
+          }
+        }),
+      );
+      await transaction.commit();
+    } catch (error) {
+      if (transaction) await transaction.rollback();
+      throw new Error(error.toString());
+    }
   }
 }

@@ -7,6 +7,7 @@ export interface UpdateJobRequestDTO {
   datePublished?: Date;
   startDate?: Date;
   vacancies?: number;
+  technologies?: any[];
   processId: string;
   state?: JobState;
   createdBy: any;

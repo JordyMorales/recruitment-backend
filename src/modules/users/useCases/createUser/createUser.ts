@@ -1,4 +1,5 @@
 import { injectable, inject } from 'inversify';
+import { UserId } from '../../domain/userId';
 import { User, UserProps } from '../../domain/user';
 import { UserEmail } from '../../domain/userEmail';
 import { IUserRepo } from '../../domain/ports/IUserRepo';
@@ -10,6 +11,7 @@ import { UserPassword } from '../../domain/userPassword';
 import { AppError } from '../../../../shared/core/AppError';
 import { TextUtils } from './../../../../shared/utils/TextUtils';
 import { Either, Result, left, right } from '../../../../shared/core/Result';
+import { UniqueEntityID } from '../../../../shared/domain/UniqueEntityID';
 import TYPES from '../../../../shared/infra/constants/types';
 
 type Response = Either<CreateUserErrors.EmailAlreadyExistsError | AppError.UnexpectedError, Result<User>>;
@@ -52,7 +54,7 @@ export class CreateUser implements UseCase<CreateUserRequestDTO, Promise<Respons
         password,
       };
 
-      const userOrError: Result<User> = User.create(userProps);
+      const userOrError: Result<User> = User.create(userProps, new UniqueEntityID(request.userId));
 
       if (userOrError.isFailure) {
         return left(Result.fail<User>(userOrError.error.toString())) as Response;

@@ -42,7 +42,7 @@ export class ScheduleInterview implements UseCase<ScheduleInterviewRequestDTO, P
       const interviewProps: InterviewProps = {
         ...request,
         applicationId,
-        stepId
+        stepId,
       };
 
       const interviewOrError = Interview.create(interviewProps);

@@ -7,12 +7,15 @@ import { Result } from '../../../../shared/core/Result';
 import { UniqueEntityID } from '../../../../shared/domain/UniqueEntityID';
 import { AggregateRoot } from '../../../../shared/domain/AggregateRoot';
 
+import { Technology } from '../../candidate/domain/technology';
+
 export interface JobProps {
   name: string;
   description?: string;
   datePublished?: Date;
   startDate?: Date;
   vacancies?: number;
+  technologies?: Technology[];
   processId: ProcessId;
   state?: JobState;
   createdBy: User;
@@ -46,6 +49,10 @@ export class Job extends AggregateRoot<JobProps> {
     return this.props.vacancies;
   }
 
+  get technologies(): Technology[] {
+    return this.props.technologies;
+  }
+
   get processId(): ProcessId {
     return this.props.processId;
   }
@@ -70,6 +77,17 @@ export class Job extends AggregateRoot<JobProps> {
     return this.props.createdAt;
   }
 
+  public addTechnology(technology: Technology): void {
+    const alreadyAdded = this.props.technologies.find((t) => t.name === technology.name);
+    if (!alreadyAdded) {
+      this.props.technologies.push(technology);
+    }
+  }
+
+  public removeTechnology(technology: Technology): void {
+    this.props.technologies = this.props.technologies.filter((t) => t.name !== technology.name);
+  }
+
   private constructor(props: JobProps, id?: UniqueEntityID) {
     super(props, id);
   }
@@ -90,6 +108,7 @@ export class Job extends AggregateRoot<JobProps> {
         datePublished: props.datePublished ? props.datePublished : null,
         startDate: props.startDate ? props.startDate : null,
         vacancies: props.vacancies ? props.vacancies : null,
+        technologies: props.technologies ? props.technologies : [],
         state: props.state ? props.state : 'DRAFF',
         updatedBy: props.updatedBy ? props.updatedBy : null,
         createdAt: props.createdAt ? props.createdAt : new Date(),

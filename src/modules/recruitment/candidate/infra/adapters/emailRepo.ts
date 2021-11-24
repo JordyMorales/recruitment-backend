@@ -11,6 +11,7 @@ export class EmailRepo implements IEmailRepo {
   constructor() {
     this.models = models;
   }
+
   async exists(email: string): Promise<boolean> {
     const EmailModel = this.models.Email;
     const emailFound = await EmailModel.findOne({
@@ -24,6 +25,15 @@ export class EmailRepo implements IEmailRepo {
       where: { candidate_id: candidateId.id.toString() },
     });
     return emails.map((email) => EmailMap.toDomain(email));
+  }
+  async getEmail(email: string): Promise<Email> {
+    const EmailModel = this.models.Email;
+    const emailFound = await EmailModel.findOne({
+      where: { value: email },
+    });
+    if (!!emailFound === false) return null;
+
+    return EmailMap.toDomain(emailFound);
   }
   async save(email: Email): Promise<void> {
     const EmailModel = this.models.Email;

@@ -2,6 +2,7 @@ import './createCandidateController';
 import './getAllCandidatesController';
 import './getCandidateByIdController';
 import './createTagController';
+import './updateCandidateController';
 import './getAllTagsController';
 import './searchTagsController';
 import './updateTagController';

@@ -639,6 +639,44 @@ module.exports = {
         },
       );
 
+    const CREATE_JOB_TECHNOLOGY = () =>
+      queryInterface.createTable(
+        'job_technology',
+        {
+          job_technology_id: {
+            type: Sequelize.UUID,
+            defaultValue: Sequelize.UUIDV4,
+            allowNull: false,
+            primaryKey: true,
+          },
+          job_id: {
+            type: Sequelize.UUID,
+            allowNull: false,
+            references: {
+              model: 'job',
+              key: 'job_id',
+            },
+            onDelete: 'cascade',
+            onUpdate: 'cascade',
+          },
+          technology_id: {
+            type: Sequelize.UUID,
+            allowNull: false,
+            references: {
+              model: 'technology',
+              key: 'technology_id',
+            },
+            onDelete: 'cascade',
+            onUpdate: 'cascade',
+          },
+        },
+        {
+          timestamps: false,
+          underscored: true,
+          tableName: 'job_technology',
+        },
+      );
+
     const CREATE_APPLICATION = () =>
       queryInterface.createTable(
         'application',
@@ -880,6 +918,7 @@ module.exports = {
       () => CREATE_PROCESS(),
       () => CREATE_STEP(),
       () => CREATE_JOB(),
+      () => CREATE_JOB_TECHNOLOGY(),
       () => CREATE_APPLICATION(),
       () => CREATE_INTERVIEW(),
       () => CREATE_INTERVIEWER(),
@@ -902,6 +941,7 @@ module.exports = {
       () => queryInterface.dropTable('process'),
       () => queryInterface.dropTable('step'),
       () => queryInterface.dropTable('job'),
+      () => queryInterface.dropTable('candidate_technology'),
       () => queryInterface.dropTable('application'),
       () => queryInterface.dropTable('interview'),
     ]);

@@ -18,6 +18,7 @@ import { ApplicationRepo } from '../../../modules/recruitment/job/infra/adapters
 import { InterviewRepo } from '../../../modules/recruitment/interview/infra/adapters/interviewRepo';
 import { InterviewerRepo } from '../../../modules/recruitment/interview/infra/adapters/interviewerRepo';
 import { RateRepo } from '../../../modules/recruitment/interview/infra/adapters/rateRepo';
+import { LinkRepo } from '../../../modules/recruitment/candidate/infra/adapters/linkRepo';
 
 // Use cases
 import { CreateUser } from '../../../modules/users/useCases/createUser/createUser';
@@ -25,6 +26,7 @@ import { GetAllUsers } from '../../../modules/users/useCases/getAllUsers/getAllU
 import { GetUserById } from '../../../modules/users/useCases/getUserById/getUserById';
 import { UpdateUser } from '../../../modules/users/useCases/updateUser/updateUser';
 import { CreateCandidate } from '../../../modules/recruitment/candidate/useCases/createCandidate/createCandidate';
+import { UpdateCandidate } from '../../../modules/recruitment/candidate/useCases/updateCandidate/updateCandidate';
 import { GetAllCandidates } from '../../../modules/recruitment/candidate/useCases/getAllCandidates/getAllCandidates';
 import { GetCandidateById } from '../../../modules/recruitment/candidate/useCases/getCandidateById/getCandidateById';
 import { CreateTag } from '../../../modules/recruitment/candidate/useCases/createTag/createTag';
@@ -81,6 +83,7 @@ container.bind(TYPES.IApplicationRepo).to(ApplicationRepo).inSingletonScope();
 container.bind(TYPES.IInterviewRepo).to(InterviewRepo).inSingletonScope();
 container.bind(TYPES.IInterviewerRepo).to(InterviewerRepo).inSingletonScope();
 container.bind(TYPES.IRateRepo).to(RateRepo).inSingletonScope();
+container.bind(TYPES.ILinkRepo).to(LinkRepo).inSingletonScope();
 
 // Use cases
 container.bind<CreateUser>(TYPES.CreateUser).to(CreateUser);
@@ -88,6 +91,7 @@ container.bind<GetAllUsers>(TYPES.GetAllUsers).to(GetAllUsers);
 container.bind<GetUserById>(TYPES.GetUserById).to(GetUserById);
 container.bind<UpdateUser>(TYPES.UpdateUser).to(UpdateUser);
 container.bind<CreateCandidate>(TYPES.CreateCandidate).to(CreateCandidate);
+container.bind<UpdateCandidate>(TYPES.UpdateCandidate).to(UpdateCandidate);
 container.bind<GetAllCandidates>(TYPES.GetAllCandidates).to(GetAllCandidates);
 container.bind<GetCandidateById>(TYPES.GetCandidateById).to(GetCandidateById);
 container.bind<CreateTag>(TYPES.CreateTag).to(CreateTag);

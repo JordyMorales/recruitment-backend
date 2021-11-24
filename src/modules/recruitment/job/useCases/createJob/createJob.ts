@@ -11,6 +11,7 @@ import { UseCase } from '../../../../../shared/core/UseCase';
 import { UniqueEntityID } from '../../../../../shared/domain/UniqueEntityID';
 import { Either, Result, left, right } from '../../../../../shared/core/Result';
 import TYPES from '../../../../../shared/infra/constants/types';
+import { Technology } from '../../../candidate/domain/technology';
 
 type Response = Either<CreateJobErrors.ProcessNotFoundError | AppError.UnexpectedError, Result<Job>>;
 
@@ -20,6 +21,13 @@ export class CreateJob implements UseCase<CreateJobRequestDTO, Promise<Response>
     @inject(TYPES.IJobRepo) private jobRepo: IJobRepo,
     @inject(TYPES.IProcessRepo) private processRepo: IProcessRepo,
   ) {}
+
+  private technologiesToDomain(technologies: any[]): Technology[] {
+    return technologies.map(({ technologyId, name }) => {
+      const technologyOrError: Result<Technology> = Technology.create({ name }, technologyId);
+      if (technologyOrError.isSuccess) return technologyOrError.getValue();
+    });
+  }
 
   public async execute(request?: CreateJobRequestDTO): Promise<Response> {
     try {
@@ -34,6 +42,7 @@ export class CreateJob implements UseCase<CreateJobRequestDTO, Promise<Response>
       const jobProps: JobProps = {
         ...request,
         createdBy: UserMap.dtoToDomain(request.createdBy),
+        technologies: request.technologies ? this.technologiesToDomain(request.technologies) : [],
         processId,
       };
 

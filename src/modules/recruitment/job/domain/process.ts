@@ -3,11 +3,13 @@ import { Guard } from '../../../../shared/core/Guard';
 import { Result } from '../../../../shared/core/Result';
 import { AggregateRoot } from '../../../../shared/domain/AggregateRoot';
 import { UniqueEntityID } from '../../../../shared/domain/UniqueEntityID';
+import { Step } from './step';
 
 export interface ProcessProps {
   code: string;
   name: string;
   description?: string;
+  steps?: Step[];
 }
 
 export class Process extends AggregateRoot<ProcessProps> {
@@ -27,6 +29,10 @@ export class Process extends AggregateRoot<ProcessProps> {
     return this.props.description;
   }
 
+  get steps(): Step[] {
+    return this.props.steps;
+  }
+
   private constructor(props: ProcessProps, id?: UniqueEntityID) {
     super(props, id);
   }
@@ -43,6 +49,7 @@ export class Process extends AggregateRoot<ProcessProps> {
       const values = {
         ...props,
         description: props.description ? props.description : null,
+        steps: props.steps ? props.steps : [],
       };
 
       const process = new Process(values, id);

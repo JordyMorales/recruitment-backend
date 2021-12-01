@@ -4,7 +4,7 @@ export interface ApplicationDTO {
   applicationId?: string;
   otherInfo?: string;
   appliedBy: any;
-  step: any;
+  step?: any;
   jobId: any;
   state?: ApplicationState;
   appliedAt: Date;

@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
       },
       other_info: {
-        type: DataTypes.STRING(150),
+        type: DataTypes.STRING(200),
         allowNull: true,
       },
       applied_by: {
@@ -39,7 +39,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       step_id: {
         type: DataTypes.UUID,
-        allowNull: false,
+        allowNull: true,
         references: {
           model: 'step',
           key: 'step_id',

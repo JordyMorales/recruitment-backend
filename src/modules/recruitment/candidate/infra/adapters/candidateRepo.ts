@@ -30,7 +30,20 @@ export class CandidateRepo implements ICandidateRepo {
         {
           model: this.models.User,
           as: 'user',
-          attributes: ['user_id', 'first_name', 'last_name', 'email', 'phone', 'photo_url', 'state', 'role'],
+          attributes: [
+            'user_id',
+            'first_name',
+            'last_name',
+            'email',
+            'phone',
+            'date_of_birth',
+            'country',
+            'city',
+            'address',
+            'photo_url',
+            'state',
+            'role',
+          ],
         },
         {
           model: this.models.User,
@@ -49,7 +62,7 @@ export class CandidateRepo implements ICandidateRepo {
         },
       ],
     });
-    if (!!candidateFound === false) throw new Error('Candidate not found.');
+    if (!!candidateFound === false) return null;
 
     return CandidateMap.toDomain(candidateFound);
   }
@@ -65,7 +78,20 @@ export class CandidateRepo implements ICandidateRepo {
         {
           model: this.models.User,
           as: 'user',
-          attributes: ['user_id', 'first_name', 'last_name', 'email', 'phone', 'photo_url', 'state', 'role'],
+          attributes: [
+            'user_id',
+            'first_name',
+            'last_name',
+            'email',
+            'phone',
+            'date_of_birth',
+            'country',
+            'city',
+            'address',
+            'photo_url',
+            'state',
+            'role',
+          ],
         },
         {
           model: this.models.User,

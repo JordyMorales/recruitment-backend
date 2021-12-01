@@ -34,7 +34,7 @@ export class FirebaseAuthService implements IFirebaseProvider {
 
   public async createUser(user: User): Promise<boolean> {
     try {
-      const { id, firstName, lastName, password, email, role, state } = user;
+      const { id, firstName, lastName, password, email, role, state, photoUrl } = user;
 
       const userRecord = await admin.auth().createUser({
         uid: id.toString(),
@@ -42,6 +42,7 @@ export class FirebaseAuthService implements IFirebaseProvider {
         password: password.props.value,
         email: email.props.value,
         disabled: state !== 'ACTIVE',
+        ...(photoUrl && { photoURL: photoUrl }),
       });
       await admin.auth().setCustomUserClaims(userRecord.uid, { role });
       return true;
@@ -52,12 +53,13 @@ export class FirebaseAuthService implements IFirebaseProvider {
 
   public async updateUser(user: User): Promise<void> {
     try {
-      const { id, firstName, lastName, email, role, state } = user;
+      const { id, firstName, lastName, email, role, state, photoUrl } = user;
 
       await admin.auth().updateUser(id.toString(), {
         displayName: `${firstName} ${lastName}`,
         email: email.props.value,
         disabled: state !== 'ACTIVE',
+        ...(photoUrl && { photoURL: photoUrl }),
       });
       await admin.auth().setCustomUserClaims(id.toString(), { role });
     } catch (error) {

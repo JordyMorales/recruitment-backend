@@ -8,8 +8,8 @@ import { UserId } from '../../../../users/domain/userId';
 import { Candidate, CandidateProps } from '../../domain/candidate';
 import { CreateCandidateErrors } from './createCandidateErrors';
 import { CreateCandidateRequestDTO } from './createCandidateRequestDTO';
-import { ICandidateRepo } from '../../domain/ports/ICandidateRepo';
 import { IUserRepo } from '../../../../users/domain/ports/IUserRepo';
+import { ICandidateRepo } from '../../domain/ports/ICandidateRepo';
 import { IEmailRepo } from '../../domain/ports/IEmailRepo';
 import { IPhoneRepo } from '../../domain/ports/IPhoneRepo';
 import { UserMap } from '../../../../users/infra/mappers/userMap';
@@ -19,7 +19,14 @@ import { UniqueEntityID } from '../../../../../shared/domain/UniqueEntityID';
 import { Either, left, Result, right } from '../../../../../shared/core/Result';
 import TYPES from '../../../../../shared/infra/constants/types';
 
-export type Response = Either<AppError.UnexpectedError, Result<Candidate>>;
+export type Response = Either<
+  | CreateCandidateErrors.UserNotFoundError
+  | CreateCandidateErrors.CandidateAlreadyExistsError
+  | CreateCandidateErrors.EmailAlreadyExistsError
+  | CreateCandidateErrors.PhoneAlreadyExistsError
+  | AppError.UnexpectedError,
+  Result<Candidate>
+>;
 
 @injectable()
 export class CreateCandidate implements UseCase<CreateCandidateRequestDTO, Promise<Response>> {
@@ -62,9 +69,9 @@ export class CreateCandidate implements UseCase<CreateCandidateRequestDTO, Promi
       if (candidateExists) {
         return left(new CreateCandidateErrors.CandidateAlreadyExistsError()) as Response;
       }
-
       let emails: Email[] = [];
       let phones: Phone[] = [];
+
       if (request.hasOwnProperty('emails')) {
         for (let index = 0; index < request.emails.length; index++) {
           const email = request.emails[index];
@@ -97,6 +104,7 @@ export class CreateCandidate implements UseCase<CreateCandidateRequestDTO, Promi
         referralBy: request.referralBy ? UserMap.toDomain(request.referralBy) : null,
         createdBy: UserMap.dtoToDomain(request.createdBy),
         createdAt: request.createdAt ? request.createdAt : new Date(),
+        personalData: userFound,
         emails,
         phones,
       };

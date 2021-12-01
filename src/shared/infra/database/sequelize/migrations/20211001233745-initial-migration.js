@@ -572,7 +572,7 @@ module.exports = {
             allowNull: false,
           },
           description: {
-            type: Sequelize.STRING(200),
+            type: Sequelize.TEXT,
             allowNull: true,
           },
           date_published: {
@@ -585,7 +585,7 @@ module.exports = {
           },
           vacancies: {
             type: Sequelize.INTEGER,
-            allowNull: true,
+            allowNull: false,
           },
           process_id: {
             type: Sequelize.UUID,
@@ -688,7 +688,7 @@ module.exports = {
             primaryKey: true,
           },
           other_info: {
-            type: Sequelize.STRING(150),
+            type: Sequelize.STRING(200),
             allowNull: true,
           },
           applied_by: {
@@ -718,7 +718,7 @@ module.exports = {
           },
           step_id: {
             type: Sequelize.UUID,
-            allowNull: false,
+            allowNull: true,
             references: {
               model: 'step',
               key: 'step_id',

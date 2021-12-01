@@ -1,20 +1,24 @@
 import express from 'express';
 import { inject } from 'inversify';
 import { controller, httpGet } from 'inversify-express-utils';
-import { CandidateMap } from '../../mappers/candidateMap';
-import { GetCandidateById } from '../../../useCases/getCandidateById/getCandidateById';
+import { ApplicationMap } from '../../mappers/applicationMap';
+import { GetCandidateApplications } from '../../../useCases/getCandidateApplications/getCandidateApplications';
 import { BaseController } from '../../../../../../shared/infra/http/models/BaseController';
 import { isAuthenticated, isAuthorized } from '../../../../../../shared/infra/http/middlewares';
-import { GetCandidateByIdErrors } from '../../../useCases/getCandidateById/getCandidateByIdErrors';
+import { GetCandidateApplicationsErrors } from '../../../useCases/getCandidateApplications/getCandidateApplicationsErrors';
 import TYPES from '../../../../../../shared/infra/constants/types';
 
-@controller('/api/v1/candidates/:id')
-export class GetCandidateByIdController extends BaseController {
-  constructor(@inject(TYPES.GetCandidateById) private useCase: GetCandidateById) {
+@controller('/api/v1/candidates/:id/applications')
+export class GetCandidateApplicationsController extends BaseController {
+  constructor(@inject(TYPES.GetCandidateApplications) private useCase: GetCandidateApplications) {
     super();
   }
 
-  @httpGet('/', isAuthenticated, isAuthorized({ hasRole: ['ADMIN', 'RECRUITER', 'INTERVIEWER'], allowSame: true }))
+  @httpGet(
+    '/',
+    isAuthenticated,
+    isAuthorized({ hasRole: ['ADMIN', 'RECRUITER', 'INTERVIEWER', 'EMPLOYEE'], allowSame: true }),
+  )
   async executeImpl(req: express.Request, res: express.Response): Promise<any> {
     const { id } = req.params;
 
@@ -24,15 +28,15 @@ export class GetCandidateByIdController extends BaseController {
       if (result.isLeft()) {
         const error = result.value;
         switch (error.constructor) {
-          case GetCandidateByIdErrors.CandidateNotFoundError:
+          case GetCandidateApplicationsErrors.CandidateNotFoundError:
             return this.notFound(res, error.errorValue().message);
           default:
             return this.fail(res, error.errorValue()?.message ?? error.errorValue());
         }
       } else {
-        const candidate = result.value.getValue();
+        const applications = result.value.getValue();
         return this.ok(res, {
-          candidate: CandidateMap.toDTO(candidate),
+          applications: applications.map((step) => ApplicationMap.toDTO(step)),
         });
       }
     } catch (err) {

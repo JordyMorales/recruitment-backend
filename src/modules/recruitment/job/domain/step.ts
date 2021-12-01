@@ -9,7 +9,7 @@ export interface StepProps {
   order: number;
   name: string;
   description?: string;
-  processId: ProcessId;
+  processId?: ProcessId;
 }
 
 export class Step extends AggregateRoot<StepProps> {
@@ -41,7 +41,6 @@ export class Step extends AggregateRoot<StepProps> {
     const nullGuard = Guard.againstNullOrUndefinedBulk([
       { argument: props.order, argumentName: 'code' },
       { argument: props.name, argumentName: 'name' },
-      { argument: props.processId, argumentName: 'processId' },
     ]);
 
     if (!nullGuard.succeeded) {
@@ -50,6 +49,7 @@ export class Step extends AggregateRoot<StepProps> {
       const values = {
         ...props,
         description: props.description ? props.description : null,
+        processId: props.processId ? props.processId : null,
       };
 
       const step = new Step(values, id);

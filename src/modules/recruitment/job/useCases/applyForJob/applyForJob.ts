@@ -8,11 +8,12 @@ import { ICandidateRepo } from '../../../candidate/domain/ports/ICandidateRepo';
 import { Application, ApplicationProps } from '../../domain/application';
 import { JobId } from '../../domain/jobId';
 import { IApplicationRepo } from '../../domain/ports/IApplicationRepo';
-import { IStepRepo } from '../../domain/ports/IStepRepo';
-import { StepId } from '../../domain/stepId';
 import { ApplyForJobErrors } from './applyForJobErrors';
 import { ApplyForJobRequestDTO } from './applyForJobRequestDTO';
 import TYPES from '../../../../../shared/infra/constants/types';
+import { StepId } from '../../domain/stepId';
+import { IStepRepo } from '../../domain/ports/IStepRepo';
+import { Step } from '../../domain/step';
 
 type Response = Either<
   | ApplyForJobErrors.ApplicationAlreadyExistsError
@@ -37,10 +38,14 @@ export class ApplyForJob implements UseCase<ApplyForJobRequestDTO, Promise<Respo
         return left(new ApplyForJobErrors.CandidateDoesNotExists(request.appliedBy)) as Response;
       }
 
-      const stepId = StepId.create(new UniqueEntityID(request.stepId)).getValue();
-      const step = await this.stepRepo.getStepById(stepId);
-      if (!!step === false) {
-        return left(new ApplyForJobErrors.StepDoesNotExists(request.stepId)) as Response;
+      let step: Step = null;
+
+      if (request.hasOwnProperty('stepId')) {
+        const stepId = StepId.create(new UniqueEntityID(request.stepId)).getValue();
+        step = await this.stepRepo.getStepById(stepId);
+        if (!!step === false) {
+          return left(new ApplyForJobErrors.StepDoesNotExists(request.stepId)) as Response;
+        }
       }
 
       const jobId = JobId.create(new UniqueEntityID(request.jobId)).getValue();

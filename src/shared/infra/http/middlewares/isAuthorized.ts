@@ -8,8 +8,11 @@ export default (opts: {
   return (req: Request, res: Response, next: Function) => {
     const { userId, role } = req['context'];
     const { id } = req.params;
+    const { userId: uid } = req.body;
 
     if (opts.allowSame && id && userId === id) return next();
+
+    if (opts.allowSame && uid && userId === uid) return next();
 
     if (!role) return endRequest(403, 'Forbidden', res);
 

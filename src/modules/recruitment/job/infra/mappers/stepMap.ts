@@ -7,11 +7,11 @@ import { UniqueEntityID } from '../../../../../shared/domain/UniqueEntityID';
 export class StepMap implements Mapper<Step> {
   public static toDTO(step: Step): StepDTO {
     return {
-      stepId: step.id.toString(),
+      stepId: step.stepId.id.toString(),
       order: step.order,
       name: step.name,
       description: step.description ? step.description : null,
-      processId: step.processId.id.toString(),
+      processId: step.processId ? step.processId.toString() : null,
     };
   }
 
@@ -21,7 +21,7 @@ export class StepMap implements Mapper<Step> {
         order: raw.order,
         name: raw.name,
         description: raw.description ? raw.description : null,
-        processId: ProcessId.create(raw.process_id).getValue(),
+        processId: raw.process_id ? ProcessId.create(raw.process_id).getValue() : null,
       },
       new UniqueEntityID(raw.step_id),
     );
@@ -33,11 +33,11 @@ export class StepMap implements Mapper<Step> {
 
   public static toPersistence(step: Step): any {
     return {
-      step_id: step.id.toString(),
+      step_id: step.stepId.id.toString(),
       order: step.order,
       name: step.name,
       description: step.description ? step.description : null,
-      process_id: step.processId.id.toString(),
+      process_id: step.processId ? step.processId.toString() : null,
     };
   }
 }

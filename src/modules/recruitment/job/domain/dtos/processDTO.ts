@@ -3,4 +3,5 @@ export interface ProcessDTO {
   code: string;
   name: string;
   description?: string;
+  steps?: any[];
 }

@@ -15,7 +15,7 @@ export class CreateCandidateController extends BaseController {
     super();
   }
 
-  @httpPost('/', isAuthenticated, isAuthorized({ hasRole: ['ADMIN'] }))
+  @httpPost('/', isAuthenticated, isAuthorized({ hasRole: ['ADMIN', 'RECRUITER', 'INTERVIEWER'], allowSame: true}))
   async executeImpl(req: express.Request, res: express.Response): Promise<any> {
     const dto: CreateCandidateRequestDTO = req.body as CreateCandidateRequestDTO;
     try {

@@ -12,6 +12,7 @@ import { Either, Result, left, right } from '../../../../../shared/core/Result';
 import { UniqueEntityID } from '../../../../../shared/domain/UniqueEntityID';
 import TYPES from '../../../../../shared/infra/constants/types';
 import { StepId } from '../../domain/stepId';
+import { Step } from '../../domain/step';
 
 export type Response = Either<
   UpdateApplicationErrors.ApplicationNotFoundError | AppError.UnexpectedError | Result<any>,
@@ -41,18 +42,22 @@ export class UpdateApplication implements UseCase<UpdateApplicationRequestDTO, P
         }
       }
 
-      const stepId = StepId.create(new UniqueEntityID(request.stepId)).getValue();
-      const stepFound = await this.stepRepo.getStepById(stepId);
-      const stepExists = !!stepFound === true;
+      let step: Step = null;
 
-      if (!stepExists) {
-        return left(new UpdateApplicationErrors.StepDoesNotExists(request.stepId)) as Response;
+      if (request.hasOwnProperty('stepId')) {
+        const stepId = StepId.create(new UniqueEntityID(request.stepId)).getValue();
+        step = await this.stepRepo.getStepById(stepId);
+        const stepExists = !!step === true;
+
+        if (!stepExists) {
+          return left(new UpdateApplicationErrors.StepDoesNotExists(request.stepId)) as Response;
+        }
       }
 
       const applicationProps: ApplicationProps = {
         ...applicationFound.props,
         ...request,
-        step: stepFound,
+        step,
         updatedAt: new Date(),
         appliedBy: applicationFound.appliedBy,
         jobId: applicationFound.jobId,

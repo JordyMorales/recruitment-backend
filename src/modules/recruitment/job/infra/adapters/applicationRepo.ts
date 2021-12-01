@@ -63,6 +63,27 @@ export class ApplicationRepo implements IApplicationRepo {
     });
     return applications.map((application) => ApplicationMap.toDomain(application));
   }
+  async getCandidateApplications(candidateId: CandidateId): Promise<Application[]> {
+    const ApplicationModel = this.models.Application;
+    const applications = await ApplicationModel.findAll({
+      where: { applied_by: candidateId.id.toString() },
+      include: [
+        {
+          model: this.models.Candidate,
+          attributes: ['candidate_id'],
+          include: [
+            {
+              model: this.models.User,
+              as: 'user',
+              attributes: ['user_id', 'first_name', 'last_name', 'email', 'photo_url', 'state', 'role'],
+            },
+          ],
+        },
+        { model: this.models.Step },
+      ],
+    });
+    return applications.map((application) => ApplicationMap.toDomain(application));
+  }
   async getStepApplications(stepId: StepId): Promise<Application[]> {
     const ApplicationModel = this.models.Application;
     const applications = await ApplicationModel.findAll({

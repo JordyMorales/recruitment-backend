@@ -8,7 +8,7 @@ import { isAuthenticated, isAuthorized } from '../../../../../../shared/infra/ht
 import { GetJobApplicationsErrors } from '../../../useCases/getJobApplications/getJobApplicationsErrors';
 import TYPES from '../../../../../../shared/infra/constants/types';
 
-@controller('/api/v1/steps/:id/applications')
+@controller('/api/v1/steps/:stepId/:jobId/applications')
 export class GetStepApplicationsController extends BaseController {
   constructor(@inject(TYPES.GetStepApplications) private useCase: GetStepApplications) {
     super();
@@ -16,10 +16,10 @@ export class GetStepApplicationsController extends BaseController {
 
   @httpGet('/', isAuthenticated, isAuthorized({ hasRole: ['ADMIN', 'RECRUITER', 'INTERVIEWER', 'EMPLOYEE'] }))
   async executeImpl(req: express.Request, res: express.Response): Promise<any> {
-    const { id } = req.params;
+    const { stepId, jobId } = req.params;
 
     try {
-      const result = await this.useCase.execute({ stepId: id });
+      const result = await this.useCase.execute({ stepId, jobId });
 
       if (result.isLeft()) {
         const error = result.value;

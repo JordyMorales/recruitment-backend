@@ -12,7 +12,7 @@ export interface ApplicationProps {
   otherInfo?: string;
   appliedBy: Candidate;
   jobId: JobId;
-  step: Step;
+  step?: Step;
   state?: ApplicationState;
   appliedAt?: Date;
   updatedAt?: Date;
@@ -59,7 +59,6 @@ export class Application extends AggregateRoot<ApplicationProps> {
     const nullGuard = Guard.againstNullOrUndefinedBulk([
       { argument: props.appliedBy, argumentName: 'appliedBy' },
       { argument: props.jobId, argumentName: 'jobId' },
-      { argument: props.step, argumentName: 'step' },
     ]);
 
     if (!nullGuard.succeeded) {
@@ -69,6 +68,7 @@ export class Application extends AggregateRoot<ApplicationProps> {
         ...props,
         otherInfo: props.otherInfo ? props.otherInfo : null,
         state: props.state ? props.state : 'APPLIED',
+        step: props.step ? props.step : null,
         appliedAt: props.appliedAt ? props.appliedAt : new Date(),
         updatedAt: props.updatedAt ? props.updatedAt : new Date(),
       };

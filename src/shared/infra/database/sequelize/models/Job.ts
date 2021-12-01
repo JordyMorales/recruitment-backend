@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
       },
       description: {
-        type: DataTypes.STRING(200),
+        type: DataTypes.TEXT,
         allowNull: true,
       },
       date_published: {
@@ -26,7 +26,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       vacancies: {
         type: DataTypes.INTEGER,
-        allowNull: true,
+        allowNull: false,
       },
       process_id: {
         type: DataTypes.UUID,

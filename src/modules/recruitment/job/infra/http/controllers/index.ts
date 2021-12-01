@@ -1,4 +1,5 @@
 import './createProcessController';
+import './getAllProcessesController';
 import './getProcessByIdController';
 import './updateProcessController';
 import './addStepToProcessController';
@@ -7,8 +8,10 @@ import './getAllProcessesStepsController';
 import './createJobController';
 import './updateJobController';
 import './getJobByIdController';
+import './getApplicationByIdController';
 import './getAllJobsController';
 import './applyForJobController';
 import './getJobApplicationsController';
+import './getCandidateApplicationsController';
 import './getStepApplicationsController';
 import './updateApplicationController';

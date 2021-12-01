@@ -18,37 +18,52 @@ export class ProcessRepo implements IProcessRepo {
     });
     return !!processFound === true;
   }
+  async getAllProcesses(): Promise<Process[]> {
+    const ProcessModel = this.models.Process;
+    const processes = await ProcessModel.findAll({
+      include: [{ model: this.models.Step, order: ['order', 'DESC'] }],
+    });
+    return processes.map((process) => ProcessMap.toDomain(process));
+  }
   async getProcessById(processId: ProcessId): Promise<Process> {
     const ProcessModel = this.models.Process;
-    const processFound = await ProcessModel.findByPk(processId.id.toString());
+    const processFound = await ProcessModel.findByPk(processId.id.toString(), {
+      include: [{ model: this.models.Step }],
+      order: [[this.models.Step, 'order', 'ASC']],
+    });
 
-    if (!!processFound === false) throw new Error('Process not found.');
+    if (!!processFound === false) return null;
 
     return ProcessMap.toDomain(processFound);
   }
   async save(process: Process): Promise<void> {
     const ProcessModel = this.models.Process;
+    const transaction = await models['sequelize'].transaction();
     try {
-      const exists = await this.exists(process.code);
-      if (!exists) {
-        const raw = ProcessMap.toPersistence(process);
-        await ProcessModel.create(raw);
-      }
+      const raw = ProcessMap.toPersistence(process);
+      await ProcessModel.create(
+        raw,
+        {
+          include: [{ model: this.models.Step }],
+        },
+        transaction,
+      );
+      await transaction.commit();
     } catch (error) {
+      if (transaction) await transaction.rollback();
       throw new Error(error.toString());
     }
   }
   async update(process: Process): Promise<void> {
     const ProcessModel = this.models.Process;
+    const transaction = await models['sequelize'].transaction();
     try {
-      const processFound = await this.getProcessById(process.processId);
-      if (!!processFound === true) {
-        const raw = ProcessMap.toPersistence(process);
-        await ProcessModel.update(raw, {
-          where: { process_id: process.processId.id.toString() },
-        });
-      }
+      const raw = ProcessMap.toPersistence(process);
+      const processInstance = await ProcessModel.findByPk(process.processId.id.toString());
+      await processInstance.update(raw, { transaction });
+      await transaction.commit();
     } catch (error) {
+      if (transaction) await transaction.rollback();
       throw new Error(error.toString());
     }
   }

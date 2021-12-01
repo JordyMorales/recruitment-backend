@@ -2,6 +2,14 @@ import { UseCaseError } from '../../../../../shared/core/UseCaseError';
 import { Result } from '../../../../../shared/core/Result';
 
 export namespace UpdateCandidateErrors {
+  export class UserNotFoundError extends Result<UseCaseError> {
+    constructor(id: string) {
+      super(false, {
+        message: `No user with the id ${id} was found`,
+      } as UseCaseError);
+    }
+  }
+
   export class CandidateNotFoundError extends Result<UseCaseError> {
     constructor(id: string) {
       super(false, {

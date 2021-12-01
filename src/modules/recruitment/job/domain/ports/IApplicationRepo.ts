@@ -8,7 +8,8 @@ export interface IApplicationRepo {
   exists(candidateId: CandidateId, jobId: JobId): Promise<boolean>;
   getApplicationById(applicationId: ApplicationId): Promise<Application>;
   getJobApplications(jobId: JobId): Promise<Application[]>;
-  getStepApplications(stepId: StepId): Promise<Application[]>;
+  getCandidateApplications(candidateId: CandidateId): Promise<Application[]>;
+  getStepApplications(stepId: StepId, jobId: JobId): Promise<Application[]>;
   save(application: Application): Promise<void>;
   update(application: Application): Promise<void>;
 }

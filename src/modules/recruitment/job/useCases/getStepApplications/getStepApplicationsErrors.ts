@@ -9,4 +9,12 @@ export namespace GetStepApplicationsErrors {
       } as UseCaseError);
     }
   }
+
+  export class JobNotFoundError extends Result<UseCaseError> {
+    constructor(id: string) {
+      super(false, {
+        message: `No job with the id ${id} was found`,
+      } as UseCaseError);
+    }
+  }
 }

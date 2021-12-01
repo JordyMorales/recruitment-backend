@@ -15,7 +15,7 @@ export class UpdateUserController extends BaseController {
     super();
   }
 
-  @httpPut('/', isAuthenticated, isAuthorized({ hasRole: ['ADMIN'], allowSame: true }))
+  @httpPut('/', isAuthenticated, isAuthorized({ hasRole: ['ADMIN', 'RECRUITER',], allowSame: true }))
   async executeImpl(req: express.Request, res: express.Response): Promise<any> {
     const dto: UpdateUserRequestDTO = req.body as UpdateUserRequestDTO;
     const { id } = req.params;

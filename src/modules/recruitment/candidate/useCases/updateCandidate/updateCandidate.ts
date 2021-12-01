@@ -8,7 +8,6 @@ import { Candidate, CandidateProps } from '../../domain/candidate';
 import { UpdateCandidateErrors } from './updateCandidateError';
 import { UpdateCandidateRequestDTO } from './updateCandidateRequestDTO';
 import { ICandidateRepo } from '../../domain/ports/ICandidateRepo';
-import { IUserRepo } from '../../../../users/domain/ports/IUserRepo';
 import { IEmailRepo } from '../../domain/ports/IEmailRepo';
 import { IPhoneRepo } from '../../domain/ports/IPhoneRepo';
 import { ILinkRepo } from './../../domain/ports/ILinkRepo';
@@ -19,8 +18,11 @@ import { UniqueEntityID } from '../../../../../shared/domain/UniqueEntityID';
 import { Either, left, Result, right } from '../../../../../shared/core/Result';
 import { CandidateId } from '../../domain/candidateId';
 import TYPES from '../../../../../shared/infra/constants/types';
+import { UserId } from '../../../../users/domain/userId';
+import { IUserRepo } from '../../../../users/domain/ports/IUserRepo';
 
 export type Response = Either<
+  | UpdateCandidateErrors.UserNotFoundError
   | UpdateCandidateErrors.CandidateNotFoundError
   | UpdateCandidateErrors.EmailAlreadyExistsError
   | UpdateCandidateErrors.PhoneAlreadyExistsError
@@ -32,6 +34,7 @@ export type Response = Either<
 export class UpdateCandidate implements UseCase<UpdateCandidateRequestDTO, Promise<Response>> {
   constructor(
     @inject(TYPES.ICandidateRepo) private candidateRepo: ICandidateRepo,
+    @inject(TYPES.IUserRepo) private userRepo: IUserRepo,
     @inject(TYPES.ILinkRepo) private linkRepo: ILinkRepo,
     @inject(TYPES.IEmailRepo) private emailRepo: IEmailRepo,
     @inject(TYPES.IPhoneRepo) private phoneRepo: IPhoneRepo,
@@ -52,6 +55,14 @@ export class UpdateCandidate implements UseCase<UpdateCandidateRequestDTO, Promi
 
   public async execute(request: UpdateCandidateRequestDTO): Promise<Response> {
     try {
+      const userId = UserId.create(new UniqueEntityID(request.userId)).getValue();
+      const userFound = await this.userRepo.getUserById(userId);
+      const userExists = !!userFound === true;
+
+      if (!userExists) {
+        return left(new UpdateCandidateErrors.UserNotFoundError(request.userId)) as Response;
+      }
+
       let candidateFound: Candidate;
       const candidateId = CandidateId.create(new UniqueEntityID(request.userId)).getValue();
 
@@ -121,6 +132,7 @@ export class UpdateCandidate implements UseCase<UpdateCandidateRequestDTO, Promi
         createdBy: candidateFound.createdBy,
         updatedBy: UserMap.dtoToDomain(request.updatedBy),
         updatedAt: new Date(),
+        personalData: userFound,
         links,
         emails,
         phones,

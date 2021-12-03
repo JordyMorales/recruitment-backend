@@ -14,7 +14,11 @@ export class GetCandidateByIdController extends BaseController {
     super();
   }
 
-  @httpGet('/', isAuthenticated, isAuthorized({ hasRole: ['ADMIN', 'RECRUITER', 'INTERVIEWER'], allowSame: true }))
+  @httpGet(
+    '/',
+    isAuthenticated,
+    isAuthorized({ hasRole: ['ADMIN', 'RECRUITER', 'INTERVIEWER'], allowSame: true }),
+  )
   async executeImpl(req: express.Request, res: express.Response): Promise<any> {
     const { id } = req.params;
 

@@ -28,5 +28,5 @@ test('Should be able to create a user', () => {
   expect(user.resumeUrl).toBeNull();
   expect(user.jobTitle).toBeNull();
   expect(user.role).toBe('CANDIDATE');
-  expect(user.state).toBe('ACTIVE');
+  expect(user.state).toBe('INACTIVE');
 });

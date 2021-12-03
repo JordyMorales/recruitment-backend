@@ -10,7 +10,10 @@ import { UniqueEntityID } from '../../../../../shared/domain/UniqueEntityID';
 import { Either, left, Result, right } from '../../../../../shared/core/Result';
 import TYPES from '../../../../../shared/infra/constants/types';
 
-export type Response = Either<GetApplicationByIdErrors.ApplicationNotFoundError | AppError.UnexpectedError, Result<Application>>;
+export type Response = Either<
+  GetApplicationByIdErrors.ApplicationNotFoundError | AppError.UnexpectedError,
+  Result<Application>
+>;
 
 @injectable()
 export class GetApplicationById implements UseCase<GetApplicationByIdRequestDTO, Promise<Response>> {

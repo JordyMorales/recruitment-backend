@@ -15,7 +15,7 @@ export class CreateUserController extends BaseController {
     super();
   }
 
-  @httpPost('/', isAuthenticated, isAuthorized({ hasRole: ['ADMIN', 'RECRUITER',] }))
+  @httpPost('/', isAuthenticated, isAuthorized({ hasRole: ['ADMIN', 'RECRUITER'] }))
   async executeImpl(req: express.Request, res: express.Response): Promise<any> {
     const dto: CreateUserRequestDTO = req.body as CreateUserRequestDTO;
 

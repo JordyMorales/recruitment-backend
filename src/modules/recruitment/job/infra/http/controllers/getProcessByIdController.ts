@@ -14,7 +14,11 @@ export class GetProcessByIdController extends BaseController {
     super();
   }
 
-  @httpGet('/', isAuthenticated, isAuthorized({ hasRole: ['ADMIN', 'RECRUITER', 'INTERVIEWER', 'EMPLOYEE', 'CANDIDATE'] }))
+  @httpGet(
+    '/',
+    isAuthenticated,
+    isAuthorized({ hasRole: ['ADMIN', 'RECRUITER', 'INTERVIEWER', 'EMPLOYEE', 'CANDIDATE'] }),
+  )
   async executeImpl(req: express.Request, res: express.Response): Promise<any> {
     const { id } = req.params;
 

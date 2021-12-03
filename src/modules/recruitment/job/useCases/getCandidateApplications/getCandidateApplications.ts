@@ -17,7 +17,9 @@ export type Response = Either<
 >;
 
 @injectable()
-export class GetCandidateApplications implements UseCase<GetCandidateApplicationsRequestDTO, Promise<Response>> {
+export class GetCandidateApplications
+  implements UseCase<GetCandidateApplicationsRequestDTO, Promise<Response>>
+{
   constructor(
     @inject(TYPES.ICandidateRepo) private candidateRepo: ICandidateRepo,
     @inject(TYPES.IApplicationRepo) private applicationRepo: IApplicationRepo,
@@ -30,7 +32,9 @@ export class GetCandidateApplications implements UseCase<GetCandidateApplication
       const exists = !!candidateFound === true;
 
       if (!exists) {
-        return left(new GetCandidateApplicationsErrors.CandidateNotFoundError(request.candidateId)) as Response;
+        return left(
+          new GetCandidateApplicationsErrors.CandidateNotFoundError(request.candidateId),
+        ) as Response;
       }
 
       const applications = await this.applicationRepo.getCandidateApplications(candidateId);
